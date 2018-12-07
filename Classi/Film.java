@@ -2,9 +2,9 @@ package classi;
 
 import java.io.Serializable;
 
-public class Film implements Serializable{
+public final class Film implements Serializable{
 	
-	public Film(String titolo, String descrizione)
+	public Film(String titolo, String descrizione, int minuti)
 	{
 		this.titolo = titolo;
 		this.descrizione = descrizione;
@@ -20,7 +20,14 @@ public class Film implements Serializable{
 		return this.descrizione;
 	}
 	
+	public int getMinuti()
+	{
+		return this.minuti;
+	}
+	
+	
 	private String descrizione;
 	private String titolo;
+	private int minuti;
 	private static final long serialVersionUID = 2958174258762431745L;
 }
