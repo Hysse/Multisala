@@ -13,9 +13,6 @@ import java.io.Serializable;
  *
  */
 public class Posto implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Indica la lettera associata al posto.
@@ -41,7 +38,7 @@ public class Posto implements Serializable{
 		stato = 'L';
 	}
 	/**
-	 * 
+	 * Metodo di restituzione della lettera del un posto.
 	 * @return Restituisce la lettera associata al posto.
 	 */
 	public char getLet()
@@ -49,7 +46,7 @@ public class Posto implements Serializable{
 		return lettera;
 	}
 	/**
-	 * 
+	 * Metodo di restituzione del numero del un posto.
 	 * @return Restituisce il numero associato al posto.
 	 */
 	public int getNum()
@@ -57,7 +54,7 @@ public class Posto implements Serializable{
 		return numero;
 	}
 	/**
-	 * 
+	 * Metodo di restituzione dello stato del un posto.
 	 * @return Restituisce true se il posto è libero, false altrimenti.
 	 */
 	public boolean isLibero()
@@ -65,7 +62,7 @@ public class Posto implements Serializable{
 		return stato == 'L';
 	}
 	/**
-	 * 
+	 * Metodo di restituzione dello stato del posto. 
 	 * @return Restituisce true se il posto è occupato, false altrimenti,
 	 */
 	public boolean isOccupato()
@@ -73,7 +70,7 @@ public class Posto implements Serializable{
 		return stato == 'O';
 	}
 	/**
-	 * 
+	 * Metodo di restituzione dello stato del posto. 
 	 * @return Restituisce true se il posto è indisponibile, false atrimenti.
 	 */
 	public boolean isIndisponibile()
