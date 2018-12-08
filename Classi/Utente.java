@@ -8,7 +8,8 @@ import java.io.Serializable;
  * Inoltre viene indicato se l'utente è un gestore e
  * ha un ID progressivo.
  */
-public class Utente implements Serializable,Cloneable{
+
+public class Utente implements Serializable, Cloneable{
 	
 	private static final long serialVersionUID = 8324800419465457181L;
 	private String username;
@@ -68,7 +69,7 @@ public class Utente implements Serializable,Cloneable{
 	 * Il metodo ritorna la variabile booleana isGestore
 	 * @return true se l'utente è un gestore, false altrimenti
 	 */
-	public boolean getGestore()
+	public boolean isGestore()
 	{
 		return this.isGestore;
 	}
@@ -109,16 +110,36 @@ public class Utente implements Serializable,Cloneable{
 		return getClass().getSimpleName() + "[Username = " + this.username + ", Password = "
 				+ this.password + ", ID utente = " + this.id + ", E' un gestore = " + this.isGestore + "]";
 	}
+	
+	/**
+	 * Metodo per clonare un utente
+	 * @return Utente clonato
+	 */
 	public Utente clone()
 	{
-		try
-		{
+		try {
 			Utente clone = (Utente) super.clone();
 			return clone;
+		} catch(CloneNotSupportedException e) {
+			e.printStackTrace();;
 		}
-		catch(CloneNotSupportedException e)
-		{
-			return null;
-		}
+		
+		return null;
 	}
+	
+	/**
+	 * @param o Object che deve essere di tipo utente
+	 * @return true se due utenti sono uguali, false altrimenti
+	 */
+	public boolean equals(Object o)
+	{
+		if (o == null || getClass() != o.getClass())
+			return false;
+		
+		Utente u = (Utente) o;
+		
+		return username.equals(u.getUsername()) && password.equals(u.getPassword())
+				&& id == u.getId() && isGestore == u.isGestore();
+	}
+	
 }

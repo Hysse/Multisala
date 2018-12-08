@@ -3,16 +3,12 @@ package classi;
 import java.io.Serializable;
 
 /**
- * 
  * Posto rappresenta un singolo posto all'interno di una sala. Esso ha una lettera e un numero che indicano
  * l'ubicazione del posto in questione all'interno della sala. La variabile stato indica, mediante un char,
  * lo stato attuale del posto, che può essere libero ('L'), occupato ('O'), oppure indisponibile ('I').
- *	
- *	
- *	
- *
  */
 public class Posto implements Serializable,Cloneable{
+	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Indica la lettera associata al posto.
@@ -26,6 +22,7 @@ public class Posto implements Serializable,Cloneable{
 	 * Può valere 'L'(libero),'O'(Occupato) oppure 'I'(Indisponibile); indica lo stato del posto.
 	 */
 	private char stato;
+	
 	/**
 	 * Costruisce un oggetto Posto.
 	 * @param lettera lettera che identifica il posto.
@@ -37,6 +34,7 @@ public class Posto implements Serializable,Cloneable{
 		this.numero = numero;
 		stato = 'L';
 	}
+	
 	/**
 	 * Metodo di restituzione della lettera del un posto.
 	 * @return Restituisce la lettera associata al posto.
@@ -45,6 +43,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return lettera;
 	}
+	
 	/**
 	 * Metodo di restituzione del numero del un posto.
 	 * @return Restituisce il numero associato al posto.
@@ -53,6 +52,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return numero;
 	}
+	
 	/**
 	 * Metodo di restituzione dello stato del un posto.
 	 * @return Restituisce true se il posto è libero, false altrimenti.
@@ -61,6 +61,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return stato == 'L';
 	}
+	
 	/**
 	 * Metodo di restituzione dello stato del posto. 
 	 * @return Restituisce true se il posto è occupato, false altrimenti,
@@ -69,6 +70,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return stato == 'O';
 	}
+	
 	/**
 	 * Metodo di restituzione dello stato del posto. 
 	 * @return Restituisce true se il posto è indisponibile, false atrimenti.
@@ -77,6 +79,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return stato == 'I';
 	}
+	
 	/**
 	 * Imposta il posto come libero.
 	 */
@@ -84,6 +87,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		stato = 'L';
 	}
+	
 	/**
 	 * Imposta il posto come occupato.
 	 */
@@ -91,6 +95,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		stato = 'O';
 	}
+	
 	/**
 	 * Imposta il posto come indisponibile.
 	 */
@@ -98,6 +103,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		stato = 'I';
 	}
+	
 	/**Copia il Posto chiamante.
 	 * @return Restituisce una copia del parametro implicito.
 	 */
@@ -113,13 +119,16 @@ public class Posto implements Serializable,Cloneable{
 			return null;
 		}
 	}
+	
 	/**Metodo di accesso per le informazioni essenziali.
 	 * @return Restituisce una stringa che indica le informazioni del Posto.
 	 */
 	public String toString()
 	{
-		return getClass(). getName() + "[Lettera : "+lettera+" Numero : "+numero+" Stato : "+stato+"]";
+		return getClass(). getName() + "[Lettera = " + lettera + " Numero = " + numero 
+				+" Stato = " + stato + "]";
 	}
+	
 	/**
 	 * Metodo di controllo per verificare l'uguaglianza con un altro Posto.
 	 * @param obj Oggetto di cui verificare l'uguaglianza.
@@ -134,11 +143,12 @@ public class Posto implements Serializable,Cloneable{
 		Posto other = (Posto) obj;
 		return other.lettera == lettera && other.numero == numero && other.stato == stato;
 	}
+	
 	/**
 	 * Metodo di controllo per verificare il matching tra due posti (numero e lettera uguali senza considerare
 	 * lo stato).
 	 * @param other Posto di cui verificare il matching.
-	 * @return
+	 * @return true se la lettera e il numero del posti sono uguali, false altrimenti
 	 */
 	public boolean matches(Posto other)
 	{
