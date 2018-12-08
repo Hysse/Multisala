@@ -11,6 +11,10 @@ import java.util.ArrayList;
  */
 public class Sala implements Serializable{
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Indica il numero che identifica univocamente la sala all'interno del cinema.
 	 */
 	private int numero;
