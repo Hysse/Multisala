@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * e una collezione di Posto che indica i posti di cui la Sala dispone.
  *
  */
-public class Sala implements Serializable{
+public class Sala implements Serializable,Cloneable{
 	/**
 	 * 
 	 */
@@ -102,12 +102,19 @@ public class Sala implements Serializable{
 	 */
 	public Sala clone()
 	{
-		ArrayList<Posto> posticlone = new ArrayList<Posto>();
-		for(Posto p : posti)
-			posticlone.add(p.clone());
-		Sala clone = new Sala(numero,posticlone);
-		return clone;
-	}
+		try
+		{
+			Sala clone = (Sala)super.clone();
+			ArrayList<Posto> posticlone = new ArrayList<Posto>();
+			for(Posto p : posti)
+				posticlone.add(p.clone());
+			return clone;
+		}
+		catch(CloneNotSupportedException e)
+		{
+			return null;
+		}
+		}
 	/**
 	 * Metodo per il controllo dell'uguaglianza tra la Sala chiamante e un Oggetto obj.
 	 * @param obj Oggetto da confrontare.

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Inoltre viene indicato se l'utente è un gestore e
  * ha un ID progressivo.
  */
-public class Utente implements Serializable{
+public class Utente implements Serializable,Cloneable{
 	
 	private static final long serialVersionUID = 8324800419465457181L;
 	private String username;
@@ -108,5 +108,17 @@ public class Utente implements Serializable{
 	{
 		return getClass().getSimpleName() + "[Username = " + this.username + ", Password = "
 				+ this.password + ", ID utente = " + this.id + ", E' un gestore = " + this.isGestore + "]";
+	}
+	public Utente clone()
+	{
+		try
+		{
+			Utente clone = (Utente) super.clone();
+			return clone;
+		}
+		catch(CloneNotSupportedException e)
+		{
+			return null;
+		}
 	}
 }

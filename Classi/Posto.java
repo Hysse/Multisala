@@ -12,7 +12,7 @@ import java.io.Serializable;
  *	
  *
  */
-public class Posto implements Serializable{
+public class Posto implements Serializable,Cloneable{
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Indica la lettera associata al posto.
@@ -103,17 +103,15 @@ public class Posto implements Serializable{
 	 */
 	public Posto clone()
 	{
-		Posto clone = new Posto(lettera,numero);
-		if(isLibero())
-			clone.setLibero();
-		else
+		try
 		{
-			if(isIndisponibile())
-				setIndisponibile();
-			else
-				setOccupato();
+			Posto clone = (Posto) super.clone();
+			return clone;
 		}
-		return clone;
+		catch(CloneNotSupportedException e)
+		{
+			return null;
+		}
 	}
 	/**Metodo di accesso per le informazioni essenziali.
 	 * @return Restituisce una stringa che indica le informazioni del Posto.

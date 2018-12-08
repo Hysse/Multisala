@@ -6,12 +6,15 @@ import java.io.Serializable;
  * Questa classe è immutabile(final) e viene utilizzata per salvare
  * descizione, titolo e durata(in minuti) di un film.
  */
-public final class Film implements Serializable{
+public final class Film implements Serializable,Cloneable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String descrizione;
 	private String titolo;
 	private int minuti;
-	private static final long serialVersionUID = 2958174258762431745L;
 	
 	/**
 	 * Il costruttore prende una Stringa titolo, una String descizione e un in per i minuti
@@ -23,6 +26,7 @@ public final class Film implements Serializable{
 	{
 		this.titolo = titolo;
 		this.descrizione = descrizione;
+		this.minuti = minuti;
 	}
 	
 	/**
@@ -61,5 +65,16 @@ public final class Film implements Serializable{
 		return getClass().getSimpleName() + "[Titolo = " + this.titolo + ", Descrizione = "
 				+ this.descrizione + ", Durata = " + this.minuti + "]";			
 	}
-	
+	public Film clone()
+	{
+		try
+		{
+		Film clone = (Film) super.clone();
+		return clone;
+		}
+		catch(CloneNotSupportedException e)
+		{
+			return null;
+		}
+	}
 }
