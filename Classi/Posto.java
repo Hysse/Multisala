@@ -14,6 +14,10 @@ import java.io.Serializable;
  */
 public class Posto implements Serializable{
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Indica la lettera associata al posto.
 	 */
 	private char lettera;
