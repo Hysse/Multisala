@@ -116,6 +116,7 @@ public class Posto implements Serializable{
 	}
 	/**
 	 * Metodo di controllo per verificare l'uguaglianza con un altro Posto.
+	 * @param obj Oggetto di cui verificare l'uguaglianza.
 	 * @return Restituisce true se obj ha le stesse caratteristiche del Posto chiamante, false altrimenti.
 	 */
 	public boolean equals(Object obj)
@@ -126,5 +127,17 @@ public class Posto implements Serializable{
 			return false;
 		Posto other = (Posto) obj;
 		return other.lettera == lettera && other.numero == numero && other.stato == stato;
+	}
+	/**
+	 * Metodo di controllo per verificare il matching tra due posti (numero e lettera uguali senza considerare
+	 * lo stato).
+	 * @param other Posto di cui verificare il matching.
+	 * @return
+	 */
+	public boolean matches(Posto other)
+	{
+		if(other == null)
+			return false;
+		return other.lettera == lettera && other.numero == numero;
 	}
 }
