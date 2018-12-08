@@ -1,7 +1,11 @@
 package classi;
 
 import java.io.Serializable;
-
+/**
+ * Rappresenta il concetto di Biglietto per un determinato spettacolo e per un posto, con associato un prezzo. 
+ * Un biglietto ha anche un stato che ne indica l'avvenuto acquisto.
+ *
+ */
 public class Biglietto implements Cloneable, Serializable{
 	private static final long serialVersionUID = 1L;
 	/**

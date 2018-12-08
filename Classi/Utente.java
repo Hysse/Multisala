@@ -5,8 +5,7 @@ import java.io.Serializable;
 /**
  * Questa classe viene utilizzata per salvare
  * username e password relativo ad un utente.
- * Inoltre viene indicato se l'utente è un gestore e
- * ha un ID progressivo.
+ * Inoltre ha un ID progressivo.
  */
 
 public class Utente implements Serializable, Cloneable{
@@ -20,20 +19,17 @@ public class Utente implements Serializable, Cloneable{
 	 */
 	private static int num_prog = 0;
 	private int id;
-	private boolean isGestore;
 	
 	/**
 	 * Il costruttore prende username(stringa), password(stringa) e un boolean per
 	 * impostare o meno l'utente a gestore
 	 * @param username username dell'utente
 	 * @param password password dell'utente
-	 * @param isGestore indica se l'utente deve essere un gestore
 	 */
-	public Utente(String username, String password, Boolean isGestore)
+	public Utente(String username, String password)
 	{
 		this.username = username;
 		this.password = password;
-		this.isGestore = isGestore;
 		id = num_prog;
 		num_prog++;
 	}
@@ -66,15 +62,6 @@ public class Utente implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * Il metodo ritorna la variabile booleana isGestore
-	 * @return true se l'utente è un gestore, false altrimenti
-	 */
-	public boolean isGestore()
-	{
-		return this.isGestore;
-	}
-	
-	/**
 	 * Metodo modificatore per cambiare l'username
 	 * @param username nuovo username dell'utente
 	 */
@@ -93,22 +80,13 @@ public class Utente implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * Metodo modificatore per cambiare i permessi dell'utente
-	 * @param bool true se l'utente deve essere gestore, false altrimenti
-	 */
-	public void setGestore(Boolean bool)
-	{
-		this.isGestore = bool;
-	}
-	
-	/**
 	 * Metodo per stampare tutte le informazione dell'Utente
-	 * @return stringa con: username, password, ID e permessi gestore
+	 * @return stringa con: username, password, ID.
 	 */
 	public String toString()
 	{
 		return getClass().getSimpleName() + "[Username = " + this.username + ", Password = "
-				+ this.password + ", ID utente = " + this.id + ", E' un gestore = " + this.isGestore + "]";
+				+ this.password + ", ID utente = " + this.id + "]";
 	}
 	
 	/**
@@ -139,7 +117,7 @@ public class Utente implements Serializable, Cloneable{
 		Utente u = (Utente) o;
 		
 		return username.equals(u.getUsername()) && password.equals(u.getPassword())
-				&& id == u.getId() && isGestore == u.isGestore();
+				&& id == u.getId();
 	}
 	
 }

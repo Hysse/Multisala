@@ -8,9 +8,7 @@ import java.util.Date;
  *
  */
 public class Spettacolo implements Cloneable, Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * La sala in cui lo spettacolo si tiene. In sala vengono anche memorizzati gli stati dei posti relativi a questo spettacolo.
