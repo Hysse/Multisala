@@ -104,7 +104,15 @@ public class Posto implements Serializable{
 	public Posto clone()
 	{
 		Posto clone = new Posto(lettera,numero);
-		clone.setLibero();
+		if(isLibero())
+			clone.setLibero();
+		else
+		{
+			if(isIndisponibile())
+				setIndisponibile();
+			else
+				setOccupato();
+		}
 		return clone;
 	}
 	/**Metodo di accesso per le informazioni essenziali.
