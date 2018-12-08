@@ -1,12 +1,17 @@
 package classi;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * Rappresenta il concetto di Spettacolo come Film proiettato in una Sala in una determinata data (anno,mese,giorno,ora).
  * 
  *
  */
-public class Spettacolo {
+public class Spettacolo implements Cloneable, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * La sala in cui lo spettacolo si tiene. In sala vengono anche memorizzati gli stati dei posti relativi a questo spettacolo.
 	 */
@@ -67,7 +72,7 @@ public class Spettacolo {
 	 */
 	public Date getDataInizio()
 	{
-		return data;
+		return (Date)data.clone();
 	}
 	/**
 	 * Metodo modificatore del prezzo base di uno spettacolo.
@@ -137,5 +142,46 @@ public class Spettacolo {
 			return p;
 		}
 	}
-	
+	/**
+	 * Metodo di accesso ai dati fondamentali dello Spettacolo.
+	 * @return Restituisce una stringa con i dati fondamentali dello Spettacolo.
+	 */
+	public String toString()
+	{
+		return getClass().getName()+"[Sala = "+sala+" Film = "+film+" Data = "+data+" Prezzo = "+prezzo+"]";
+	}
+	/**
+	 * Metodo di clonazione per Spettacolo.
+	 * @return Restituisce un puntatore ad una copia esatta dello Spettacolo chiamante.
+	 */
+	public Spettacolo clone()
+	{
+		try
+		{
+			Spettacolo clone = (Spettacolo) super.clone();
+			clone.film = film.clone();
+			clone.sala = sala.clone();
+			clone.data = (Date)data.clone();
+			return clone;
+		}
+		catch(CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * Metodo di controllo dell'uguaglianza di uno Oggetto con lo Spettacolo chiamante.
+	 * @param obj Oggetto di cui controllare l'uguaglianza con lo Spettacolo chiamante.
+	 * @return Restituisce true se il chiamante e obj hanno lo stesso stato, false altrimenti.
+	 */
+	public boolean equals(Object obj)
+	{
+		if(obj == null)
+			return false;
+		if(obj.getClass() != getClass())
+			return false;
+		Spettacolo other = (Spettacolo) obj;
+		return other.data.equals(data) && other.film.equals(film) && other.sala.equals(sala) && other.prezzo == prezzo;
+	}
 }

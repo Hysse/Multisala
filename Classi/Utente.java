@@ -129,7 +129,7 @@ public class Utente implements Serializable, Cloneable{
 	
 	/**
 	 * @param o Object che deve essere di tipo utente
-	 * @return true se due utenti sono uguali, false altrimenti
+	 * @return true se due utenti hanno lo stesso stato, false altrimenti
 	 */
 	public boolean equals(Object o)
 	{

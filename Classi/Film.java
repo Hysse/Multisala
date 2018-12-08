@@ -73,7 +73,7 @@ public final class Film implements Serializable, Cloneable{
 		Film clone = (Film) super.clone();
 		return clone;
 		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();;
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -82,7 +82,7 @@ public final class Film implements Serializable, Cloneable{
 	/**
 	 * Metodo per confrontare se due film sono uguali
 	 * @param o Object che deve essere di tipo Film
-	 * @return true se i film sono uguali, false altrimenti
+	 * @return true se i film hanno lo stesso stato, false altrimenti
 	 */
 	public boolean equals(Object o)
 	{

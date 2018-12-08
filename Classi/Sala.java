@@ -115,7 +115,7 @@ public class Sala implements Serializable, Cloneable{
 			clone.posti = posticlone;
 			return clone;
 		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();;
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -124,7 +124,7 @@ public class Sala implements Serializable, Cloneable{
 	/**
 	 * Metodo per il controllo dell'uguaglianza tra la Sala chiamante e un Oggetto obj.
 	 * @param obj Oggetto da confrontare.
-	 * @return true se le Sale sono uguali, false altrimenti
+	 * @return true se le Sale hanno lo stesso stato, false altrimenti
 	 */
 	public boolean equals(Object obj)
 	{
