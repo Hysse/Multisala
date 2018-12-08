@@ -25,7 +25,11 @@ public class Posto implements Serializable{
 	 * Può valere 'L'(libero),'O'(Occupato) oppure 'I'(Indisponibile); indica lo stato del posto.
 	 */
 	private char stato;
-	
+	/**
+	 * Costruisce un oggetto Posto.
+	 * @param lettera lettera che identifica il posto.
+	 * @param numero numero che identifica il posto.
+	 */
 	public Posto(char lettera,int numero)
 	{
 		this.lettera = lettera;
