@@ -113,13 +113,10 @@ public class Biglietto implements Cloneable, Serializable{
 	 */
 	public Biglietto clone()
 	{
-		try
-		{
+		try {
 			Biglietto clone = (Biglietto) super.clone();
 			return clone;
-		}
-		catch(CloneNotSupportedException e)
-		{
+		} catch(CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		return null;

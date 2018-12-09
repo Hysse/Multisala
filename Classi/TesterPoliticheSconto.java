@@ -36,7 +36,7 @@ public class TesterPoliticheSconto {
 		{
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getHours() > 11)
+				if(b.getSpettacolo().getDataInizio().getHours() > 13)
 					return b.getPrezzo()-((b.getPrezzo() * 20) / 100);
 				else
 					return b.getPrezzo();
@@ -87,9 +87,10 @@ public class TesterPoliticheSconto {
 		
 		System.out.println(biglietto.getSpettacolo().getFilm().getTitolo());
 		System.out.println(biglietto.getSpettacolo().getDataInizio());
-		System.out.println("Prezzo iniziale : "+biglietto.getSpettacolo().getPrezzo());
-		System.out.println("Prezzo scontato : "+biglietto.getPrezzo());
-		System.out.println("Stato Sala 1 dopo la prenotazione/acquisto : \n\n"+biglietto.getSpettacolo().getSala().displayPosti());
+		System.out.println("Prezzo iniziale = "+biglietto.getSpettacolo().getPrezzo());
+		System.out.println("Prezzo scontato = "+biglietto.getPrezzo());
+		System.out.println("Sala dello spettacolo = " + biglietto.getSpettacolo().getSala().getNumSala());
+		System.out.println("\nStato Sala 1 dopo la prenotazione/acquisto : \n\n"+biglietto.getSpettacolo().getSala().displayPosti());
 	}
 
 }

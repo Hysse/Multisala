@@ -43,6 +43,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return lettera;
 	}
+	
 	/**
 	 * Metodo di accesso allo stato del Posto.
 	 * @return Restituisce la lettera indicante lo stato del Posto.
@@ -51,6 +52,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return stato;
 	}
+	
 	/**
 	 * Metodo di restituzione del numero del un posto.
 	 * @return Restituisce il numero associato al posto.
@@ -116,13 +118,10 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public Posto clone()
 	{
-		try
-		{
+		try{
 			Posto clone = (Posto) super.clone();
 			return clone;
-		}
-		catch(CloneNotSupportedException e)
-		{
+		}catch(CloneNotSupportedException e) {
 			return null;
 		}
 	}
