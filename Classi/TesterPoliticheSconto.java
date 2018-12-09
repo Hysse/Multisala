@@ -15,9 +15,9 @@ public class TesterPoliticheSconto {
 			public double getSconto(Biglietto b)
 			{
 				if(cliente.getEta() > 18)
-					return (b.getPrezzo() * 45) / 100;
+					return b.getPrezzo()-((b.getPrezzo() * 45) / 100);
 				else
-					return 0.0;
+					return b.getPrezzo();
 			}
 		}
 		
@@ -26,9 +26,9 @@ public class TesterPoliticheSconto {
 			public double getSconto(Biglietto b)
 			{
 				if(b.getSpettacolo().getDataInizio().getDay() == 0)
-					return (b.getPrezzo() * 40) / 100;
+					return b.getPrezzo()-((b.getPrezzo() * 40) / 100);
 				else
-					return 0.0;
+					return b.getPrezzo();
 			}
 		}
 		
@@ -36,10 +36,10 @@ public class TesterPoliticheSconto {
 		{
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getHours() >= 13)
-					return (b.getPrezzo() * 20) / 100;
+				if(b.getSpettacolo().getDataInizio().getHours() > 11)
+					return b.getPrezzo()-((b.getPrezzo() * 20) / 100);
 				else
-					return 0.0;
+					return b.getPrezzo();
 			}
 		}
 		
@@ -59,7 +59,7 @@ public class TesterPoliticheSconto {
 		
 		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120);
 		
-		Date data = new Date(2018,11,8,13,0);
+		Date data = new Date(2018,11,8,12,0);
 		
 		Spettacolo spettacolo = new Spettacolo(sala1, film, data, 20.00);
 		
@@ -77,21 +77,21 @@ public class TesterPoliticheSconto {
 		
 		double prezzofinale = biglietto.getPrezzo();
 		double temp;
-
 		for(PoliticaSconto p : politicheAttive)
 		{
 			temp = p.getSconto(biglietto);
-			if ((prezzofinale -= temp) < 0.0)
-				prezzofinale = 0.0;
+			if(temp < prezzofinale)
+				prezzofinale = temp;
 		}
 		biglietto.setPrezzo(prezzofinale);
 		
 		System.out.println(biglietto.getSpettacolo().getFilm().getTitolo());
 		System.out.println(biglietto.getSpettacolo().getDataInizio());
-		System.out.println("Prezzo iniziale = "+biglietto.getSpettacolo().getPrezzo());
-		System.out.println("Prezzo scontato = "+biglietto.getPrezzo());
-		System.out.println("Sala dello spettacolo = " + biglietto.getSpettacolo().getSala().getNumSala());
-		System.out.println("\nStato Sala 1 dopo la prenotazione/acquisto :\n"+biglietto.getSpettacolo().getSala().displayPosti());
+		System.out.println("Prezzo iniziale : "+biglietto.getSpettacolo().getPrezzo());
+		System.out.println("Prezzo scontato : "+biglietto.getPrezzo());
+		System.out.println("Sala dello spettacolo : " + biglietto.getSpettacolo().getSala().getNumSala());
+		System.out.println("Stato Sala 1 dopo la prenotazione/acquisto :"
+				+ "\n"+biglietto.getSpettacolo().getSala().displayPosti());
 	}
 
 }
