@@ -15,15 +15,21 @@ public class Cliente extends Utente{
 	 */
 	private ArrayList<Biglietto> prenotazioni;
 	/**
+	 * Età del Cliente.
+	 */
+	private int eta;
+	/**
 	 * Metodo costruttore del Cliente che estende il costruttore dell'Utente aggiungendo ad esso la creazione
 	 * di una collezione di Biglietti (prenotazioni).
 	 * @param username Lo username del Cliente.
 	 * @param password La password del Cliente.
+	 * @param eta L'eta del Cliente.
 	 */
-	public Cliente(String username, String password)
+	public Cliente(String username, String password,int eta)
 	{
 		super(username, password);
 		prenotazioni = new ArrayList<Biglietto>();
+		this.eta = eta;
 	}
 	/**
 	 * Metodo modificatore del Cliente che elimina la prenotazioni di indice i.
@@ -58,6 +64,22 @@ public class Cliente extends Utente{
 	public int haPrenotazione(Biglietto biglietto)
 	{
 		return prenotazioni.indexOf(biglietto);
+	}
+	/**
+	 * Metodo di accesso all'età del Cliente.
+	 * @return Restituisce l'età attuale del Cliente.
+	 */
+	public int getEta()
+	{
+		return eta;
+	}
+	/**
+	 * Metodo modificatore dell'età del Cliente.
+	 * @param eta Restituisce l'età del Cliente.
+	 */
+	public void setEta(int eta)
+	{
+		this.eta = eta;
 	}
 	/**
 	 * Metodo di visualizzazione che amplia il metodo toString() di Utente aggiungendo la stampa delle prenotazioni.
