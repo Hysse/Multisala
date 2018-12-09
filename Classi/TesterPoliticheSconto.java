@@ -59,7 +59,7 @@ public class TesterPoliticheSconto {
 		
 		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120);
 		
-		Date data = new Date(2018,11,8,12,0);
+		Date data = new Date(2018,11,8,13,0);
 		
 		Spettacolo spettacolo = new Spettacolo(sala1, film, data, 20.00);
 		
@@ -81,7 +81,8 @@ public class TesterPoliticheSconto {
 		for(PoliticaSconto p : politicheAttive)
 		{
 			temp = p.getSconto(biglietto);
-			prezzofinale -= temp;
+			if ((prezzofinale -= temp) < 0.0)
+				prezzofinale = 0.0;
 		}
 		biglietto.setPrezzo(prezzofinale);
 		
