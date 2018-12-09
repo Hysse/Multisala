@@ -15,6 +15,14 @@ public class Spettacolo implements Cloneable, Serializable{
 	 */
 	private Sala sala;
 	/**
+	 * Numero che identifica univocamente uno spettacolo.
+	 */
+	private static int progressivo = 0;
+	/**
+	 * variabile che conterrà il progressivo relativo allo Spettacolo.
+	 */
+	private int id;
+	/**
 	 * Il prezzo base dello spettacolo.
 	 */
 	private double prezzo;
@@ -40,6 +48,8 @@ public class Spettacolo implements Cloneable, Serializable{
 		this.film = film;
 		this.data = data;
 		this.prezzo = prezzo;
+		id = progressivo;
+		progressivo++;
 	}
 	
 	/**
@@ -118,13 +128,12 @@ public class Spettacolo implements Cloneable, Serializable{
 	
 	/**
 	 * Metodo modificatore per l'occupazione di un posto riguardante lo spettacolo. Occupa un posto della sala relativo allo spettacolo.
-	 * @param lettera La lettera del posto da occupare.
-	 * @param numero Il numero del posto da occupare.
+	 * @param p Il posto da occupare.
 	 * @return Restituisce il posto appena occupato se esiste, altrimenti restituisce null;
 	 */
-	public Posto occupa(char lettera,int numero)
+	public Posto occupa(Posto posto)
 	{
-		Posto p = sala.getPosto(lettera, numero);
+		Posto p = sala.getPosto(posto);
 				if(p == null)
 					return null;
 				else
@@ -136,13 +145,12 @@ public class Spettacolo implements Cloneable, Serializable{
 	
 	/**
 	 * Metodo modificatore per la liberazione di un posto riguardante lo spettacolo. Libera un posto della sala relativo allo spettacolo.
-	 * @param lettera La lettera del posto da liberare.
-	 * @param numero Il numero del posto da liberare.
+	 * @param posto Il posto da liberare.
 	 * @return Restituisce il posto appena liberato se esiste, altrimenti restituisce null;
 	 */
-	public Posto libera(char lettera,int numero)
+	public Posto libera(Posto posto)
 	{
-		Posto p = sala.getPosto(lettera, numero);
+		Posto p = sala.getPosto(posto);
 		if(p == null)
 			return null;
 		else

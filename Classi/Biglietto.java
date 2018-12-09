@@ -13,9 +13,13 @@ public class Biglietto implements Cloneable, Serializable{
 	 */
 	private final Spettacolo spettacolo;
 	/**
-	 * Posto della sala associato allo spettacolo del biglietto.
+	 * Lettera del posto della sala associata allo spettacolo del biglietto.
 	 */
-	private final Posto posto;
+	private final char lettera;
+	/**
+	 * Numero del posto della sala associata allo spettacolo del biglietto.
+	 */
+	private final int numero;
 	/**
 	 * Variabile booleana che indica se il biglietto è in realtà una prenotazione oppure un biglietto acquistato.
 	 */
@@ -27,14 +31,16 @@ public class Biglietto implements Cloneable, Serializable{
 	/**
 	 * Metodo costruttore del biglietto.
 	 * @param spettacolo Lo spettacolo che si vuole associare al biglietto.
-	 * @param posto Il posto dello spettacolo che riguarda il biglietto.
+	 * @param lettera La lettera del posto relativo al biglietto.
+	 * @param numero Il numero relativo al posto del biglietto.
 	 * @param acquistato Variabile booleana che indica se un biglietto è una prenotazione oppure no.
 	 * @param prezzo Il prezzo del biglietto.
 	 */
-	public Biglietto(Spettacolo spettacolo, Posto posto, boolean acquistato, double prezzo)
+	public Biglietto(Spettacolo spettacolo, char lettera,int numero, boolean acquistato, double prezzo)
 	{
 		this.spettacolo = spettacolo;
-		this.posto = posto;
+		this.lettera = lettera;
+		this.numero = numero;
 		this.acquistato = acquistato;
 		this.prezzo = prezzo;
 	}
@@ -47,12 +53,20 @@ public class Biglietto implements Cloneable, Serializable{
 		return spettacolo.clone();
 	}
 	/**
-	 * Metodo di accesso al posto relativo al un biglietto.
-	 * @return Restituisce una copia del posto associato al biglietto.
+	 * Metodo di accesso alla lettera del posto relativo al un biglietto.
+	 * @return Restituisce la lettera del posto associato al biglietto.
 	 */
-	public Posto getPosto()
+	public char getLetteraPosto()
 	{
-		return posto.clone();
+		return lettera;
+	}
+	/**
+	 * Metodo di accesso al numero del posto relativo al un biglietto.
+	 * @return Restituisce il numero del posto associato al biglietto.
+	 */
+	public int getNumeroPosto()
+	{
+		return numero;
 	}
 	/**
 	 * Metodo di identificazione del tipo di biglietto
@@ -91,7 +105,7 @@ public class Biglietto implements Cloneable, Serializable{
 	 */
 	public String toString()
 	{
-		return getClass().getName()+"[Spettacolo = "+spettacolo+" Posto = "+posto+" Acquistato = "+acquistato+" Prezzo = "+prezzo+"]";
+		return getClass().getName()+"[Spettacolo = "+spettacolo+" Lettera = "+lettera+"Numero = "+numero+" Acquistato = "+acquistato+" Prezzo = "+prezzo+"]";
 	}
 	/**
 	 * Metodo di clonazione che effettua una copia del Biglietto chiamante.
@@ -122,7 +136,7 @@ public class Biglietto implements Cloneable, Serializable{
 		if(obj.getClass() != getClass())
 			return false;
 		Biglietto other = (Biglietto) obj;
-		return other.acquistato == acquistato && other.posto.equals(posto) && other.spettacolo.equals(spettacolo) && other.prezzo == prezzo;
+		return other.acquistato == acquistato && other.numero == numero && other.lettera == lettera && other.spettacolo.equals(spettacolo) && other.prezzo == prezzo;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package p1;
+package classi;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

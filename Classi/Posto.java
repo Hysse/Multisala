@@ -43,7 +43,14 @@ public class Posto implements Serializable,Cloneable{
 	{
 		return lettera;
 	}
-	
+	/**
+	 * Metodo di accesso allo stato del Posto.
+	 * @return Restituisce la lettera indicante lo stato del Posto.
+	 */
+	public char getStatus()
+	{
+		return stato;
+	}
 	/**
 	 * Metodo di restituzione del numero del un posto.
 	 * @return Restituisce il numero associato al posto.
