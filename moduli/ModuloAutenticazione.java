@@ -12,7 +12,7 @@ public class ModuloAutenticazione {
 	private ArrayList<Utente> utenti;
 	
 	/**
-	 * Il costruttore instanzia un arraylist di clienti
+	 * Questo costruttore instanzia un arraylist di clienti
 	 */
 	public ModuloAutenticazione()
 	{
@@ -20,11 +20,39 @@ public class ModuloAutenticazione {
 	}
 	
 	/**
+	 * Questo costruttore salva un arraylist di utentu
+	 * @param utenti arraylist di utenti da salvare
+	 */
+	public ModuloAutenticazione(ArrayList<Utente> utenti)
+	{
+		this.utenti = utenti;
+	}
+	
+	/**
+	 * Questo metodo aggiunge un utente nella lista degli utenti registrati
+	 * @param u Utente da aggiungere
+	 */
+	public void aggiungiUtente(Utente u)
+	{
+		utenti.add(u);
+	}
+	
+	/**
+	 * Questo metodo rimuove un utente nella lista degli utenti registrati
+	 * @param u Utente da rimuovere
+	 * @return true se è stato rimosso e quindi presente nella lista, false altrimenti
+	 */
+	public boolean removeUtente(Utente u)
+	{
+		return utenti.remove(u);
+	}
+	
+	/**
 	 * Questo metodo controlla se un utente è presente nella lista
 	 * @param u Utente che deve effettuare il login
-	 * @return true se presente nella lista, false altrimenti
+	 * @return L'utente che deve essere loggato se presente, null altrimenti
 	 */
-	public Utente login(Utente u)
+	public Utente cercaUtente(Utente u)
 	{
 		for (Utente user: utenti)
 			if (user.equals(u))
