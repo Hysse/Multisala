@@ -42,6 +42,11 @@ public class ModuloAutenticazione {
 	{
 		return multisala.removeUtente(u);
 	}
+	/**
+	 * Metodo che controlla se esiste già un Utente in collezione con lo username uguale a quello passato come parametro.
+	 * @param username Username che si vuole controllare nella collezione.
+	 * @return Restituisce true se esiste un Cliente con quell'username nella collezione, false altrimenti.
+	 */
 	public boolean alreadyExists(String username)
 	{
 		for(Utente user : multisala.getListaUtenti())
@@ -74,6 +79,7 @@ public class ModuloAutenticazione {
 	 * Metodo per la registrazione di un Cliente (se non vi sono già utenti con lo stesso username).
 	 * @param username Username del Cliente da creare.
 	 * @param password Password del Cliente da creare.
+	 * @param eta L'età del Cliente da creare.
 	 * @return Restituisce true se la creazione è andata a buon fine, false altrimenti;
 	 * @throws SignUpException Eccezione lanciata se esiste già un Cliente nella collezione con lo stesso username.
 	 */

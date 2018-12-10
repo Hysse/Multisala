@@ -15,13 +15,6 @@ public class Utente implements Serializable, Cloneable{
 	private String password;
 	private boolean isGestore;
 	/**
-	 * num_prog è una variabile statica che viene incrementata
-	 * ogni volta che viene creato un utente a cui viene assegnato come ID
-	 */
-	private static int num_prog = 0;
-	private int id;
-	
-	/**
 	 * Il costruttore prende username(stringa), password(stringa) e un boolean per
 	 * impostare o meno l'utente a gestore o a cliente.
 	 * @param username username dell'utente.
@@ -33,8 +26,6 @@ public class Utente implements Serializable, Cloneable{
 		this.username = username;
 		this.password = password;
 		this.isGestore = isGestore;
-		id = num_prog;
-		num_prog++;
 	}
 	
 	public boolean isGestore()
@@ -64,16 +55,6 @@ public class Utente implements Serializable, Cloneable{
 	{
 		return this.password;
 	}
-	
-	/**
-	 * Il metodo ritorna l'ID dell'utente
-	 * @return int con l'id
-	 */
-	public int getId()
-	{
-		return id;
-	}
-	
 	/**
 	 * Metodo modificatore per cambiare l'username
 	 * @param username nuovo username dell'utente
@@ -99,7 +80,7 @@ public class Utente implements Serializable, Cloneable{
 	public String toString()
 	{
 		return getClass().getSimpleName() + "[Username = " + this.username + ", Password = "
-				+ this.password + ", isGestore = "+isGestore+", ID utente = " + this.id + "]";
+				+ this.password + ", isGestore = "+isGestore+ "]";
 	}
 	
 	/**
@@ -112,7 +93,7 @@ public class Utente implements Serializable, Cloneable{
 			Utente clone = (Utente) super.clone();
 			return clone;
 		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();;
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -129,8 +110,7 @@ public class Utente implements Serializable, Cloneable{
 		
 		Utente u = (Utente) o;
 		
-		return username.equals(u.getUsername()) && password.equals(u.getPassword())
-				&& id == u.getId();
+		return username.equals(u.getUsername()) && password.equals(u.getPassword());
 	}
 	
 }
