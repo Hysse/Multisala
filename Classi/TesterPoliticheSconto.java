@@ -10,7 +10,7 @@ public class TesterPoliticheSconto {
 	public static void main(String[] args) {
 		Cliente cliente = new Cliente("David","Ciaociao1.",19);
 		
-		class PoliticaEta implements PoliticaSconto
+		class PoliticaEta extends PoliticaSconto
 		{
 			public double getSconto(Biglietto b)
 			{
@@ -21,7 +21,7 @@ public class TesterPoliticheSconto {
 			}
 		}
 		
-		class PoliticaDomenica implements PoliticaSconto
+		class PoliticaDomenica extends PoliticaSconto
 		{
 			public double getSconto(Biglietto b)
 			{
@@ -32,7 +32,7 @@ public class TesterPoliticheSconto {
 			}
 		}
 		
-		class PoliticaPomeriggio implements PoliticaSconto
+		class PoliticaPomeriggio extends PoliticaSconto
 		{
 			public double getSconto(Biglietto b)
 			{
@@ -57,7 +57,7 @@ public class TesterPoliticheSconto {
 		
 		Sala sala1 = new Sala(1, posti);
 		
-		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120);
+		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120,1);
 		
 		Date data = new Date(2018,11,8,12,0);
 		
