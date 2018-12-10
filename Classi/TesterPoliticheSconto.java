@@ -12,6 +12,8 @@ public class TesterPoliticheSconto {
 		
 		class PoliticaEta extends PoliticaSconto
 		{
+			private static final long serialVersionUID = 5537778735811244143L;
+
 			public double getSconto(Biglietto b)
 			{
 				if(cliente.getEta() > 18)
@@ -23,6 +25,9 @@ public class TesterPoliticheSconto {
 		
 		class PoliticaDomenica extends PoliticaSconto
 		{
+
+			private static final long serialVersionUID = -295664013413977913L;
+
 			public double getSconto(Biglietto b)
 			{
 				if(b.getSpettacolo().getDataInizio().getDay() == 0)
@@ -34,6 +39,8 @@ public class TesterPoliticheSconto {
 		
 		class PoliticaPomeriggio extends PoliticaSconto
 		{
+			private static final long serialVersionUID = 2423014435575286864L;
+
 			public double getSconto(Biglietto b)
 			{
 				if(b.getSpettacolo().getDataInizio().getHours() > 11)
@@ -57,7 +64,7 @@ public class TesterPoliticheSconto {
 		
 		Sala sala1 = new Sala(1, posti);
 		
-		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120,1);
+		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120, 1);
 		
 		Date data = new Date(2018,11,8,12,0);
 		
