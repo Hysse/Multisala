@@ -1,7 +1,9 @@
 package moduli;
 
-import java.util.ArrayList;
+import classi.Multisala;
 import classi.Utente;
+import eccezioni.LoginException;
+import eccezioni.SignUpException;
 
 /**
  * Questa classe viene utilizzata per controllare se un utente
@@ -9,23 +11,16 @@ import classi.Utente;
  */
 public class ModuloAutenticazione {
 	
-	private ArrayList<Utente> utenti;
+	private Multisala multisala;
 	
+
 	/**
-	 * Questo costruttore instanzia un arraylist di clienti
+	 * Costruttore che associa a un moduloAutenticazione un Multisala dove si trova i clienti
+	 * @param multisala Multisala dove prendere la lista di clienti
 	 */
-	public ModuloAutenticazione()
+	public ModuloAutenticazione(Multisala multisala)
 	{
-		utenti = new ArrayList<Utente>();
-	}
-	
-	/**
-	 * Questo costruttore salva un arraylist di utentu
-	 * @param utenti arraylist di utenti da salvare
-	 */
-	public ModuloAutenticazione(ArrayList<Utente> utenti)
-	{
-		this.utenti = utenti;
+		this.multisala = multisala;
 	}
 	
 	/**
@@ -34,7 +29,7 @@ public class ModuloAutenticazione {
 	 */
 	public void aggiungiUtente(Utente u)
 	{
-		utenti.add(u);
+		multisala.addUtente(u);
 	}
 	
 	/**
@@ -44,20 +39,59 @@ public class ModuloAutenticazione {
 	 */
 	public boolean removeUtente(Utente u)
 	{
-		return utenti.remove(u);
+		return multisala.removeUtente(u);
 	}
 	
 	/**
-	 * Questo metodo controlla se un utente è presente nella lista
-	 * @param u Utente che deve effettuare il login
-	 * @return L'utente che deve essere loggato se presente, null altrimenti
+	 * Questo metodo controlla se un utente è presente nella lista e fa effettuare il login
+	 * @param username Stringa con username dell'utente
+	 * @param password Stringa con password dell'utente
+	 * @return L'utente che deve essere loggato se presente, altrimenti lancia l'eccezione
+	 * @throws LoginException eccezione che viene lanciata se l'utente non è presente nella lista
+	 * degli utenti registrati
 	 */
-	public Utente getUtente(Utente u)
+	public Utente loginUtente(String username, String password) throws LoginException
 	{
-		for (Utente user: utenti)
-			if (user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()) )
-				return user;
+		for (Utente user: multisala.getListaUtenti())
+		{
+			if (user.getUsername().equals(username) && user.getPassword().equals(password))
+				return user;	
+		}
 		
-		return null;
+		throw new LoginException();
+	}
+	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws SignUpException
+	 */
+	public boolean signUpUtente(String username, String password) throws SignUpException
+	{
+		if (loginUtente(username, password) != null)
+			throw new SignUpException();
+		else
+		{
+			multisala.addUtente(new Utente(username, password));
+			return true;
+		}
+			
+	}
+	
+	/**
+	 * Metodo che può essere usato solo se un utente ha fatto il login
+	 * @param utente
+	 * @param password
+	 */
+	public void changePassword(Utente utente, String password)
+	{
+		for (Utente user: multisala.getListaUtenti())
+		{
+			if (user.getUsername().equals(utente.getUsername()) &&
+					user.getPassword().equals(utente.getPassword()))
+				user.setPassword(password);	
+		}
 	}
 }

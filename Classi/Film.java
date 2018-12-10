@@ -12,18 +12,21 @@ public final class Film implements Serializable, Cloneable{
 	private String descrizione;
 	private String titolo;
 	private int minuti;
+	private int idFilm;
 	
 	/**
 	 * Il costruttore prende una Stringa titolo, una String descizione e un in per i minuti
 	 * @param titolo titolo del film
 	 * @param descrizione descrizione del film con breve trama
 	 * @param minuti durata del film in minuti
+	 * @param idFilm int che identifica un film
 	 */
-	public Film(String titolo, String descrizione, int minuti)
+	public Film(String titolo, String descrizione, int minuti, int idFilm)
 	{
 		this.titolo = titolo;
 		this.descrizione = descrizione;
 		this.minuti = minuti;
+		this.idFilm = idFilm;
 	}
 	
 	/**
@@ -51,6 +54,15 @@ public final class Film implements Serializable, Cloneable{
 	public int getMinuti()
 	{
 		return this.minuti;
+	}
+	
+	/**
+	 * Metodo che ritorna id identificativo del Film
+	 * @return int con id del film
+	 */
+	public int getIdFilm()
+	{
+		return this.getIdFilm();
 	}
 	
 	/**
