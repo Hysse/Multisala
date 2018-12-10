@@ -36,11 +36,12 @@ public class Spettacolo implements Cloneable, Serializable{
 	private Date data;
 	
 	/**
-	 * Crea uno Spettacolo partendo dalla Sala in cui è proiettato, dal film che è proiettato e dalla datà dello spettacolo.
-	 * 
+	 * Crea uno Spettacolo partendo dalla Sala in cui è proiettato, dal film che è 
+	 * proiettato e dalla datà dello spettacolo.
 	 * @param sala Sala in cui il film è proiettato.
 	 * @param film Film proiettato durante lo spettacolo.
 	 * @param data Data dello spettacolo. (anno,mese,giorno,ora).
+	 * @param prezzo Double per il prezzo dello spettacolo
 	 */
 	public Spettacolo(Sala sala, Film film, Date data,double prezzo)
 	{
@@ -77,6 +78,15 @@ public class Spettacolo implements Cloneable, Serializable{
 	public Film getFilm()
 	{
 		return film.clone();
+	}
+	
+	/**
+	 * Metodo di accesso all'id dello spettacolo
+	 * @return int con id dello spettacolo
+	 */
+	public int getId()
+	{
+		return id;
 	}
 	
 	/**
@@ -119,6 +129,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * Metodo di accesso alla data di fine spettacolo (quindi la data inizio addizionata dei minuti del film).
 	 * @return Restituisce la data di fine spettacolo.
 	 */
+	@SuppressWarnings("deprecation")
 	public Date getDataFine()
 	{
 		Date datafine = (Date)data.clone();
