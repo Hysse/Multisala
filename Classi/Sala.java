@@ -91,7 +91,6 @@ public class Sala implements Serializable, Cloneable{
 		}
 		return null;
 	}
-	
 	/**
 	 * Metodo che restituisce il puntatore a un Posto contenuto nella sala cercato per uguaglianza con un Posto passato per parametro.
 	 * @param p Posto da cercare.
@@ -105,18 +104,15 @@ public class Sala implements Serializable, Cloneable{
 		else
 			return posti.get(pos);
 	}
-	
 	public String displayPosti()
 	{
 		String stringa = "";
 		for(Posto p : posti)
 		{
-			stringa += " Lettera = " + p.getLet() + " Numero = "
-					+ p.getNum() +" Stato = " + p.getStatus() +"\n";
+			stringa += " Lettera : "+p.getLet()+" Numero : "+p.getNum()+" Stato : "+p.getStatus()+"\n";
 		}
 		return stringa;
 	}
-	
 	/**Metodo di accesso per le informazioni essenziali.
 	 * @return Restituisce una stringa che indica le informazioni della Sala.
 	 */

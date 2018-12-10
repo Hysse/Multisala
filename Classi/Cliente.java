@@ -29,7 +29,7 @@ public class Cliente extends Utente{
 	 */
 	public Cliente(String username, String password,int eta)
 	{
-		super(username, password);
+		super(username, password,false);
 		prenotazioni = new ArrayList<Biglietto>();
 		this.eta = eta;
 	}

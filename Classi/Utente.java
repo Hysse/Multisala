@@ -13,6 +13,7 @@ public class Utente implements Serializable, Cloneable{
 	private static final long serialVersionUID = 8324800419465457181L;
 	private String username;
 	private String password;
+	private boolean isGestore;
 	/**
 	 * num_prog è una variabile statica che viene incrementata
 	 * ogni volta che viene creato un utente a cui viene assegnato come ID
@@ -22,18 +23,24 @@ public class Utente implements Serializable, Cloneable{
 	
 	/**
 	 * Il costruttore prende username(stringa), password(stringa) e un boolean per
-	 * impostare o meno l'utente a gestore
-	 * @param username username dell'utente
-	 * @param password password dell'utente
+	 * impostare o meno l'utente a gestore o a cliente.
+	 * @param username username dell'utente.
+	 * @param password password dell'utente.
+	 * @param indica se l'Utente è un gestore oppure un cliente.
 	 */
-	public Utente(String username, String password)
+	public Utente(String username, String password,boolean isGestore)
 	{
 		this.username = username;
 		this.password = password;
+		this.isGestore = isGestore;
 		id = num_prog;
 		num_prog++;
 	}
 	
+	public boolean isGestore()
+	{
+		return isGestore;
+	}
 	/**
 	 * Il metodo ritorna l'username dell'utente
 	 * @return Stringa con l'username
@@ -42,7 +49,13 @@ public class Utente implements Serializable, Cloneable{
 	{
 		return this.username;
 	}
-	
+	/**
+	 * Metodo modificatore per impostare un Utente come gestore.
+	 */
+	public void setGestore()
+	{
+		isGestore = true;
+	}
 	/**
 	 * Il metodo ritorna la password dell'utente
 	 * @return Stringa con la password
@@ -86,7 +99,7 @@ public class Utente implements Serializable, Cloneable{
 	public String toString()
 	{
 		return getClass().getSimpleName() + "[Username = " + this.username + ", Password = "
-				+ this.password + ", ID utente = " + this.id + "]";
+				+ this.password + ", isGestore = "+isGestore+", ID utente = " + this.id + "]";
 	}
 	
 	/**
