@@ -1,5 +1,6 @@
 package moduli;
 
+import classi.Cliente;
 import classi.Multisala;
 import classi.Utente;
 import eccezioni.LoginException;
@@ -41,7 +42,15 @@ public class ModuloAutenticazione {
 	{
 		return multisala.removeUtente(u);
 	}
-	
+	public boolean alreadyExists(String username)
+	{
+		for(Utente user : multisala.getListaUtenti())
+		{
+			if(user.getUsername().equals(username))
+				return true;
+		}
+		return false;
+	}
 	/**
 	 * Questo metodo controlla se un utente è presente nella lista e fa effettuare il login
 	 * @param username Stringa con username dell'utente
@@ -62,19 +71,19 @@ public class ModuloAutenticazione {
 	}
 	
 	/**
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 * @throws SignUpException
+	 * Metodo per la registrazione di un Cliente (se non vi sono già utenti con lo stesso username).
+	 * @param username Username del Cliente da creare.
+	 * @param password Password del Cliente da creare.
+	 * @return Restituisce true se la creazione è andata a buon fine, false altrimenti;
+	 * @throws SignUpException Eccezione lanciata se esiste già un Cliente nella collezione con lo stesso username.
 	 */
-	public boolean signUpUtente(String username, String password) throws SignUpException
+	public boolean signUpUtente(String username, String password,int eta) throws SignUpException
 	{
-		if (loginUtente(username, password) != null)
+		if (alreadyExists(username))
 			throw new SignUpException();
 		else
 		{
-			multisala.addUtente(new Utente(username, password));
+			multisala.addUtente(new Cliente(username, password,eta));
 			return true;
 		}
 			
