@@ -52,10 +52,10 @@ public class ModuloAutenticazione {
 	 * @param u Utente che deve effettuare il login
 	 * @return L'utente che deve essere loggato se presente, null altrimenti
 	 */
-	public Utente cercaUtente(Utente u)
+	public Utente getUtente(Utente u)
 	{
 		for (Utente user: utenti)
-			if (user.equals(u))
+			if (user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()) )
 				return user;
 		
 		return null;
