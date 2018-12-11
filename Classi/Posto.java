@@ -38,6 +38,7 @@ public class Posto implements Serializable,Cloneable{
 		this.lettera = lettera;
 		this.numero = numero;
 		isDisponibile = true;
+		isLibero = true;
 	}
 	
 	/**
