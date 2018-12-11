@@ -19,9 +19,14 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	private int numero;
 	/**
-	 * Può valere 'L'(libero),'O'(Occupato) oppure 'I'(Indisponibile); indica lo stato del posto.
+	 * Può valere 'true'(libero),'false'(Prenotato/Venduto)
 	 */
-	private char stato;
+	private boolean isLibero;
+	/**
+	 * Può valere true se il posto è disponibile e false se indisponibile(posto rotto/non accessibile)
+	 */
+	private boolean isDisponibile;
+	
 	
 	/**
 	 * Costruisce un oggetto Posto.
@@ -32,7 +37,7 @@ public class Posto implements Serializable,Cloneable{
 	{
 		this.lettera = lettera;
 		this.numero = numero;
-		stato = 'L';
+		isDisponibile = true;
 	}
 	
 	/**
@@ -46,11 +51,11 @@ public class Posto implements Serializable,Cloneable{
 	
 	/**
 	 * Metodo di accesso allo stato del Posto.
-	 * @return Restituisce la lettera indicante lo stato del Posto.
+	 * @return Restituisce true se disponibile, false altrimenti.
 	 */
-	public char getStatus()
+	public boolean isDisponibile()
 	{
-		return stato;
+		return isDisponibile;
 	}
 	
 	/**
@@ -68,7 +73,7 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public boolean isLibero()
 	{
-		return stato == 'L';
+		return isLibero;
 	}
 	
 	/**
@@ -77,16 +82,7 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public boolean isOccupato()
 	{
-		return stato == 'O';
-	}
-	
-	/**
-	 * Metodo di restituzione dello stato del posto. 
-	 * @return Restituisce true se il posto è indisponibile, false atrimenti.
-	 */
-	public boolean isIndisponibile()
-	{
-		return stato == 'I';
+		return !isLibero();
 	}
 	
 	/**
@@ -94,7 +90,7 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public void setLibero()
 	{
-		stato = 'L';
+		isLibero = true;
 	}
 	
 	/**
@@ -102,7 +98,7 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public void setOccupato()
 	{
-		stato = 'O';
+		isLibero = false;
 	}
 	
 	/**
@@ -110,7 +106,15 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public void setIndisponibile()
 	{
-		stato = 'I';
+		isDisponibile = false;
+	}
+	
+	/**
+	 * Imposta il posto come disponibile
+	 */
+	public void setDisponibile()
+	{
+		isDisponibile = true;
 	}
 	
 	/**Copia il Posto chiamante.
@@ -131,8 +135,8 @@ public class Posto implements Serializable,Cloneable{
 	 */
 	public String toString()
 	{
-		return getClass(). getName() + "[Lettera = " + lettera + " Numero = " + numero 
-				+" Stato = " + stato + "]";
+		return getClass(). getName() + "[Lettera = " + lettera + ", Numero = " + numero 
+				+", Disponibile = " + isDisponibile + ",Libero = " + isLibero + "]";
 	}
 	
 	/**
@@ -147,7 +151,8 @@ public class Posto implements Serializable,Cloneable{
 		if(obj.getClass() != getClass())
 			return false;
 		Posto other = (Posto) obj;
-		return other.lettera == lettera && other.numero == numero && other.stato == stato;
+		return other.lettera == lettera && other.numero == numero
+				&& other.isDisponibile == isDisponibile && other.isLibero == isLibero;
 	}
 	
 	/**

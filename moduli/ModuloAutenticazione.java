@@ -46,7 +46,7 @@ public class ModuloAutenticazione {
 	 * @param username Username che si vuole controllare nella collezione.
 	 * @return Restituisce true se esiste un Cliente con quell'username nella collezione, false altrimenti.
 	 */
-	public boolean alreadyExists(String username)
+	private boolean alreadyExists(String username)
 	{
 		for(Utente user : multisala.getListaUtenti())
 		{
@@ -84,10 +84,7 @@ public class ModuloAutenticazione {
 		if (alreadyExists(username))
 			throw new SignUpException();
 		else
-		{
-			multisala.addUtente(new Cliente(username, password,eta));
-		}
-			
+			multisala.addUtente(new Cliente(username, password,eta));		
 	}
 	
 	/**

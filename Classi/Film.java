@@ -13,6 +13,7 @@ public final class Film implements Serializable, Cloneable{
 	private String titolo;
 	private int minuti;
 	private int idFilm;
+	private double incasso;
 	
 	/**
 	 * Il costruttore prende una Stringa titolo, una String descizione e un in per i minuti
@@ -27,6 +28,21 @@ public final class Film implements Serializable, Cloneable{
 		this.descrizione = descrizione;
 		this.minuti = minuti;
 		this.idFilm = idFilm;
+		this.incasso = 0.0;
+	}
+	
+	/**
+	 * Metodo per aggiungere una somma di denaro(Double) all'incasso totale del film
+	 * @param incasso
+	 */
+	public void addIncasso(Double incasso)
+	{
+		this.incasso += incasso;
+	}
+	
+	public Double getIncasso()
+	{
+		return incasso;
 	}
 	
 	/**
@@ -62,7 +78,7 @@ public final class Film implements Serializable, Cloneable{
 	 */
 	public int getIdFilm()
 	{
-		return this.getIdFilm();
+		return this.idFilm;
 	}
 	
 	/**
@@ -104,6 +120,6 @@ public final class Film implements Serializable, Cloneable{
 		Film f = (Film) o;
 		
 		return titolo.equals(f.getTitolo()) && descrizione.equals(f.getDescrizione())
-				&& minuti == f.getMinuti();
+				&& minuti == f.getMinuti() && incasso == f.getIncasso();
 	}
 }

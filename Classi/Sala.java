@@ -109,7 +109,8 @@ public class Sala implements Serializable, Cloneable{
 		String stringa = "";
 		for(Posto p : posti)
 		{
-			stringa += " Lettera : "+p.getLet()+" Numero : "+p.getNum()+" Stato : "+p.getStatus()+"\n";
+			stringa += " Lettera : "+p.getLet()+" Numero : "+p.getNum()+
+					" Disponibile : "+p.isDisponibile()+ " Occupato : " + p.isOccupato() + "\n";
 		}
 		return stringa;
 	}

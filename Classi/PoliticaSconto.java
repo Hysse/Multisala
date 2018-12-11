@@ -18,7 +18,7 @@ public abstract class PoliticaSconto implements Cloneable, Serializable{
 	public abstract double getSconto(Biglietto biglietto);
 	
 	/**
-	 * 
+	 * Metodo per clonare una politica di sconto
 	 */
 	public PoliticaSconto clone()
 	{
@@ -32,7 +32,7 @@ public abstract class PoliticaSconto implements Cloneable, Serializable{
 	}
 	
 	/**
-	 * 
+	 * Metodo per verificare che due politiche di sconto siano uguali in base al nome della classe
 	 */
 	public boolean equals(Object o)
 	{

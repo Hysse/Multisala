@@ -3,10 +3,9 @@ package classi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import eccezioni.FilmNonPresenteException;
-import eccezioni.OraSpettacoloException;
 
 /**
- * 
+ * Classe che possiede tutte le informazioni di un multisala
  */
 public class Multisala implements Serializable, Cloneable{
 	
@@ -18,87 +17,26 @@ public class Multisala implements Serializable, Cloneable{
 	private ArrayList<PoliticaSconto> listaPoliticheSconto;
 	
 	/**
-	 * 
-	 * @param listaSale
-	 * @param listaSpettacoli
-	 * @param listaFilm
+	 * Costruttore di un multisala
+	 * @param listaSale ArrayList delle sale
+	 * @param listaSpettacoli ArrayList degli spettacoli
+	 * @param listaFilm ArrayList dei film
+	 * @param listaUtenti ArrayList degli utenti
+	 * @param listaPoliticheSconto ArrayList delle politiche di sconto
 	 */
 	public Multisala(ArrayList<Sala> listaSale, ArrayList<Spettacolo> listaSpettacoli,
-			ArrayList<Film> listaFilm, ArrayList<Utente> listaUtenti)
+			ArrayList<Film> listaFilm, ArrayList<Utente> listaUtenti, ArrayList<PoliticaSconto> listaPoliticheSconto)
 	{
 		this.listaSale = listaSale;
 		this.listaSpettacoli = listaSpettacoli;
 		this.listaFilm = listaFilm;
 		this.listaUtenti = listaUtenti;
+		this.listaPoliticheSconto = listaPoliticheSconto;
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 */
-	public void addSala(Sala s)
-	{
-		listaSale.add(s);
-	}
-	
-	
-	public Sala getSala(int numeroSala)
-	{
-		for (Sala s: listaSale)
-		{
-			if (s.getNumSala() == numeroSala)
-				return s;
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param numeroSala
-	 * @return
-	 */
-	public boolean removeSala(int numeroSala)
-	{
-		Sala s;
-		
-		if ((s = getSala(numeroSala)) != null)
-				return listaSale.remove(s);
-		
-		return false;
-	}
-	
-	/**
-	 * 
-	 * @param u
-	 */
-	public void addUtente(Utente u)
-	{
-		listaUtenti.add(u);
-	}
-	
-	/**
-	 * 
-	 * @param u
-	 * @return
-	 */
-	public boolean removeUtente(Utente u)
-	{
-		return listaUtenti.remove(u);
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Utente> getListaUtenti()
-	{
-		return this.listaUtenti;
-	}
-	
-	/**
-	 * 
-	 * @param f
+	 * Metodo per aggiungere un film alla lista dei film del multisala
+	 * @param f Film da aggiungere
 	 */
 	public void addFilm(Film f)
 	{
@@ -106,30 +44,25 @@ public class Multisala implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * 
-	 * @param idFilm
-	 * @return
-	 * @throws FilmNonPresenteException
+	 * Metodo che rimuove un film dalla lista dei film di un multisala
+	 * @param idFilm int con id del film da eliminare
+	 * @return true se il film è stato eliminato, false altrimenti
 	 */
-	public boolean removeFilm(int idFilm) throws FilmNonPresenteException
+	public boolean removeFilm(int idFilm)
 	{
 		Film f;
 		if ((f = getFilm(idFilm)) != null)
 				return listaFilm.remove(f);
-		/*for (Film f: listaFilm)
-		{
-			if (f.getIdFilm() == idFilm)
-				return listaFilm.remove(f);
-		}*/
-		
-		throw new FilmNonPresenteException();
+		else
+			return false;
 	}
 	
 	/**
-	 * 
-	 * @param filmId
-	 * @return
-	 * @throws FilmNonPresenteException
+	 * Metodo che ritorna un film cercato per id se presente nella lista dei film
+	 * @param filmId int con id del film
+	 * @return Film cercato per id se presente, altrimenti viene lanciata un'eccezione
+	 * @throws FilmNonPresenteException eccezione lanciata nel caso in cui un film cercato
+	 * non è presente nella lista dei film del multisala
 	 */
 	public Film getFilm(int filmId) throws FilmNonPresenteException
 	{
@@ -143,89 +76,90 @@ public class Multisala implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * 
-	 * @param spettacolo
+	 * Meotodo che aggiunge un utente alla lista degli utenti
+	 * @param u Utente da aggiungere
 	 */
-	public void addSpettacolo(Spettacolo spettacolo) throws OraSpettacoloException
+	public void addUtente(Utente u)
 	{
-		for(Spettacolo s : listaSpettacoli)
-		{
-			if(s.getDataInizio().before(spettacolo.getDataInizio()) && s.getDataFine().after(spettacolo.getDataInizio()))
-				throw new OraSpettacoloException();
-		}
-		listaSpettacoli.add(spettacolo);
+		listaUtenti.add(u);
 	}
 	
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * Metodo che ritorna un Utente cercato con l'username nella lista degli utenti del multisala
+	 * @param username Stringa con l'username dell'utente
+	 * @return Utente cercato con l'username se presente, altrimenti null se non è presente
 	 */
-	public boolean removeSpettacolo(int id)
+	public Utente getUtente(String username)
 	{
-		Spettacolo s;
-		if ((s = getSpettacolo(id)) != null)
-			return listaSpettacoli.remove(s);
-		else
-			return false;
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public Spettacolo getSpettacolo(int id)
-	{
-		for (Spettacolo s: listaSpettacoli)
+		for (Utente u: listaUtenti)
 		{
-			if (s.getId() == id)
-				return s;
+			if (u.getUsername().equals(username))
+				return u;
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * 
-	 * @param p
+	 * Metodo che cerca un utente nella lista degli utenti e se presente lo rimuove
+	 * @param u Utente da rimuovere
+	 * @return true se l'utente è stato rimosso, false altrimenti
 	 */
-	public void addPoliticaSconto(PoliticaSconto p)
+	public boolean removeUtente(Utente u)
 	{
-		listaPoliticheSconto.add(p);
-	}
-	
-	/**
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public boolean removePoliticaSconto(PoliticaSconto p)
-	{
-		if (getPoliticaSconto(p))
-			return listaPoliticheSconto.remove(p);
-		else
-			return false;
-	}
-	
-	/**
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public boolean getPoliticaSconto(PoliticaSconto p)
-	{
-		for (PoliticaSconto politica: listaPoliticheSconto)
-		{
-			if (politica.equals(p))
-				return true;
-		}
+		if (getUtente(u.getUsername()) != null)
+			return listaUtenti.remove(u);
 		
 		return false;
 	}
 	
 	/**
-	 * 
+	 * Metodo che ritorna la lista degli utenti di un multisala
+	 * @return ArrayList degli utenti del multisala
+	 */
+	public ArrayList<Utente> getListaUtenti()
+	{
+		return this.listaUtenti;
+	}
+	
+	/**
+	 * Metodo che ritorna la lista delle sale di un Multisala
+	 * @return ArrayList con le sale del Multisala
+	 */
+	public ArrayList<Sala> getListaSale()
+	{
+		return listaSale;
+	}
+	
+	/**
+	 * Metodo che ritorna la lista dei film del Multisala
+	 * @return ArrayList delle politiche di sconto del multisala
+	 */
+	public ArrayList<Film> getListaFilm()
+	{
+		return this.listaFilm;
+	}
+	
+	/**
+	 * Metodo che ritorna la lista delle politiche di sconto di un multisala
+	 * @return ArrayList delle politiche di sconto
+	 */
+	public ArrayList<PoliticaSconto> getListaPoliticheSconto()
+	{
+		return this.listaPoliticheSconto;
+	}
+	
+	/**
+	 * Metodo che ritorna la lista degli spettacoli del multisala
+	 * @return ArrayList con gli spettacoli del multisala
+	 */
+	public ArrayList<Spettacolo> getListaSpettacoli()
+	{
+		return listaSpettacoli;
+	}
+	
+	/**
+	 * Meotodo che clona un Multisala
 	 */
 	public Multisala clone()
 	{
@@ -278,7 +212,7 @@ public class Multisala implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * 
+	 * Metodo che verifica se die multisala sono uguali
 	 */
 	public boolean equals(Object o)
 	{
@@ -293,7 +227,8 @@ public class Multisala implements Serializable, Cloneable{
 	}
 	
 	/**
-	 * 
+	 * Metodo che ritorna una stringa con la formattazione testuale di un multisala
+	 * @return Stringa con le informazioni
 	 */
 	public String toString()
 	{
