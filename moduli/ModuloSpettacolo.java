@@ -1,7 +1,10 @@
 package moduli;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import classi.Film;
+import classi.Multisala;
 import classi.Spettacolo;
+import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
 
 /**
@@ -9,7 +12,7 @@ import eccezioni.OraSpettacoloException;
  */
 public class ModuloSpettacolo {
 	
-	private ArrayList<Spettacolo> listaSpettacoli;
+	private Multisala multisala;
 	
 	/**
 	 * Costruttore del moduloSpettacolo per gestire gli spettacoli del multisala
@@ -17,25 +20,37 @@ public class ModuloSpettacolo {
 	 */
 	public ModuloSpettacolo(classi.Multisala multisala)
 	{
-		this.listaSpettacoli = multisala.getListaSpettacoli();
+		this.multisala = multisala;
 	}
 	
 	/**
-	 * Metodo per aggiungere uno spettacolo a una lista di spettacoli
-	 * @param spettacolo spettacolo da aggiungere
-	 * @throws OraSpettacoloException eccezione lanciata nel caso in cui
-	 * lo spettacolo non può essere aggiunto poichè nell'ora in cui inizia è 
-	 * gia presente un altro spettacolo che ancora deve finire
+	 * Metodo che aggiunge uno spettacolo alla lista degli spettacoli del multisala.
+	 * Vengono passati nei parametri gli attributi per instanziare un nuovo spettacolo.
+	 * Poichè ogni spettacolo ha uno stato della sala diverso in base alle prenotazioni
+	 * viene assegnato al nuovo spettacolo una copia della sala in cui si vuole aggiungere lo
+	 * spettacolo
+	 * @param film Film dello spettacolo
+	 * @param numeroSala int con numero della sala
+	 * @param prezzo Double con prezzo dello spettacolo
+	 * @param data Calendar con data e orario dello spettacolo
+	 * @throws OraSpettacoloException eccezione lanciata nel caso in cui si tenta di aggiungere
+	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala7
+	 * in considerazione
 	 */
-	public void addSpettacolo(Spettacolo spettacolo) throws OraSpettacoloException
+	public void addSpettacolo(int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
 	{
-		for(Spettacolo s : listaSpettacoli)
+		ModuloSala m = new ModuloSala(multisala);
+		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(),
+				getFilm(idFilm), data, prezzo);
+		
+		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
 			if(s.getDataInizio().before(spettacolo.getDataInizio())
-				&& s.getDataFine().after(spettacolo.getDataInizio()))
+					&& s.getDataFine().after(spettacolo.getDataInizio()) &&
+					s.getSala().equals(spettacolo.getSala()))
 				throw new OraSpettacoloException();
 		}
-		listaSpettacoli.add(spettacolo);
+		multisala.getListaSpettacoli().add(spettacolo);
 	}
 	
 	/**
@@ -47,7 +62,7 @@ public class ModuloSpettacolo {
 	{
 		Spettacolo s;
 		if ((s = getSpettacolo(id)) != null)
-			return listaSpettacoli.remove(s);
+			return multisala.getListaSpettacoli().remove(s);
 		else
 			return false;
 	}
@@ -59,12 +74,53 @@ public class ModuloSpettacolo {
 	 */
 	public Spettacolo getSpettacolo(int id)
 	{
-		for (Spettacolo s: listaSpettacoli)
+		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
 			if (s.getId() == id)
 				return s;
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Metodo per aggiungere un film alla lista dei film del multisala
+	 * @param f Film da aggiungere
+	 */
+	public void addFilm(Film f)
+	{
+		multisala.getListaFilm().add(f);
+	}
+	
+	/**
+	 * Metodo che rimuove un film dalla lista dei film di un multisala
+	 * @param idFilm int con id del film da eliminare
+	 * @return true se il film è stato eliminato, false altrimenti
+	 */
+	public boolean removeFilm(int idFilm)
+	{
+		Film f;
+		if ((f = getFilm(idFilm)) != null)
+				return multisala.getListaFilm().remove(f);
+		else
+			return false;
+	}
+	
+	/**
+	 * Metodo che ritorna un film cercato per id se presente nella lista dei film
+	 * @param filmId int con id del film
+	 * @return Film cercato per id se presente, altrimenti viene lanciata un'eccezione
+	 * @throws FilmNonPresenteException eccezione lanciata nel caso in cui un film cercato
+	 * non è presente nella lista dei film del multisala
+	 */
+	public Film getFilm(int filmId) throws FilmNonPresenteException
+	{
+		for (Film f: multisala.getListaFilm())
+		{
+			if (f.getIdFilm() == filmId)
+				return f;
+		}
+		
+		throw new FilmNonPresenteException();
 	}
 }
