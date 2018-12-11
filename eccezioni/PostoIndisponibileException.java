@@ -1,6 +1,6 @@
 package eccezioni;
 
-public class PostoIndisponibileException extends RuntimeException{
+public class PostoIndisponibileException extends Exception{
 
 	private static final long serialVersionUID = -6202665977119824678L;
 	private String str;
