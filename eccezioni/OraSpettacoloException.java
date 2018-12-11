@@ -1,6 +1,6 @@
 package eccezioni;
 
-public class OraSpettacoloException extends RuntimeException{
+public class OraSpettacoloException extends Exception{
 
 	private static final long serialVersionUID = 7956048222594311507L;
 	private String str;
