@@ -3,6 +3,7 @@ package classi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import eccezioni.FilmNonPresenteException;
+import eccezioni.OraSpettacoloException;
 
 /**
  * 
@@ -143,11 +144,16 @@ public class Multisala implements Serializable, Cloneable{
 	
 	/**
 	 * 
-	 * @param s
+	 * @param spettacolo
 	 */
-	public void addSpettacolo(Spettacolo s)
+	public void addSpettacolo(Spettacolo spettacolo) throws OraSpettacoloException
 	{
-		listaSpettacoli.add(s);
+		for(Spettacolo s : listaSpettacoli)
+		{
+			if(s.getDataInizio().before(spettacolo.getDataInizio()) && s.getDataFine().after(spettacolo.getDataInizio()))
+				throw new OraSpettacoloException();
+		}
+		listaSpettacoli.add(spettacolo);
 	}
 	
 	/**
