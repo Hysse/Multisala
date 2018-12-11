@@ -37,10 +37,11 @@ public class ModuloSpettacolo {
 	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala7
 	 * in considerazione
 	 */
-	public void addSpettacolo(Film film, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
+	public void addSpettacolo(int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
 	{
 		ModuloSala m = new ModuloSala(multisala);
-		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(), film, data, prezzo);
+		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(),
+				getFilm(idFilm), data, prezzo);
 		
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
