@@ -1,7 +1,7 @@
 package classi;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Rappresenta il concetto di Spettacolo come Film proiettato in una Sala in una determinata
@@ -33,7 +33,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	/**
 	 * La data in cui il film è proiettato.
 	 */
-	private Date data;
+	private Calendar data;
 	
 	/**
 	 * Crea uno Spettacolo partendo dalla Sala in cui è proiettato, dal film che è 
@@ -43,7 +43,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * @param data Data dello spettacolo. (anno,mese,giorno,ora).
 	 * @param prezzo Double per il prezzo dello spettacolo
 	 */
-	public Spettacolo(Sala sala, Film film, Date data,double prezzo)
+	public Spettacolo(Sala sala, Film film, Calendar data,double prezzo)
 	{
 		this.sala = sala;
 		this.film = film;
@@ -93,9 +93,9 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * Metodo di accesso alla data di uno spettacolo.
 	 * @return Restituisce la data di uno spettacolo.
 	 */
-	public Date getDataInizio()
+	public Calendar getDataInizio()
 	{
-		return (Date)data.clone();
+		return (Calendar)data.clone();
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * Metodo modificatore per cambiare data ad uno spettacolo.
 	 * @param data La nuova data dello spettacolo.
 	 */
-	public void setData(Date nuovaData)
+	public void setData(Calendar nuovaData)
 	{
 		this.data = nuovaData;
 	}
@@ -130,10 +130,10 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * @return Restituisce la data di fine spettacolo.
 	 */
 	@SuppressWarnings("deprecation")
-	public Date getDataFine()
+	public Calendar getDataFine()
 	{
-		Date datafine = (Date)data.clone();
-		datafine.setMinutes(datafine.getMinutes()+film.getMinuti());
+		Calendar datafine = (Calendar)data.clone();
+		datafine.set(Calendar.MINUTE, datafine.get(Calendar.MINUTE) + film.getMinuti());
 		return datafine;
 	}
 	
@@ -190,7 +190,7 @@ public class Spettacolo implements Cloneable, Serializable{
 			Spettacolo clone = (Spettacolo) super.clone();
 			clone.film = film.clone();
 			clone.sala = sala.clone();
-			clone.data = (Date)data.clone();
+			clone.data = (Calendar)data.clone();
 			return clone;
 		} catch(CloneNotSupportedException e) {
 			e.printStackTrace();

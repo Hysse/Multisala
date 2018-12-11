@@ -1,7 +1,8 @@
 package classi;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 //PROVARE AD IMPLEMENTARE POLITICHE DI SCONTO SIA COME CLASSE ASTRATTA SIA COME INTERFACCIA. PENSACI!
 public class TesterPoliticheSconto {
@@ -30,7 +31,7 @@ public class TesterPoliticheSconto {
 
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getDay() == 0)
+				if(b.getSpettacolo().getDataInizio().get(Calendar.DAY_OF_WEEK) == 0)
 					return b.getPrezzo()-((b.getPrezzo() * 40) / 100);
 				else
 					return b.getPrezzo();
@@ -43,7 +44,7 @@ public class TesterPoliticheSconto {
 
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getHours() > 11)
+				if(b.getSpettacolo().getDataInizio().get(Calendar.HOUR) > 11)
 					return b.getPrezzo()-((b.getPrezzo() * 20) / 100);
 				else
 					return b.getPrezzo();
@@ -66,7 +67,7 @@ public class TesterPoliticheSconto {
 		
 		Film film = new Film("L'uomo che visse due volte","Un uomo che praticamente visse due volte. Assurdo fra",120, 1);
 		
-		Date data = new Date(2018,11,8,12,0);
+		GregorianCalendar data = new GregorianCalendar(2018,11,8,12,0);
 		
 		Spettacolo spettacolo = new Spettacolo(sala1, film, data, 20.00);
 		

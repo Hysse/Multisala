@@ -1,7 +1,8 @@
 package classi;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class TesterMultisala {
 
@@ -29,7 +30,7 @@ public class TesterMultisala {
 
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getDay() == 0)
+				if(b.getSpettacolo().getDataInizio().get(Calendar.DAY_OF_WEEK) == 0)
 					return b.getPrezzo()-((b.getPrezzo() * 40) / 100);
 				else
 					return b.getPrezzo();
@@ -42,7 +43,7 @@ public class TesterMultisala {
 
 			public double getSconto(Biglietto b)
 			{
-				if(b.getSpettacolo().getDataInizio().getHours() > 11)
+				if(b.getSpettacolo().getDataInizio().get(Calendar.HOUR) > 11)
 					return b.getPrezzo()-((b.getPrezzo() * 20) / 100);
 				else
 					return b.getPrezzo();
@@ -77,9 +78,9 @@ public class TesterMultisala {
 		Film film2 = new Film("La città incantata","Film d'animazione di Miazaki",80, 2);
 		Film film3 = new Film("Spiderman","Un ragazzo viene morso da un ragno e ne acquista i poteri",110, 3);
 		
-		Date data1 = new Date(2018,11,8,12,0);
-		Date data2 = new Date(2018,11,10,11,0);
-		Date data3 = new Date(2018,11,10,12,0);
+		GregorianCalendar data1 = new GregorianCalendar(2018,11,8,12,0);
+		GregorianCalendar data2 = new GregorianCalendar(2018,11,10,11,0);
+		GregorianCalendar data3 = new GregorianCalendar(2018,11,10,12,0);
 		
 		Spettacolo spettacolo1 = new Spettacolo(sala1, film1, data1, 25.00);
 		Spettacolo spettacolo2 = new Spettacolo(sala2, film2, data2, 25.00);
