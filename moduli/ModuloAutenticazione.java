@@ -1,6 +1,13 @@
 package moduli;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import classi.Cliente;
+import classi.FlussoGenerico;
 import classi.Multisala;
 import classi.Utente;
 import eccezioni.SignUpException;
@@ -15,14 +22,31 @@ public class ModuloAutenticazione {
 	
 
 	/**
-	 * Costruttore che associa a un moduloAutenticazione un Multisala dove si trova i clienti
-	 * @param multisala Multisala dove prendere la lista di clienti
+	 * Costruttore che associa a un moduloAutenticazione un Multisala preso dal file multisala.dat. Se
+	 * il file non esiste crea un nuovo file chiamato multisala.dat. Dal multisala in seguito il modulo accede
+	 * alla collezione di Utenti per verificare l'accesso.
 	 */
-	public ModuloAutenticazione(Multisala multisala)
+	public ModuloAutenticazione() throws ClassNotFoundException,IOException
 	{
-		this.multisala = multisala;
+		File file = new File("multisala.dat");
+		if(!file.exists())
+		{
+			file.createNewFile();
+			FlussoGenerico<Multisala> flusso = new FlussoGenerico<Multisala>("multisala.dat");
+			flusso.save(new Multisala());
+		}
+		FlussoGenerico<Multisala> flusso = new FlussoGenerico<Multisala>("multisala.dat");
+		multisala = flusso.load();
 	}
 	
+	/**
+	 * Metodo di accesso al multisala del modulo.
+	 * @return Restituisce un puntatore all'oggetto Multisala del modulo.
+	 */
+	public Multisala getMultisala()
+	{
+		return multisala;
+	}
 	/**
 	 * Questo metodo aggiunge un utente nella lista degli utenti registrati
 	 * @param u Utente da aggiungere

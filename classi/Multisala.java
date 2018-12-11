@@ -34,6 +34,14 @@ public class Multisala implements Serializable, Cloneable{
 		this.listaPoliticheSconto = listaPoliticheSconto;
 	}
 	
+	public Multisala() {
+		listaSale = new ArrayList<Sala>();
+		listaFilm = new ArrayList<Film>();
+		listaSpettacoli = new ArrayList<Spettacolo>();
+		listaUtenti = new ArrayList<Utente>();
+		listaPoliticheSconto = new ArrayList<PoliticaSconto>();
+	}
+	
 	/**
 	 * Metodo per aggiungere un film alla lista dei film del multisala
 	 * @param f Film da aggiungere
