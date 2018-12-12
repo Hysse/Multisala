@@ -24,15 +24,15 @@ public class ModuloSconto {
 	 * @param sconto PoliticaSconto da aggiungere
 	 * @return true se lo sconto è stato aggiunto, false se lo sconto era già presente nella lista
 	 */
-	public boolean addPoliticaSconto(PoliticaSconto Sconto)
+	public boolean addPoliticaSconto(PoliticaSconto sconto)
 	{
 		for (PoliticaSconto p: listaPoliticheSconto)
 		{
-			if (p.equals(Sconto))
+			if (p.equals(sconto))
 				return false;
 		}
 		
-		listaPoliticheSconto.add(p);
+		listaPoliticheSconto.add(sconto);
 		return true;
 	}
 	
