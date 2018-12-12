@@ -4,14 +4,18 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
-import classi.CloseListener;
+import listeners.CloseListener;
+import listeners.InputTextListener;
 import classi.FlussoGenerico;
 import classi.Multisala;
 import classi.Utente;
@@ -36,7 +40,10 @@ public class FrameLogin extends JFrame{
 		try {
 			autenticazione = new ModuloAutenticazione();
 		} catch (ClassNotFoundException | IOException e) {
-			new FrameErrore(e).setVisible(true);
+			JFrame errore = new FrameErrore(e);
+			errore.setVisible(true);
+			errore.addWindowListener(new CloseListener(autenticazione.getMultisala()));
+			
 		}
 		addWindowListener(new CloseListener(autenticazione.getMultisala()));
 		add(createLoginPanel());
@@ -51,6 +58,7 @@ public class FrameLogin extends JFrame{
 		JTextField pwdtxt = new JTextField(10);
 		JLabel err = new JLabel("");
 		JButton login = new JButton("Login");
+		login.setEnabled(false);
 		JButton registrati = new JButton("Registrati");
 		
 		class LoginListener implements ActionListener
@@ -68,7 +76,7 @@ public class FrameLogin extends JFrame{
 						new FrameGestore(utente).setVisible(true);
 					else
 						new FrameCliente((Cliente)utente).setVisible(true);
-					setVisible(false);
+					dispose();
 				}
 			}
 		}
@@ -84,6 +92,12 @@ public class FrameLogin extends JFrame{
 		
 		ActionListener listenerLogin = new LoginListener();
 		ActionListener listenerRegistrati = new RegistratiListener();
+		ArrayList<Document> documenti = new ArrayList<Document>();
+		documenti.add(usrtxt.getDocument());
+		documenti.add(pwdtxt.getDocument());
+		DocumentListener inputListener = new InputTextListener(documenti,login);
+		usrtxt.getDocument().addDocumentListener(inputListener);
+		pwdtxt.getDocument().addDocumentListener(inputListener);
 		login.addActionListener(listenerLogin);
 		registrati.addActionListener(listenerRegistrati);
 		panel.setLayout(new GridLayout(4,3));
