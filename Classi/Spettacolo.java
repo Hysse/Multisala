@@ -129,7 +129,6 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * Metodo di accesso alla data di fine spettacolo (quindi la data inizio addizionata dei minuti del film).
 	 * @return Restituisce la data di fine spettacolo.
 	 */
-	@SuppressWarnings("deprecation")
 	public Calendar getDataFine()
 	{
 		Calendar datafine = (Calendar)data.clone();
@@ -139,19 +138,19 @@ public class Spettacolo implements Cloneable, Serializable{
 	
 	/**
 	 * Metodo modificatore per l'occupazione di un posto riguardante lo spettacolo. Occupa un posto della sala relativo allo spettacolo.
-	 * @param p Il posto da occupare.
+	 * @param char del posto 
 	 * @return Restituisce il posto appena occupato se esiste, altrimenti restituisce null;
 	 */
-	public Posto occupa(Posto posto)
+	public Posto occupa(char lettera, int numero)
 	{
-		Posto p = sala.getPosto(posto);
-				if(p == null)
-					return null;
-				else
-				{
-					p.setOccupato();
-					return p;
-				}
+		Posto p = sala.getPosto(lettera, numero);
+		if(p == null)
+			return null;
+		else
+		{
+			p.setOccupato();
+			return p;
+		}
 	}
 	
 	/**
@@ -159,9 +158,9 @@ public class Spettacolo implements Cloneable, Serializable{
 	 * @param posto Il posto da liberare.
 	 * @return Restituisce il posto appena liberato se esiste, altrimenti restituisce null;
 	 */
-	public Posto libera(Posto posto)
+	public Posto libera(char lettera, int numero)
 	{
-		Posto p = sala.getPosto(posto);
+		Posto p = sala.getPosto(lettera, numero);
 		if(p == null)
 			return null;
 		else

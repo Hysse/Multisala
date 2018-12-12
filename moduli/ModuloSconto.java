@@ -8,7 +8,7 @@ import classi.PoliticaSconto;
  */
 public class ModuloSconto {
 	
-	private ArrayList<PoliticaSconto> listaPoliticheSconto;
+	private static ArrayList<PoliticaSconto> listaPoliticheSconto;
 	
 	/**
 	 * Costruttore che salva una lista di poliche di sconto di un multisala
@@ -57,5 +57,17 @@ public class ModuloSconto {
 		
 		return null;
 	}
-
+	
+	public static void applicaSconto(classi.Biglietto biglietto)
+	{
+		double prezzofinale = biglietto.getPrezzo();
+		double temp;
+		for(PoliticaSconto p : listaPoliticheSconto)
+		{
+			temp = p.getSconto(biglietto);
+			if(temp < prezzofinale)
+				prezzofinale = temp;
+		}
+		biglietto.setPrezzo(prezzofinale);
+	}
 }
