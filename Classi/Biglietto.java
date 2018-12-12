@@ -29,20 +29,19 @@ public class Biglietto implements Cloneable, Serializable{
 	 */
 	private double prezzo;
 	/**
-	 * Metodo costruttore del biglietto.
+	 * Metodo costruttore del biglietto, imposta il prezzo del biglietto al prezzo dello spettacolo
 	 * @param spettacolo Lo spettacolo che si vuole associare al biglietto.
 	 * @param lettera La lettera del posto relativo al biglietto.
 	 * @param numero Il numero relativo al posto del biglietto.
 	 * @param acquistato Variabile booleana che indica se un biglietto è una prenotazione oppure no.
-	 * @param prezzo Il prezzo del biglietto.
 	 */
-	public Biglietto(Spettacolo spettacolo, char lettera,int numero, boolean acquistato, double prezzo)
+	public Biglietto(Spettacolo spettacolo, char lettera,int numero, boolean acquistato)
 	{
 		this.spettacolo = spettacolo;
 		this.lettera = lettera;
 		this.numero = numero;
 		this.acquistato = acquistato;
-		this.prezzo = prezzo;
+		this.prezzo = spettacolo.getPrezzo();
 	}
 	/**
 	 * Metodo di accesso allo spettacolo relativo al biglietto.
