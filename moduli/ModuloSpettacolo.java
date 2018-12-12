@@ -1,8 +1,10 @@
 package moduli;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import classi.Film;
 import classi.Multisala;
+import classi.Sala;
 import classi.Spettacolo;
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
@@ -40,9 +42,7 @@ public class ModuloSpettacolo {
 	public void addSpettacolo(int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
 	{
 		ModuloSala m = new ModuloSala(multisala);
-		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(),
-				getFilm(idFilm), data, prezzo);
-		
+		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(),getFilm(idFilm), data, prezzo);
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
 			if(s.getDataInizio().before(spettacolo.getDataInizio())
@@ -122,5 +122,53 @@ public class ModuloSpettacolo {
 		}
 		
 		throw new FilmNonPresenteException();
+	}
+	
+	/**
+	 * Metodo per creare una sotto-collezione di spettacoli che iniziano tra la data attuale del sistema e il fine settimana.
+	 * @return Restituisce un ArrayList<Spettacolo> contenente tutti gli Spettacoli che iniziano tra la data corrente del sistema e il fine settimana.
+	 */
+	public ArrayList<Spettacolo> getSpettacoliSettimana() {
+		ArrayList<Spettacolo> spettacoliSettimana = new ArrayList<Spettacolo>();
+		Calendar dataUtente = Calendar.getInstance();
+		Calendar fineSettimana = (Calendar) dataUtente.clone();
+		// FACCIO DIVENTARE fineSettimana LA DATA DI FINE SETTIMANA DELLA SETTIMANA
+		while (fineSettimana.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+			fineSettimana.set(Calendar.DAY_OF_MONTH, fineSettimana.get(Calendar.DAY_OF_MONTH) + 1);
+		for (Spettacolo s : multisala.getListaSpettacoli()) {
+			// controlla se ((dataSpettacolo >= dataUtente) && (dataSpettacolo <=
+			// fineSettimana))
+			if ((s.getDataInizio().equals(dataUtente) || s.getDataInizio().after(dataUtente))
+					&& (s.getDataInizio().before(fineSettimana) || s.getDataInizio().equals(fineSettimana)))
+				spettacoliSettimana.add(s);
+		}
+		return spettacoliSettimana;
+	}
+	
+	/**
+	 * Metodo per creare una sotto-collezione di spettacoli tenuti nella Sala passata.
+	 * @param sala La sala di cui si vuole avere la lista Spettacoli.
+	 * @return Restituisce un ArrayList<Spettacolo> contenente tutti gli Spettacoli che si terranno in quella sala.
+	 */
+	public ArrayList<Spettacolo> getSpettacoliPerSala(Sala sala) {
+		ArrayList<Spettacolo> spettacoliSala = new ArrayList<Spettacolo>();
+		for(Spettacolo s : multisala.getListaSpettacoli()) {
+			if(s.getSala().getNumSala() == sala.getNumSala())
+				spettacoliSala.add(s);
+		}
+		return spettacoliSala;
+	}
+	/**
+	 * Metodo per eliminare tutti gli Spettacoli del giorno.
+	 */
+	public void RemoveDailyProgram()
+	{
+		Calendar attuale = Calendar.getInstance();
+		ArrayList<Spettacolo>listaSpettacoli = multisala.getListaSpettacoli();
+		for(Spettacolo s : listaSpettacoli)
+		{
+			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) && s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) && s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
+				listaSpettacoli.remove(s);
+		}
 	}
 }
