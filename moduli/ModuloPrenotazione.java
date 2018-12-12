@@ -144,7 +144,7 @@ public class ModuloPrenotazione {
 	{
 		for (Biglietto b: cliente.getListaPrenotazioni())
 		{
-			if (b.getSpettacolo().getId() == s.getId() && b.isPrenotazione())
+			if (b.getSpettacolo().getFilm().equals(s.getFilm()) && b.isPrenotazione())
 				return true;
 		}
 		
