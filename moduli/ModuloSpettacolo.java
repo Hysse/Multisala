@@ -184,7 +184,9 @@ public class ModuloSpettacolo {
 		ArrayList<Spettacolo>listaSpettacoli = multisala.getListaSpettacoli();
 		for(Spettacolo s : listaSpettacoli)
 		{
-			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) && s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) && s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
+			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) &&
+					s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) &&
+					s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
 				listaSpettacoli.remove(s);
 		}
 	}
@@ -273,5 +275,33 @@ public class ModuloSpettacolo {
 		Sort<Spettacolo> sort = new Sort<Spettacolo>(new PostiDisponibiliComparator(),copia);
 		sort.insertionSort();
 		return copia;
+	}
+	
+	public ArrayList<Film> getIncassoSettimanaleFilm()
+	{
+		ArrayList<Film> spettacoliSettimana = new ArrayList<Film>();
+		Calendar dataUtente = Calendar.getInstance();
+		Calendar inzioSettimana = (Calendar) dataUtente.clone();
+		// FACCIO DIVENTARE fineSettimana LA DATA DI FINE SETTIMANA DELLA SETTIMANA
+		while (inzioSettimana.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
+			inzioSettimana.set(Calendar.DAY_OF_MONTH, inzioSettimana.get(Calendar.DAY_OF_MONTH) - 1);
+		
+		for (int i = 0; i < 7; i++)
+		{
+			for (Spettacolo s: multisala.getListaSpettacoli())
+			{
+				if(s.getDataInizio().get(Calendar.YEAR) == inzioSettimana.get(Calendar.YEAR) &&
+						s.getDataInizio().get(Calendar.MONTH) == inzioSettimana.get(Calendar.MONTH) &&
+						s.getDataInizio().get(Calendar.DAY_OF_MONTH) == inzioSettimana.get(Calendar.DAY_OF_MONTH))
+				{
+					if (!spettacoliSettimana.contains(s.getFilm()))
+						spettacoliSettimana.add(s.getFilm());
+				}
+				
+				inzioSettimana.set(Calendar.DAY_OF_MONTH, inzioSettimana.get(Calendar.DAY_OF_MONTH) + 1);
+			}
+		}
+		
+		return spettacoliSettimana;
 	}
 }
