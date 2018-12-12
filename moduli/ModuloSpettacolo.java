@@ -2,12 +2,15 @@ package moduli;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+
 import classi.Film;
 import classi.Multisala;
 import classi.Sala;
 import classi.Spettacolo;
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
+import utilities.Sort;
 
 /**
  * Classe per gestire gli Spettacoli di un multisala
@@ -36,7 +39,7 @@ public class ModuloSpettacolo {
 	 * @param prezzo Double con prezzo dello spettacolo
 	 * @param data Calendar con data e orario dello spettacolo
 	 * @throws OraSpettacoloException eccezione lanciata nel caso in cui si tenta di aggiungere
-	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala7
+	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala
 	 * in considerazione
 	 */
 	public void addSpettacolo(int id,Film film, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
@@ -45,9 +48,9 @@ public class ModuloSpettacolo {
 		Spettacolo spettacolo = new Spettacolo(id,modSala.getSala(numeroSala).clone(),film, data, prezzo);
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
-			if(s.getDataInizio().before(spettacolo.getDataInizio())
+			if((s.getDataInizio().before(spettacolo.getDataInizio())
 					&& s.getDataFine().after(spettacolo.getDataInizio()) &&
-					s.getSala().getNumSala() == spettacolo.getSala().getNumSala())
+					s.getSala().getNumSala() == spettacolo.getSala().getNumSala()) || s.getDataInizio().equals(spettacolo.getDataInizio()))
 				throw new OraSpettacoloException();
 		}
 		multisala.getListaSpettacoli().add(spettacolo);
@@ -184,5 +187,72 @@ public class ModuloSpettacolo {
 			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) && s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) && s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
 				listaSpettacoli.remove(s);
 		}
+	}
+	
+	public ArrayList<Spettacolo> SortSpettacoliCronologico()
+	{
+		class CronologicComparator implements Comparator<Spettacolo>
+		{
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				if(s1.getDataInizio().before(s2.getDataInizio()))
+					return -1;
+				else
+				{
+					if(s1.getDataInizio().after(s2.getDataInizio()))
+						return 1;
+					else
+						return 0;
+				}
+				}
+		}
+		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
+		for(Spettacolo s : multisala.getListaSpettacoli())
+			copia.add(s.clone());
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new CronologicComparator(),copia);
+		sorter.insertionSort();
+		return copia;
+	}
+	
+	public ArrayList<Spettacolo> SortSpettacoliSalaCrescente()
+	{
+		class SalaComparator implements Comparator<Spettacolo>
+		{
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				if(s1.getSala().getNumSala() < s2.getSala().getNumSala())
+					return -1;
+				else
+				{
+					if(s1.getSala().getNumSala() > s2.getSala().getNumSala())
+						return 1;
+					else
+						return 0;
+				}
+				}
+		}
+		
+		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
+		for(Spettacolo s : multisala.getListaSpettacoli())
+			copia.add(s.clone());
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new SalaComparator(),copia);
+		sorter.insertionSort();
+		return copia;
+	}
+	
+	
+	public ArrayList<Spettacolo> SortSpettacoliTitolo()
+	{
+		class TitoloComparator implements Comparator<Spettacolo>
+		{
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				return s1.getFilm().getTitolo().compareTo(s2.getFilm().getTitolo());
+				}
+		}
+		
+		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
+		for(Spettacolo s : multisala.getListaSpettacoli())
+			copia.add(s.clone());
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new TitoloComparator(),copia);
+		sorter.insertionSort();
+		return copia;
 	}
 }
