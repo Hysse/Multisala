@@ -1,7 +1,11 @@
 package classi;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+
+import utilities.Sort;
 
 /**
  * Rappresenta il concetto di Spettacolo come Film proiettato in una Sala in una determinata
@@ -163,6 +167,20 @@ public class Spettacolo implements Cloneable, Serializable{
 			return p;
 		}
 	}
+	public String displayContent()
+	{
+		String am_pm,am_pm2;
+		if(data.get(Calendar.AM_PM) == Calendar.AM)
+			am_pm = "A.M.";
+		else
+			am_pm = "P.M.";
+		if(getDataFine().get(Calendar.AM_PM) == Calendar.AM)
+			am_pm2 = "A.M.";
+		else
+			am_pm2 = "P.M.";
+		return "Id : "+id+" Sala : "+sala.getNumSala()+" Film : "+film.getTitolo()+" Data : "+data.get(Calendar.DAY_OF_MONTH)+"/"+(data.get(Calendar.MONTH)+1)+"/"+data.get(Calendar.YEAR)+" Inizio : "+data.get(Calendar.HOUR)+":"+data.get(Calendar.MINUTE)+" "+am_pm+" Fine : "+getDataFine().get(Calendar.HOUR)+":"+getDataFine().get(Calendar.MINUTE)+" "+am_pm2+"  Prezzo : "+prezzo;
+	}
+	
 	
 	/**
 	 * Metodo di accesso ai dati fondamentali dello Spettacolo.
