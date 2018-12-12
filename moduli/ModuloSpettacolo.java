@@ -258,19 +258,19 @@ public class ModuloSpettacolo {
 	
 	public ArrayList<Spettacolo> SortSpettacoloNumPosti()
 	{
-		class postoLiberoComparator implements Comparator<Spettacolo>
+		class PostiDisponibiliComparator implements Comparator<Spettacolo>
 		{
 
 			@Override
 			public int compare(Spettacolo s1, Spettacolo s2) {
-				return s1.getSala().getNumPostiLiberi() - s2.getSala().getNumPostiLiberi();
+				return s1.getSala().getNumPostiDisponibili() - s2.getSala().getNumPostiDisponibili();
 			}
 		}
 		
 		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
 		for(Spettacolo s : multisala.getListaSpettacoli())
 			copia.add(s.clone());
-		Sort<Spettacolo> sort = new Sort<Spettacolo>(new postoLiberoComparator(),copia);
+		Sort<Spettacolo> sort = new Sort<Spettacolo>(new PostiDisponibiliComparator(),copia);
 		sort.insertionSort();
 		return copia;
 	}
