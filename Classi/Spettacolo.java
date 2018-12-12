@@ -167,6 +167,10 @@ public class Spettacolo implements Cloneable, Serializable{
 			return p;
 		}
 	}
+	/**
+	 * Metodo di accesso alle informazioni principali di uno Spettacolo.
+	 * @return Restituisce una stringa contente le informazioni sull'id Spettacolo,il numero Sala,il titolo del Film, La data di inizio e fine e il prezzo.
+	 */
 	public String displayContent()
 	{
 		String am_pm,am_pm2;
