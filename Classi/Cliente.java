@@ -54,12 +54,30 @@ public class Cliente extends Utente{
 	}
 	
 	/**
+	 * Metodo che ritorna la lista delle prenotazioni di un cliente
+	 * @return ArrayList con le prenotazioni
+	 */
+	public ArrayList<Biglietto> getListaPrenotazioni()
+	{
+		return this.prenotazioni;
+	}
+	
+	/**
 	 * Metodo modificatore di aggiunta di una Prenotazione.
 	 * @param biglietto La prenotazione che si vuole aggiungere.
 	 */
 	public void addPrenotazione(Biglietto biglietto)
 	{
 		prenotazioni.add(biglietto);
+	}
+	
+	/**
+	 * Metodo che ritorna il numero di prentazioni di un Cliente
+	 * @return int con num di prenotazione
+	 */
+	public int numPrenotazioni()
+	{
+		return prenotazioni.size();
 	}
 	
 	/**
@@ -94,7 +112,7 @@ public class Cliente extends Utente{
 	 */
 	public String toString()
 	{
-		return super.toString()+"[Prenotazioni = "+prenotazioni+"]";
+		return super.toString()+"[Età = " + eta + ", Prenotazioni = "+prenotazioni+"]";
 	}
 	
 	/**
