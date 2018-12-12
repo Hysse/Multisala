@@ -56,12 +56,16 @@ public class Sala implements Serializable, Cloneable{
 	{
 		return posti.size();
 	}
-	public int getNumPostiLiberi()
+	/**
+	 * Metodo di accesso di numero di posti disponibili.
+	 * @return Restituisce il numero di posti disponibili per o spettacolo.
+	 */
+	public int getNumPostiDisponibili()
 	{
 		int cont = 0;
 		for(Posto p : posti)
 		{
-			if(p.isLibero())
+			if(p.isDisponibile())
 				cont++;
 		}
 		return cont;
