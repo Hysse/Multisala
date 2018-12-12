@@ -56,7 +56,16 @@ public class Sala implements Serializable, Cloneable{
 	{
 		return posti.size();
 	}
-	
+	public int getNumPostiLiberi()
+	{
+		int cont = 0;
+		for(Posto p : posti)
+		{
+			if(p.isLibero())
+				cont++;
+		}
+		return cont;
+	}
 	/**
 	 * Metodo per l'inserimento di un posto in sala.
 	 * @param p Posto da inserire nella sala.
