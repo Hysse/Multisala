@@ -105,4 +105,22 @@ public class ModuloGestore {
 		return m.setIndisponibile(new Posto(lettera, numero), numSala);
 	}
 	
+	/**
+	 * Metodo che restituisce l'incasso settimanale totale corrente
+	 * @return double con l'incasso totale della settimana corrente
+	 */
+	public double getIncassoTotaleSettimana()
+	{
+		return multisala.getIncassoSettimanale();
+	}
+	
+	/**
+	 * Metodo che ritorna una lista con gli incassi settimanali per film
+	 * @return Arraylist con film
+	 */
+	public ArrayList<Film> getIncassoSettimanaleFilm()
+	{
+		ModuloSpettacolo m = new ModuloSpettacolo(multisala);
+		return m.getIncassoSettimanaleFilm();
+	}
 }
