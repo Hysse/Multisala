@@ -47,14 +47,6 @@ public class ModuloAutenticazione {
 	{
 		return multisala;
 	}
-	/**
-	 * Questo metodo aggiunge un utente nella lista degli utenti registrati
-	 * @param u Utente da aggiungere
-	 */
-	public void aggiungiUtente(Utente u)
-	{
-		multisala.addUtente(u);
-	}
 	
 	/**
 	 * Questo metodo rimuove un utente nella lista degli utenti registrati
