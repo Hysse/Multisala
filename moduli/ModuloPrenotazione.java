@@ -92,7 +92,6 @@ public class ModuloPrenotazione {
 				multisala.addAmount(b.getPrezzo());
 				b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
 				b.setAcquistato();
-				p.setOccupato();
 				cliente.addPrenotazione(b);
 				return b;
 			}
@@ -125,7 +124,6 @@ public class ModuloPrenotazione {
 			multisala.addAmount(b.getPrezzo());
 			b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
 			b.setAcquistato();
-			p.setOccupato();
 			cliente.addPrenotazione(b);
 			return b;
 		}
@@ -163,8 +161,7 @@ public class ModuloPrenotazione {
 		{
 			if (b.equals(biglietto))
 			{
-				Posto p = new Posto(b.getLetteraPosto(), b.getNumeroPosto());
-				p.setLibero();
+				b.getSpettacolo().libera(b.getLetteraPosto(), b.getNumeroPosto());
 				return cliente.removePrenotazione(b);
 			}
 		}
