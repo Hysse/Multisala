@@ -178,20 +178,18 @@ public class ModuloSpettacolo {
 	/**
 	 * Metodo per eliminare tutti gli Spettacoli del giorno.
 	 */
-	public void RemoveDailyProgram()
+	/*public void RemoveDailyProgram() INSTABILE (GENERA CONCURRENT MODIFICATION EXCEPTION)
 	{
 		Calendar attuale = Calendar.getInstance();
 		ArrayList<Spettacolo>listaSpettacoli = multisala.getListaSpettacoli();
 		for(Spettacolo s : listaSpettacoli)
 		{
-			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) &&
-					s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) &&
-					s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
+			if(s.getDataInizio().get(Calendar.YEAR) == attuale.get(Calendar.YEAR) && s.getDataInizio().get(Calendar.MONTH) == attuale.get(Calendar.MONTH) && s.getDataInizio().get(Calendar.DAY_OF_MONTH) == attuale.get(Calendar.DAY_OF_MONTH))
 				listaSpettacoli.remove(s);
 		}
-	}
+	}*/
 	
-	public ArrayList<Spettacolo> SortSpettacoliCronologico()
+	public ArrayList<Spettacolo> SortSpettacoliCronologico(ArrayList<Spettacolo> array)
 	{
 		class CronologicComparator implements Comparator<Spettacolo>
 		{
@@ -208,14 +206,14 @@ public class ModuloSpettacolo {
 				}
 		}
 		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
-		for(Spettacolo s : multisala.getListaSpettacoli())
+		for(Spettacolo s : array)
 			copia.add(s.clone());
 		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new CronologicComparator(),copia);
 		sorter.insertionSort();
 		return copia;
 	}
 	
-	public ArrayList<Spettacolo> SortSpettacoliSalaCrescente()
+	public ArrayList<Spettacolo> SortSpettacoliSalaCrescente(ArrayList<Spettacolo> array)
 	{
 		class SalaComparator implements Comparator<Spettacolo>
 		{
@@ -233,7 +231,7 @@ public class ModuloSpettacolo {
 		}
 		
 		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
-		for(Spettacolo s : multisala.getListaSpettacoli())
+		for(Spettacolo s : array)
 			copia.add(s.clone());
 		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new SalaComparator(),copia);
 		sorter.insertionSort();
@@ -241,7 +239,7 @@ public class ModuloSpettacolo {
 	}
 	
 	
-	public ArrayList<Spettacolo> SortSpettacoliTitolo()
+	public ArrayList<Spettacolo> SortSpettacoliTitolo(ArrayList<Spettacolo> array)
 	{
 		class TitoloComparator implements Comparator<Spettacolo>
 		{
@@ -251,7 +249,7 @@ public class ModuloSpettacolo {
 		}
 		
 		ArrayList<Spettacolo> copia = new ArrayList<Spettacolo>();
-		for(Spettacolo s : multisala.getListaSpettacoli())
+		for(Spettacolo s : array)
 			copia.add(s.clone());
 		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new TitoloComparator(),copia);
 		sorter.insertionSort();
@@ -276,6 +274,7 @@ public class ModuloSpettacolo {
 		sort.insertionSort();
 		return copia;
 	}
+
 	
 	public ArrayList<Film> getIncassoSettimanaleFilm()
 	{
