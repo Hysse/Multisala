@@ -11,6 +11,10 @@ public class Spettacolo implements Cloneable, Serializable{
 
 	private static final long serialVersionUID = 1L;
 	/**
+	 * L'id che identifica univocamente lo Spettacolo.
+	 */
+	private int id;
+	/**
 	 * La sala in cui lo spettacolo si tiene. In sala vengono anche memorizzati gli stati dei posti relativi a questo spettacolo.
 	 */
 	private Sala sala;
@@ -30,19 +34,28 @@ public class Spettacolo implements Cloneable, Serializable{
 	/**
 	 * Crea uno Spettacolo partendo dalla Sala in cui è proiettato, dal film che è 
 	 * proiettato e dalla datà dello spettacolo.
+	 * @param id L'id dello spettacolo.
 	 * @param sala Sala in cui il film è proiettato.
 	 * @param film Film proiettato durante lo spettacolo.
 	 * @param data Data dello spettacolo. (anno,mese,giorno,ora).
 	 * @param prezzo Double per il prezzo dello spettacolo
 	 */
-	public Spettacolo(Sala sala, Film film, Calendar data,double prezzo)
+	public Spettacolo(int id,Sala sala, Film film, Calendar data,double prezzo)
 	{
+		this.id = id;
 		this.sala = sala;
 		this.film = film;
 		this.data = data;
 		this.prezzo = prezzo;
 	}
-	
+	/**
+	 * Metodo di accesso all'id dello Spettacolo
+	 * @return Restituisce l'id dello Spettacolo.
+	 */
+	public int getID()
+	{
+		return id;
+	}
 	/**
 	 * Metodo di accesso al prezzo base dello spettacolo.
 	 * @return Restituisce il prezzo base dello spettacolo.
@@ -157,7 +170,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	 */
 	public String toString()
 	{
-		return getClass().getName()+"[Sala = "+sala+" Film = "+film+" Data = "+data+" Prezzo = "+prezzo+"]";
+		return getClass().getName()+"[Id = "+id+" Sala = "+sala+" Film = "+film+" Data = "+data+" Prezzo = "+prezzo+"]";
 	}
 	
 	/**
@@ -190,6 +203,6 @@ public class Spettacolo implements Cloneable, Serializable{
 		if(obj.getClass() != getClass())
 			return false;
 		Spettacolo other = (Spettacolo) obj;
-		return other.data.equals(data) && other.film.equals(film) && other.sala.equals(sala) && other.prezzo == prezzo;
+		return other.id == id && other.data.equals(data) && other.film.equals(film) && other.sala.equals(sala) && other.prezzo == prezzo;
 	}
 }

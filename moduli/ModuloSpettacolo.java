@@ -39,15 +39,15 @@ public class ModuloSpettacolo {
 	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala7
 	 * in considerazione
 	 */
-	public void addSpettacolo(int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
+	public void addSpettacolo(int id,Film film, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
 	{
-		ModuloSala m = new ModuloSala(multisala);
-		Spettacolo spettacolo = new Spettacolo(m.getSala(numeroSala).clone(),getFilm(idFilm), data, prezzo);
+		ModuloSala modSala = new ModuloSala(multisala);
+		Spettacolo spettacolo = new Spettacolo(id,modSala.getSala(numeroSala).clone(),film, data, prezzo);
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
 			if(s.getDataInizio().before(spettacolo.getDataInizio())
 					&& s.getDataFine().after(spettacolo.getDataInizio()) &&
-					s.getSala().equals(spettacolo.getSala()))
+					s.getSala().getNumSala() == spettacolo.getSala().getNumSala())
 				throw new OraSpettacoloException();
 		}
 		multisala.getListaSpettacoli().add(spettacolo);
@@ -76,7 +76,7 @@ public class ModuloSpettacolo {
 	{
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
-			if (s.getId() == id)
+			if (s.getID() == id)
 				return s;
 		}
 		
@@ -122,6 +122,20 @@ public class ModuloSpettacolo {
 		}
 		
 		throw new FilmNonPresenteException();
+	}
+	
+	/**
+	 * Metodo per creare una sotto-collezione di spettacoli che iniziano tra la data attuale del sistema e il fine settimana.
+	 * @return Restituisce un ArrayList<Spettacolo> contenente tutti gli Spettacoli che iniziano tra la data corrente del sistema e il fine settimana.
+	 */
+	public ArrayList<Spettacolo> getSpettacoliFruibili() {
+		ArrayList<Spettacolo> spettacoliFruibili = new ArrayList<Spettacolo>();
+		Calendar dataUtente = Calendar.getInstance();
+		for (Spettacolo s : multisala.getListaSpettacoli()) {
+			if (s.getDataInizio().after(dataUtente))
+				spettacoliFruibili.add(s);
+		}
+		return spettacoliFruibili;
 	}
 	
 	/**
