@@ -21,11 +21,19 @@ public class ModuloSconto {
 	
 	/**
 	 * Metodo che aggiunge una politica di sconto alla lista
-	 * @param p PoliticaSconto da aggiungere
+	 * @param sconto PoliticaSconto da aggiungere
+	 * @return true se lo sconto è stato aggiunto, false se lo sconto era già presente nella lista
 	 */
-	public void addPoliticaSconto(PoliticaSconto p)
+	public boolean addPoliticaSconto(PoliticaSconto Sconto)
 	{
+		for (PoliticaSconto p: listaPoliticheSconto)
+		{
+			if (p.equals(Sconto))
+				return false;
+		}
+		
 		listaPoliticheSconto.add(p);
+		return true;
 	}
 	
 	/**
@@ -58,6 +66,10 @@ public class ModuloSconto {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param biglietto
+	 */
 	public static void applicaSconto(classi.Biglietto biglietto)
 	{
 		double prezzofinale = biglietto.getPrezzo();
