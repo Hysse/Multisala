@@ -6,10 +6,8 @@ import classi.Posto;
 import classi.Spettacolo;
 import eccezioni.OraPrenotazioneException;
 import eccezioni.PostoIndisponibileException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import classi.Biglietto;
 
 /**
@@ -167,7 +165,7 @@ public class ModuloPrenotazione {
 			{
 				Posto p = new Posto(b.getLetteraPosto(), b.getNumeroPosto());
 				p.setLibero();
-				return prenotazioni.remove(b);
+				return cliente.removePrenotazione(b);
 			}
 		}
 		
