@@ -63,40 +63,54 @@ public class ModuloSala {
 	/**
 	 * Cerca un posto in una sala e lo imposta disponibile
 	 * @param p posto da cercare nella sala
-	 * @return true se il posto è presente, false altrimenti
+	 * @param numSala numero sala dove cercare il posto da imposare disponibile
+	 * @return true se il posto è presente ed è stato impostato disponibile e la sala esiste
+	 * false altrimenti
 	 */
-	public boolean setDisponibile(Posto p)
+	public boolean setDisponibile(Posto p, int numSala)
 	{
 		Posto posto;
-		
 		for (Sala s: listaSale)
 		{
-			if ((posto = s.getPosto(p)) != null)
+			if (s.getNumSala() == numSala)
 			{
-				posto.setDisponibile();
-				return true;
+				if ((posto = s.getPosto(p)) != null)
+				{
+					posto.setDisponibile();
+					return true;
+				}
+				else
+					return false;
 			}
-		}	
+		}
+		
 		return false;
 	}
 	
 	/**
 	 * Cerca un posto in una sala e lo imposta indisponibile
 	 * @param p posto da cercare nella sala
-	 * @return true se il posto è presente, false altrimenti
+	 * @param numSala numero sala dove cercare il posto da imposare indisponibile
+	 * @return true se il posto è presente ed è stato impostato indisponibile e la sala esiste,
+	 * false altrimenti
 	 */
-	public boolean setInisponibile(Posto p)
+	public boolean setIndisponibile(Posto p, int numSala)
 	{
 		Posto posto;
-		
 		for (Sala s: listaSale)
 		{
-			if ((posto = s.getPosto(p)) != null)
+			if (s.getNumSala() == numSala)
 			{
-				posto.setIndisponibile();
-				return true;
+				if ((posto = s.getPosto(p)) != null)
+				{
+					posto.setIndisponibile();
+					return true;
+				}
+				else
+					return false;
 			}
-		}	
+		}
+		
 		return false;
 	}
 }
