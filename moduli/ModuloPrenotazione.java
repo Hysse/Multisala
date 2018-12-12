@@ -2,11 +2,16 @@ package moduli;
 
 import classi.Cliente;
 import classi.Multisala;
+import classi.Posto;
 import classi.Spettacolo;
+import eccezioni.PostoIndisponibileException;
+
+import java.util.ArrayList;
+
 import classi.Biglietto;
 
 /**
- * 
+ * Classe che gestisce le prenotazioni di uno spettacolo
  */
 public class ModuloPrenotazione {
 	
@@ -27,15 +32,27 @@ public class ModuloPrenotazione {
 	 * @param lettera Char con lettera del posto
 	 * @param numero int con numero del post
 	 * @return Biglietto della prenotazione, altrimenti null se il biglietto è già stato prenotato
+	 * oppure se il posto da occupare non esiste oppure è occupato
+	 * @throws PostoIndisponibileException eccezione lanciata nel caso in cui nella sala clonata
+	 * dello spettacolo il posto sia indisponibile
 	 */
-	public Biglietto addPrenotazione(Spettacolo spettacolo, char lettera, int numero)
+	public Biglietto addPrenotazione(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException
 	{
+		moduli.ModuloSala m = new ModuloSala(multisala);
 		if (alreadyPrenotato(spettacolo))
 			return null;
 		
 		Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
-		cliente.addPrenotazione(b);
-		return b;
+		Posto p = m.getSala(spettacolo.getId()).getPosto(lettera, numero);
+		if (spettacolo.occupa(lettera, numero) != null && p.isLibero())
+		{
+			if (!p.isDisponibile())
+				throw new PostoIndisponibileException();
+			cliente.addPrenotazione(b);
+			return b;
+		}
+		else
+			return null;
 	}
 	
 	/**
@@ -44,16 +61,69 @@ public class ModuloPrenotazione {
 	 * @param lettera Char con lettera del posto
 	 * @param numero int con numero del posto
 	 * @return Biglietto dell'acquisto, altrimenti null se il biglietto è già stato acquistato
+	 * oppure se il posto da occupare non è lbero o non esiste
+	 * @throws PostoIndisponibileException eccezione lanciata nel caso in cui nella sala clonata
+	 * dello spettacolo il posto sia indisponibile
 	 */
-	public Biglietto acquistoDiretto(Spettacolo spettacolo, char lettera, int numero)
+	public Biglietto acquistoDiretto(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException
 	{
-		if (!alreadyPrenotato(spettacolo))
-			return null;
+		moduli.ModuloSala m = new ModuloSala(multisala);
 		
-		Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
-		acquistaBiglietto(b);
-		cliente.addPrenotazione(b);
-		return b;
+		if (!alreadyPrenotato(spettacolo))
+		{	
+			Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
+			Posto p = m.getSala(spettacolo.getId()).getPosto(lettera, numero);
+			if (spettacolo.occupa(lettera, numero) != null && p.isLibero())
+			{
+				if (!p.isDisponibile())
+					throw new PostoIndisponibileException();
+				
+				ModuloSconto.applicaSconto(b);
+				multisala.addAmount(b.getPrezzo());
+				b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
+				b.setAcquistato();
+				p.setOccupato();
+				cliente.addPrenotazione(b);
+				return b;
+			}
+			else
+				return null;	
+		}
+		else
+			return null;
+	}
+	
+	/**
+	 * Metodo per confermare l'acquisto di una prenotazione
+	 * @param spettacolo Spettacolo in cui acquistare un biglietto
+	 * @param lettera Char con lettera del posto
+	 * @param numero int con numero del posto 
+	 * @return Biglietto dell'acquisto che ha confermato la prenotazione, altrimenti null se il
+	 * biglietto non è stato prenotato oppure se il posto è diventato indisponibile
+	 * @throws PostoIndisponibileException
+	 */
+	public Biglietto acquistoConPrenotazione(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException
+	{
+		moduli.ModuloSala m = new ModuloSala(multisala);
+		if (alreadyPrenotato(spettacolo))
+		{
+			Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
+			Posto p = m.getSala(spettacolo.getId()).getPosto(b.getLetteraPosto(), b.getLetteraPosto());
+			if (p.isDisponibile())
+			{
+				ModuloSconto.applicaSconto(b);
+				multisala.addAmount(b.getPrezzo());
+				b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
+				b.setAcquistato();
+				p.setOccupato();
+				cliente.addPrenotazione(b);
+				return b;
+			}
+			else
+				throw new PostoIndisponibileException();
+		}
+		else
+			return null;
 	}
 	
 	/**
@@ -67,26 +137,30 @@ public class ModuloPrenotazione {
 		for (Biglietto b: cliente.getListaPrenotazioni())
 		{
 			if (b.getSpettacolo().getId() == s.getId() && b.isPrenotazione())
-				return false;
+				return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
-	 * Metodo che permette l'acquisto diretto di un biglietto o conferma una prenotazione effettuando
-	 * l'acquisto. Viene occupato il posto nella sala dello spettacolo, viene impostato lo stato del
-	 * biglietto ad acquistato, viene applicato lo sconto in base alle politiche di sconto attive,
-	 * viene aggiunto il prezzo finale all'incasso settimanale del multisala e all'incasso del film
-	 * @param b Biglietto da acquistare/confermare
+	 * Metodo per rimuovere una prenotazione dalla lista delle prenotazioni di un cliente
+	 * @param biglietto Biglietto da rimuovere
+	 * @return true se il biglietto è stato trovato e rimosso, false altrimenti
 	 */
-	public void acquistaBiglietto(Biglietto b)
+	public boolean removePrenotazione(Biglietto biglietto)
 	{
-		b.setAcquistato();
-		b.getSpettacolo().occupa(b.getLetteraPosto(), b.getNumeroPosto());
-		ModuloSconto.applicaSconto(b);
-		multisala.addAmount(b.getPrezzo());
-		b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
+		ArrayList<Biglietto> prenotazioni = cliente.getListaPrenotazioni();
+		for (Biglietto b: prenotazioni)
+		{
+			if (b.equals(biglietto))
+			{
+				Posto p = new Posto(b.getLetteraPosto(), b.getNumeroPosto());
+				p.setLibero();
+				return prenotazioni.remove(b);
+			}
+		}
+		
+		return false;
 	}
-
 }
