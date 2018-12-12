@@ -150,7 +150,7 @@ public class ModuloSpettacolo {
 		Calendar dataUtente = Calendar.getInstance();
 		Calendar fineSettimana = (Calendar) dataUtente.clone();
 		// FACCIO DIVENTARE fineSettimana LA DATA DI FINE SETTIMANA DELLA SETTIMANA
-		while (fineSettimana.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+		while (fineSettimana.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
 			fineSettimana.set(Calendar.DAY_OF_MONTH, fineSettimana.get(Calendar.DAY_OF_MONTH) + 1);
 		for (Spettacolo s : multisala.getListaSpettacoli()) {
 			// controlla se ((dataSpettacolo >= dataUtente) && (dataSpettacolo <=
