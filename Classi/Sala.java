@@ -13,7 +13,7 @@ public class Sala implements Serializable, Cloneable{
 	/**
 	 * Indica il numero che identifica univocamente la sala all'interno del cinema.
 	 */
-	private int numero;
+	private int numeroPosti;
 	/**
 	 * E' una collezione di posti di cui la sala dispone.
 	 */
@@ -26,7 +26,7 @@ public class Sala implements Serializable, Cloneable{
 	 */
 	public Sala(int numero,ArrayList<Posto> posti)
 	{
-		this.numero = numero;
+		this.numeroPosti = numero;
 		this.posti = posti;
 	}
 	
@@ -36,7 +36,7 @@ public class Sala implements Serializable, Cloneable{
 	 */
 	public void setNum(int numero)
 	{
-		this.numero = numero;
+		this.numeroPosti = numero;
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Sala implements Serializable, Cloneable{
 	 */
 	public int getNumSala()
 	{
-		return numero;
+		return numeroPosti;
 	}
 	
 	/**
@@ -91,6 +91,7 @@ public class Sala implements Serializable, Cloneable{
 		}
 		return null;
 	}
+	
 	/**
 	 * Metodo che restituisce il puntatore a un Posto contenuto nella sala cercato per uguaglianza con un Posto passato per parametro.
 	 * @param p Posto da cercare.
@@ -104,6 +105,11 @@ public class Sala implements Serializable, Cloneable{
 		else
 			return posti.get(pos);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String displayPosti()
 	{
 		String stringa = "";
@@ -119,7 +125,7 @@ public class Sala implements Serializable, Cloneable{
 	 */
 	public String toString()
 	{
-		return getClass().getName() + "[Numero = " + numero + " Posti = " + posti + "]";
+		return getClass().getName() + "[Numero = " + numeroPosti + " Posti = " + posti + "]";
 	}
 	
 	/**
@@ -155,6 +161,6 @@ public class Sala implements Serializable, Cloneable{
 		if(obj.getClass() != getClass())
 			return false;
 		Sala other = (Sala) obj;
-		return other.numero == numero && other.posti.equals(posti);
+		return other.numeroPosti == numeroPosti && other.posti.equals(posti);
 	}
 }
