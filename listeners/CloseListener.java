@@ -1,8 +1,11 @@
-package classi;
+package listeners;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+
+import classi.FlussoGenerico;
+import classi.Multisala;
 
 public class CloseListener implements WindowListener{
 	private Multisala multisala;
@@ -20,7 +23,7 @@ public class CloseListener implements WindowListener{
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		FlussoGenerico<Multisala> flusso = new FlussoGenerico("multisala.dat");
+		FlussoGenerico<Multisala> flusso = new FlussoGenerico<Multisala>("multisala.dat");
 		try {
 			flusso.save(multisala);
 		} catch (IOException e) {
