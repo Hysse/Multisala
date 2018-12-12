@@ -36,21 +36,11 @@ public class Cliente extends Utente{
 	
 	/**
 	 * Metodo modificatore del Cliente che elimina la prenotazioni di indice i.
-	 * @param i L'indice della prenotazione da eliminare all'interno della collezione.
+	 * @param b Biglietto da rimuovere
 	 */
-	public void removePrenotazione(int i)
+	public boolean removePrenotazione(Biglietto b)
 	{
-		prenotazioni.remove(i);
-	}
-	
-	/**
-	 * Metodo di accesso di Cliente che permette l'accesso ad una prenotazione di indice i.
-	 * @param i L'indice della prenotazione da prelevare nella collezione.
-	 * @return Restituisce la Prenotazione di indice i nella collezione.
-	 */
-	public Biglietto getPrenotazione(int i)
-	{
-		return prenotazioni.get(i);
+		return prenotazioni.remove(b);
 	}
 	
 	/**
@@ -69,25 +59,6 @@ public class Cliente extends Utente{
 	public void addPrenotazione(Biglietto biglietto)
 	{
 		prenotazioni.add(biglietto);
-	}
-	
-	/**
-	 * Metodo che ritorna il numero di prentazioni di un Cliente
-	 * @return int con num di prenotazione
-	 */
-	public int numPrenotazioni()
-	{
-		return prenotazioni.size();
-	}
-	
-	/**
-	 * Metodo di controllo che indica se una Prenotazione è contenuta o meno nella collezione.
-	 * @param biglietto La Prenotazione da cercare nella collezione.
-	 * @return Restituisce l'indice della Prenotazione cercata all'interno della collezione se presente, -1 altrimenti.
-	 */
-	public int haPrenotazione(Biglietto biglietto)
-	{
-		return prenotazioni.indexOf(biglietto);
 	}
 	
 	/**
