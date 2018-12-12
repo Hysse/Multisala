@@ -1,9 +1,14 @@
 package moduli;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+
 import classi.Multisala;
 import classi.Sala;
 import classi.Spettacolo;
+import utilities.Sort;
 
 /**
  * Classe che permette a un utente di compiere varie operazioni su un multisala, tra cui:
@@ -28,72 +33,74 @@ public class ModuloCliente {
 		this.multisala = multisala;
 	}
 	
-	/**
-	 * Metodo che visualizza il programma complessivo della settiamana a partire dal giorno in cui
-	 * l'utente loggato chiede di visualizzare, fino alla domenica
-	 * @return stringa con programma complessivo della settimana
-	 */
-	public String visualizzaProgrammaSettimanale()
+	public ArrayList<Spettacolo> getSpettacoliSettimana()
 	{
-		String str = "";
-		
-		LocalDate dataUtente = LocalDate.now();
-		int i = dataUtente.getDayOfWeek().getValue();
-		while(i <= 7)
-		{
-			for (Spettacolo s: multisala.getListaSpettacoli())
-			{
-				if (confontaDate(s.getDataInizio(), dataUtente))
-					str = str + s.toString() + "\n";
-			}
-			
-			i++;
-		}
-		return str;
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.getSpettacoliSettimana();
 	}
 	
-	/**
-	 * Metodo che visualizza il programma complessivo della settiamana a partire dal giorno in cui
-	 * l'utente loggato chiede di visualizzare, fino alla domenica per sala
-	 * @param s Sala per cui si vuole stampare il programma settimanale
-	 * @return String con programma settimanale per sala
-	 */
-	public String visualizzaProgrammaSettimanaleSala(Sala sala)
+	public ArrayList<Spettacolo> getSpettacoliSale(Sala sala)
 	{
-		String str = "";
-		
-		LocalDate dataUtente = LocalDate.now();
-		int i = dataUtente.getDayOfWeek().getValue();
-		while(i <= 7)
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.getSpettacoliPerSala(sala);
+	}
+	
+	public void SortSpettacoliCronologico(ArrayList<Spettacolo> array)
+	{
+		class CronologicComparator implements Comparator<Spettacolo>
 		{
-			for (Spettacolo s: multisala.getListaSpettacoli())
-			{
-				if (confontaDate(s.getDataInizio(), dataUtente) && s.getSala().equals(sala))
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				if(s1.getDataInizio().before(s2.getDataInizio()))
+					return -1;
+				else
 				{
-					str = str + s.toString() + "\n";
+					if(s1.getDataInizio().after(s2.getDataInizio()))
+						return 1;
+					else
+						return 0;
 				}
-			}
-			
-			i++;
+				}
 		}
-		return str;
+		
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new CronologicComparator(),array);
+		sorter.insertionSort();
 	}
 	
-	/**
-	 * Metodo privato per confrontare una Date con una Localdate in base a: giorno, mese, anno
-	 * @param d1 Date
-	 * @param d2 LocalDate
-	 * @return true se giorno mese e anno sono gli stessi, false altrimenti
-	 */
-	@SuppressWarnings("deprecation")
-	private static boolean confontaDate(java.util.Date d1, LocalDate d2)
+	public void SortSpettacoliSalaCrescente(ArrayList<Spettacolo> array)
 	{
-		if (d1.getDay() == d2.getDayOfWeek().getValue() && d1.getMonth() == d2.getMonthValue()
-				&& (d1.getYear() + 1900) == d2.getYear())
-			return true;
-		else
-			return false;
+		class SalaComparator implements Comparator<Spettacolo>
+		{
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				if(s1.getSala().getNumSala() < s2.getSala().getNumSala())
+					return -1;
+				else
+				{
+					if(s1.getSala().getNumSala() > s2.getSala().getNumSala())
+						return 1;
+					else
+						return 0;
+				}
+				}
+		}
+		
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new SalaComparator(),array);
+		sorter.insertionSort();
 	}
+	
+	
+	public void SortSpettacoliTitolo(ArrayList<Spettacolo> array)
+	{
+		class TitoloComparator implements Comparator<Spettacolo>
+		{
+			public int compare(Spettacolo s1, Spettacolo s2) {
+				return s1.getFilm().getTitolo().compareTo(s2.getFilm().getTitolo());
+				}
+		}
+		
+		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new TitoloComparator(),array);
+		sorter.insertionSort();
+	}
+	
 	
 
 }
