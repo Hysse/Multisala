@@ -15,14 +15,6 @@ public class Spettacolo implements Cloneable, Serializable{
 	 */
 	private Sala sala;
 	/**
-	 * Numero che identifica univocamente uno spettacolo.
-	 */
-	private static int progressivo = 0;
-	/**
-	 * variabile che conterrà il progressivo relativo allo Spettacolo.
-	 */
-	private int id;
-	/**
 	 * Il prezzo base dello spettacolo.
 	 */
 	private double prezzo;
@@ -49,8 +41,6 @@ public class Spettacolo implements Cloneable, Serializable{
 		this.film = film;
 		this.data = data;
 		this.prezzo = prezzo;
-		id = progressivo;
-		progressivo++;
 	}
 	
 	/**
@@ -78,15 +68,6 @@ public class Spettacolo implements Cloneable, Serializable{
 	public Film getFilm()
 	{
 		return film.clone();
-	}
-	
-	/**
-	 * Metodo di accesso all'id dello spettacolo
-	 * @return int con id dello spettacolo
-	 */
-	public int getId()
-	{
-		return id;
 	}
 	
 	/**
@@ -133,7 +114,7 @@ public class Spettacolo implements Cloneable, Serializable{
 	{
 		Calendar datafine = (Calendar)data.clone();
 		datafine.set(Calendar.MINUTE, datafine.get(Calendar.MINUTE) + film.getMinuti());
-		return datafine;
+		return (Calendar)datafine.clone();
 	}
 	
 	/**
