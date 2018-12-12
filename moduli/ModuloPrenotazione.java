@@ -43,13 +43,13 @@ public class ModuloPrenotazione {
 		if (!isBeforeDodici(spettacolo))
 			throw new OraPrenotazioneException();
 			
-		moduli.ModuloSala m = new ModuloSala(multisala);
+		ModuloSala moduloSala = new ModuloSala(multisala);
 		if (alreadyPrenotato(spettacolo))
 			return null;
 		
 		Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
-		Posto p = m.getSala(spettacolo.getId()).getPosto(lettera, numero);
-		if (spettacolo.occupa(lettera, numero) != null && p.isLibero())
+		Posto p = moduloSala.getSala(spettacolo.getSala().getNumSala()).getPosto(lettera, numero);
+		if (spettacolo.occupa(lettera,numero) != null && p.isLibero())
 		{
 			if (!p.isDisponibile())
 				throw new PostoIndisponibileException();
@@ -82,8 +82,8 @@ public class ModuloPrenotazione {
 		if (!alreadyPrenotato(spettacolo))
 		{	
 			Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
-			Posto p = m.getSala(spettacolo.getId()).getPosto(lettera, numero);
-			if (spettacolo.occupa(lettera, numero) != null && p.isLibero())
+			Posto p = m.getSala(spettacolo.getSala().getNumSala()).getPosto(lettera, numero);
+			if (spettacolo.occupa(lettera,numero) != null && p.isLibero())
 			{
 				if (!p.isDisponibile())
 					throw new PostoIndisponibileException();
@@ -118,7 +118,7 @@ public class ModuloPrenotazione {
 		if (!isBeforeDodici(b.getSpettacolo()))
 			throw new OraPrenotazioneException();
 		moduli.ModuloSala m = new ModuloSala(multisala);
-		Posto p = m.getSala(b.getSpettacolo().getId()).getPosto(b.getLetteraPosto(), b.getLetteraPosto());
+		Posto p = m.getSala(b.getSpettacolo().getSala().getNumSala()).getPosto(b.getLetteraPosto(), b.getLetteraPosto());
 		if (p.isDisponibile())
 		{
 			ModuloSconto.applicaSconto(b);
