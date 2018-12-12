@@ -44,7 +44,10 @@ public class ModuloSala {
 		
 		return null;
 	}
-	
+	public int getNumeroSale()
+	{
+		return listaSale.size();
+	}
 	/**
 	 * Metodo che rimuove una sala identificata da un numero
 	 * @param numeroSala int con numero della sala da rimuovere
