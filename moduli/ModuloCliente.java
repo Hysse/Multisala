@@ -10,6 +10,7 @@ import classi.Cliente;
 import classi.Multisala;
 import classi.Sala;
 import classi.Spettacolo;
+import eccezioni.BigliettoPresenteException;
 import eccezioni.OraPrenotazioneException;
 import eccezioni.PostoIndisponibileException;
 import eccezioni.PostoNonEsistenteException;
@@ -82,19 +83,16 @@ public class ModuloCliente {
 	 * @param spettacolo L'id dello Spettacolo per cui prenotare il Bilietto.
 	 * @param lettera La lettera del Posto da prenotare
 	 * @param numero Il numero del Posto da prenotare.
-	 * @return Restituisce true se la prenotazione è andata a buon fine, false se è gia presente una prenotazione del Cliente per lo stesso Spettacolo.
 	 * @throws OraPrenotazioneException Eccezione lanciata se l'ora di inizo dello spettacolo da prenotare è a meno di 12 ore dall'ora dell'utente.
 	 * @throws PostoIndisponibileException Eccezione lanciata se il Posto che si vuole prenotare è indisponibile.
 	 * @throws PostoNonEsistenteException Eccezione lanciata se il Posto non esiste all'interno della Sala in cui si tiene lo SPettacolo.
+	 * @throws BigliettoPresenteException Eccezione lanciata se si ha già un biglietto per lo Spettacolo.
 	 */
-	public boolean prenotaBiglietto(int idSpettacolo,char lettera,int numero) throws OraPrenotazioneException,PostoIndisponibileException,PostoNonEsistenteException
+	public void prenotaBiglietto(int idSpettacolo,char lettera,int numero) throws OraPrenotazioneException,PostoIndisponibileException,PostoNonEsistenteException, BigliettoPresenteException
 	{
 		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
-		if(modPre.addPrenotazione(modSpe.getSpettacolo(idSpettacolo), lettera, numero) == null)
-			return false;
-		else
-			return true;
+		modPre.addPrenotazione(modSpe.getSpettacolo(idSpettacolo), lettera, numero);
 	}
 	/**
 	 * Metodo per eliminare un biglietto relativo ad una prenotazione effettuata.
@@ -116,15 +114,13 @@ public class ModuloCliente {
 	 * @throws OraPrenotazioneException Eccezione lanciata se l'ora di inizo dello spettacolo da prenotare è a meno di 12 ore dall'ora dell'utente.
 	 * @throws PostoIndisponibileException Eccezione lanciata se il Posto che si vuole acquistare è indisponibile.
 	 * @throws PostoNonEsistenteException Eccezione lanciata se il Posto non esiste all'interno della Sala in cui si tiene lo Spettacolo.
+	 * @throws BigliettoPresenteException Eccezione lanciata se si ha già un biglietto per lo Spettacolo.
 	 */
-	public boolean acquistoDiretto(int idSpettacolo,char lettera,int numero) throws PostoIndisponibileException, OraPrenotazioneException, PostoOccupatoException, PostoNonEsistenteException
+	public void acquistoDiretto(int idSpettacolo,char lettera,int numero) throws PostoIndisponibileException, OraPrenotazioneException, PostoOccupatoException, PostoNonEsistenteException, BigliettoPresenteException
 	{
 		ModuloBiglietto modBig = new ModuloBiglietto(multisala, cliente);
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
-		if(modBig.acquistoDiretto(modSpe.getSpettacolo(idSpettacolo), lettera, numero) == null)
-			return false;
-		else 
-			return true;
+		modBig.acquistoDiretto(modSpe.getSpettacolo(idSpettacolo), lettera, numero);
 	}
 	/**
 	 * Metodo per acquistare un biglietto relativo ad una prenotazione effettuata.

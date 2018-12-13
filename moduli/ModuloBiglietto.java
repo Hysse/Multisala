@@ -4,6 +4,7 @@ import classi.Cliente;
 import classi.Multisala;
 import classi.Posto;
 import classi.Spettacolo;
+import eccezioni.BigliettoPresenteException;
 import eccezioni.OraPrenotazioneException;
 import eccezioni.PostoIndisponibileException;
 import eccezioni.PostoNonEsistenteException;
@@ -39,16 +40,17 @@ public class ModuloBiglietto {
 	 * dello spettacolo il posto sia indisponibile
 	 * @throws OraPrenotazioneException eccezione lanciata nel caso in cui l'ora in cui il cliente
 	 * cerca di prenotare un biglietto rientra nelle dodici ore prima dello spettacolo
+	 * @throws BigliettoPresenteException 
 	 */
-	public Biglietto addPrenotazione(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException, OraPrenotazioneException,PostoNonEsistenteException
+	public void addPrenotazione(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException, OraPrenotazioneException,PostoNonEsistenteException, BigliettoPresenteException
 	{
 		if (!isBeforeDodici(spettacolo))
 			throw new OraPrenotazioneException();
 		if(spettacolo.getSala().getPosto(lettera, numero) == null)
 			throw new PostoNonEsistenteException();
 		ModuloSala moduloSala = new ModuloSala(multisala);
-		if (alreadyPrenotato(spettacolo))
-			return null;
+		if (alreadyPresente(spettacolo))
+			throw new BigliettoPresenteException();
 		
 		Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
 		Posto postoSala = moduloSala.getSala(spettacolo.getSala().getNumSala()).getPosto(lettera, numero);
@@ -56,7 +58,6 @@ public class ModuloBiglietto {
 			throw new PostoIndisponibileException();
 		spettacolo.occupa(lettera, numero);
 		cliente.addPrenotazione(b);
-		return b;
 	}
 	/**
 	 * Metodo di ricerca di un Biglietto per idSpettacolo (Ogni cliente può avere solo un biglietto per spettacolo).
@@ -83,16 +84,17 @@ public class ModuloBiglietto {
 	 * dello spettacolo il posto sia indisponibile
 	 * @throws OraPrenotazioneException eccezione lanciata nel caso in cui l'ora in cui il cliente
 	 * cerca di acquistare il biglietto rientra nelle dodici ore prima dello spettacolo
+	 * @throws BigliettoPresenteException 
 	 */
-	public Biglietto acquistoDiretto(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException, OraPrenotazioneException,PostoOccupatoException,PostoNonEsistenteException
+	public void acquistoDiretto(Spettacolo spettacolo, char lettera, int numero) throws PostoIndisponibileException, OraPrenotazioneException,PostoOccupatoException,PostoNonEsistenteException, BigliettoPresenteException
 	{
 		if (!isBeforeDodici(spettacolo))
 			throw new OraPrenotazioneException();
 		if(spettacolo.getSala().getPosto(lettera, numero) == null)
 			throw new PostoNonEsistenteException();
 		moduli.ModuloSala modSala = new ModuloSala(multisala);
-		
-		if (!alreadyPrenotato(spettacolo))
+		ModuloSconto modSco = new ModuloSconto(multisala);
+		if (!alreadyPresente(spettacolo))
 		{	
 			Biglietto b = new Biglietto(spettacolo, lettera, numero, false);
 			Posto postoSala = modSala.getSala(spettacolo.getSala().getNumSala()).getPosto(lettera, numero);
@@ -102,15 +104,14 @@ public class ModuloBiglietto {
 			if(!postoSpettacolo.isLibero())
 				throw new PostoOccupatoException();
 			spettacolo.occupa(lettera,numero);
-			ModuloSconto.applicaSconto(b);
+			modSco.applicaSconto(b);
 			multisala.addAmount(b.getPrezzo());
 			b.getSpettacolo().getFilm().addIncasso(b.getPrezzo());
 			b.setAcquistato();
 			cliente.addPrenotazione(b);
-			return b;
 		}
 		else
-			return null;
+			throw new BigliettoPresenteException();
 	}
 	
 	/**
@@ -128,10 +129,11 @@ public class ModuloBiglietto {
 		if (!isBeforeDodici(biglietto.getSpettacolo()))
 			throw new OraPrenotazioneException();
 		moduli.ModuloSala modSala = new ModuloSala(multisala);
+		ModuloSconto modSco = new ModuloSconto(multisala);
 		Posto p = modSala.getSala(biglietto.getSpettacolo().getSala().getNumSala()).getPosto(biglietto.getLetteraPosto(), biglietto.getNumeroPosto());
 		if (p.isDisponibile())
 		{
-			ModuloSconto.applicaSconto(biglietto);
+			modSco.applicaSconto(biglietto);
 			multisala.addAmount(biglietto.getPrezzo());
 			biglietto.getSpettacolo().getFilm().addIncasso(biglietto.getPrezzo());
 			biglietto.setAcquistato();
@@ -149,11 +151,11 @@ public class ModuloBiglietto {
 	 * @param s Spettacolo da cui prendere l'id
 	 * @return true se il cliente già ha prenotato un biglietto per uno spettacolo, false altrimenti
 	 */
-	public boolean alreadyPrenotato(Spettacolo s)
+	public boolean alreadyPresente(Spettacolo s)
 	{
 		for (Biglietto b: cliente.getListaBiglietti())
 		{
-			if (b.getSpettacolo().getID() == s.getID() && b.isPrenotazione())
+			if (b.getSpettacolo().getID() == s.getID())
 				return true;
 		}
 		return false;
