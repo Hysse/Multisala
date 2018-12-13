@@ -13,6 +13,7 @@ public class Sala implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Posto> posti;
 	private int numSala;
+	private int numeroColonne;
 
 	/**
 	 * Costruisce un oggetto Sala
@@ -21,11 +22,15 @@ public class Sala implements Serializable, Cloneable {
 	 *               cinema.
 	 * @param posti  Collezione di posti iniziale della sala.
 	 */
-	public Sala(int numSala, ArrayList<Posto> posti) {
+	public Sala(int numSala, ArrayList<Posto> posti,int numcol) {
 		this.numSala = numSala;
 		this.posti = posti;
+		this.numeroColonne = numcol;
 	}
-
+	public int getNumColonne()
+	{
+		return numeroColonne;
+	}
 	/**
 	 * Imposta un nuovo numero identificativo alla sala.
 	 * 
