@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
+import classi.Biglietto;
+import classi.Cliente;
 import classi.Multisala;
 import classi.Sala;
 import classi.Spettacolo;
+import eccezioni.OraPrenotazioneException;
+import eccezioni.PostoIndisponibileException;
+import eccezioni.PostoNonEsistenteException;
+import eccezioni.PostoOccupatoException;
 import utilities.Sort;
 
 /**
@@ -23,13 +29,15 @@ import utilities.Sort;
 public class ModuloCliente {
 	
 	private Multisala multisala;
+	private Cliente cliente;
 	
 	/**
 	 * Costruttore moduloCliente che salva un Multisala da cui prendere le informazioni
 	 * @param multisala Multisala da cui prendere le informazioni
 	 */
-	public ModuloCliente(Multisala multisala)
+	public ModuloCliente(Multisala multisala,Cliente cliente)
 	{
+		this.cliente = cliente;
 		this.multisala = multisala;
 	}
 	
@@ -45,62 +53,63 @@ public class ModuloCliente {
 		return modSpettacolo.getSpettacoliPerSala(sala);
 	}
 	
-	public void SortSpettacoliCronologico(ArrayList<Spettacolo> array)
+	public ArrayList<Spettacolo> getFruibiliCronologico()
 	{
-		class CronologicComparator implements Comparator<Spettacolo>
-		{
-			public int compare(Spettacolo s1, Spettacolo s2) {
-				if(s1.getDataInizio().before(s2.getDataInizio()))
-					return -1;
-				else
-				{
-					if(s1.getDataInizio().after(s2.getDataInizio()))
-						return 1;
-					else
-						return 0;
-				}
-				}
-		}
-		
-		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new CronologicComparator(),array);
-		sorter.insertionSort();
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.SortSpettacoliCronologico(modSpettacolo.getSpettacoliFruibili());
 	}
 	
-	public void SortSpettacoliSalaCrescente(ArrayList<Spettacolo> array)
+	public ArrayList<Spettacolo> getFruibiliSalaCresc()
 	{
-		class SalaComparator implements Comparator<Spettacolo>
-		{
-			public int compare(Spettacolo s1, Spettacolo s2) {
-				if(s1.getSala().getNumSala() < s2.getSala().getNumSala())
-					return -1;
-				else
-				{
-					if(s1.getSala().getNumSala() > s2.getSala().getNumSala())
-						return 1;
-					else
-						return 0;
-				}
-				}
-		}
-		
-		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new SalaComparator(),array);
-		sorter.insertionSort();
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.SortSpettacoliSalaCrescente(modSpettacolo.getSpettacoliFruibili());
 	}
 	
-	
-	public void SortSpettacoliTitolo(ArrayList<Spettacolo> array)
+	public ArrayList<Spettacolo> getFruibiliTitolo()
 	{
-		class TitoloComparator implements Comparator<Spettacolo>
-		{
-			public int compare(Spettacolo s1, Spettacolo s2) {
-				return s1.getFilm().getTitolo().compareTo(s2.getFilm().getTitolo());
-				}
-		}
-		
-		Sort<Spettacolo> sorter = new Sort<Spettacolo>(new TitoloComparator(),array);
-		sorter.insertionSort();
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.SortSpettacoliTitolo(modSpettacolo.getSpettacoliFruibili());
 	}
 	
+	public Spettacolo getInfoSpettacolo(int id)
+	{
+		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
+		return modSpettacolo.getSpettacolo(id);
+	}
 	
+	public boolean prenotaBiglietto(Spettacolo spettacolo,char lettera,int numero) throws OraPrenotazioneException,PostoIndisponibileException,PostoNonEsistenteException
+	{
+		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		if(modPre.addPrenotazione(spettacolo, lettera, numero) == null)
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean cancellaPrenotazione(int idSpettacolo)
+	{
+		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		Biglietto b = modPre.getBiglietto(idSpettacolo);
+		return modPre.removePrenotazione(b);
+	}
+	
+	public boolean acquistoDiretto(Spettacolo spettacolo,char lettera,int numero) throws PostoIndisponibileException, OraPrenotazioneException, PostoOccupatoException, PostoNonEsistenteException
+	{
+		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		if(modPre.acquistoDiretto(spettacolo, lettera, numero) == null)
+			return false;
+		else 
+			return true;
+	}
+	
+	public boolean acquistoPrenotazione(int idSpettacolo) throws PostoIndisponibileException, OraPrenotazioneException
+	{
+		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		Biglietto b = modPre.getBiglietto(idSpettacolo);
+		if(modPre.acquistoConPrenotazione(b) == null)
+			return false;
+		else 
+			return true;
+	}
 
 }

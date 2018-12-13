@@ -34,8 +34,7 @@ public class ModuloPrenotazione {
 	 * @param spettacolo Spettacolo in cui deve essere prenotato il posto
 	 * @param lettera Char con lettera del posto
 	 * @param numero int con numero del post
-	 * @return Biglietto della prenotazione, altrimenti null se il biglietto è già stato prenotato
-	 * oppure se il posto da occupare non esiste oppure è occupato
+	 * @return Biglietto della prenotazione, altrimenti null se il biglietto è già stato prenotato.
 	 * @throws PostoIndisponibileException eccezione lanciata nel caso in cui nella sala clonata
 	 * dello spettacolo il posto sia indisponibile
 	 * @throws OraPrenotazioneException eccezione lanciata nel caso in cui l'ora in cui il cliente
@@ -59,7 +58,20 @@ public class ModuloPrenotazione {
 		cliente.addPrenotazione(b);
 		return b;
 	}
-	
+	/**
+	 * Metodo di ricerca di un Biglietto per idSpettacolo (Ogni cliente può avere solo un biglietto per spettacolo).
+	 * @param idSpettacolo ID dello spettacolo di cui si vuole avere il biglietto,se presente.
+	 * @return Restituisce il Biglietto relativo allo SPettacolo con ID = idSpettacolo, null se non ne esistono.
+	 */
+	public Biglietto getBiglietto(int idSpettacolo)
+	{
+		for(Biglietto b : cliente.getListaPrenotazioni())
+		{
+			if(b.getSpettacolo().getID() == idSpettacolo)
+				return b;
+		}
+		return null;
+	}
 	/**
 	 * Metodo per acquistare direttamente un biglietto
 	 * @param spettacolo Spettacolo in cui acquistare un biglietto
