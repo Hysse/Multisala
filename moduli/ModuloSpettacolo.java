@@ -171,10 +171,10 @@ public class ModuloSpettacolo {
 	 * @param sala La sala di cui si vuole avere la lista Spettacoli.
 	 * @return Restituisce un ArrayList<Spettacolo> contenente tutti gli Spettacoli che si terranno in quella sala.
 	 */
-	public ArrayList<Spettacolo> getSpettacoliPerSala(Sala sala) {
+	public ArrayList<Spettacolo> getSpettacoliPerSala(int numSala) {
 		ArrayList<Spettacolo> spettacoliSala = new ArrayList<Spettacolo>();
 		for(Spettacolo s : multisala.getListaSpettacoli()) {
-			if(s.getSala().getNumSala() == sala.getNumSala())
+			if(s.getSala().getNumSala() == numSala)
 				spettacoliSala.add(s);
 		}
 		return spettacoliSala;
