@@ -98,6 +98,10 @@ public class Biglietto implements Cloneable, Serializable{
 	{
 		this.prezzo = prezzo;
 	}
+	public String displayBiglietto()
+	{
+		return "Spettacolo : "+spettacolo.displayContent()+" Posto : "+lettera+" "+numero+" Prezzo pagato : "+prezzo;
+	}
 	/**
 	 * Metodo di visualizzazione delle informazioni principali del Biglietto.
 	 * @return Restituisce una stringa con le informazioni principali del Biglietto.
