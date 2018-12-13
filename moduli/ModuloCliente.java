@@ -66,6 +66,12 @@ public class ModuloCliente {
 		return cliente;
 	}
 	
+	public boolean hasBiglietto(Spettacolo spettacolo)
+	{
+		ModuloBiglietto modBig = new ModuloBiglietto(multisala, cliente);
+		return modBig.alreadyPresente(spettacolo);
+	}
+	
 	public ArrayList<Spettacolo> getFruibiliCronologico()
 	{
 		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
