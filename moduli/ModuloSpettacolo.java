@@ -280,30 +280,8 @@ public class ModuloSpettacolo {
 	}
 
 	
-	public ArrayList<Film> getIncassoSettimanaleFilm()
+	public double getIncassoFilm(Film film)
 	{
-		ArrayList<Film> spettacoliSettimana = new ArrayList<Film>();
-		Calendar dataUtente = Calendar.getInstance();
-		Calendar inzioSettimana = (Calendar) dataUtente.clone();
-		while (inzioSettimana.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
-			inzioSettimana.set(Calendar.DAY_OF_MONTH, inzioSettimana.get(Calendar.DAY_OF_MONTH) - 1);
-		
-		for (int i = 0; i < 7; i++)
-		{
-			for (Spettacolo s: multisala.getListaSpettacoli())
-			{
-				if(s.getDataInizio().get(Calendar.YEAR) == inzioSettimana.get(Calendar.YEAR) &&
-						s.getDataInizio().get(Calendar.MONTH) == inzioSettimana.get(Calendar.MONTH) &&
-						s.getDataInizio().get(Calendar.DAY_OF_MONTH) == inzioSettimana.get(Calendar.DAY_OF_MONTH))
-				{
-					if (!spettacoliSettimana.contains(s.getFilm()))
-						spettacoliSettimana.add(s.getFilm());
-				}
-				
-				inzioSettimana.set(Calendar.DAY_OF_MONTH, inzioSettimana.get(Calendar.DAY_OF_MONTH) + 1);
-			}
-		}
-		
-		return spettacoliSettimana;
+		return film.getIncasso();
 	}
 }

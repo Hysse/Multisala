@@ -120,9 +120,9 @@ public class ModuloGestore {
 	 * Metodo che ritorna una lista con i film della settimana.
 	 * @return Arraylist con i film della settimana.
 	 */
-	public ArrayList<Film> getIncassoSettimanaleFilm()
+	public double getIncassoFilm(Film film)
 	{
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
-		return modSpe.getIncassoSettimanaleFilm();
+		return modSpe.getIncassoFilm(film);
 	}
 }
