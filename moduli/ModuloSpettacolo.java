@@ -34,18 +34,21 @@ public class ModuloSpettacolo {
 	 * Poichè ogni spettacolo ha uno stato della sala diverso in base alle prenotazioni
 	 * viene assegnato al nuovo spettacolo una copia della sala in cui si vuole aggiungere lo
 	 * spettacolo
-	 * @param film Film dello spettacolo
+	 * @param idSpettacolo Id dello SPettacolo da aggiuungere.
+	 * @param idFilm Id del film dello spettacolo
 	 * @param numeroSala int con numero della sala
 	 * @param prezzo Double con prezzo dello spettacolo
 	 * @param data Calendar con data e orario dello spettacolo
 	 * @throws OraSpettacoloException eccezione lanciata nel caso in cui si tenta di aggiungere
 	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala
 	 * in considerazione
+	 * @throws FilmNonPresenteException Eccezione lanciata nel caso in cui l'id del film da associare allo spettacolo con corrisponda a nessun film.
 	 */
-	public void addSpettacolo(int id,Film film, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException
+	public void addSpettacolo(int idSpettacolo,int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException
 	{
 		ModuloSala modSala = new ModuloSala(multisala);
-		Spettacolo spettacolo = new Spettacolo(id,modSala.getSala(numeroSala).clone(),film, data, prezzo);
+		Film film = getFilm(idFilm);
+		Spettacolo spettacolo = new Spettacolo(idSpettacolo,modSala.getSala(numeroSala).clone(),film, data, prezzo);
 		for (Spettacolo s: multisala.getListaSpettacoli())
 		{
 			if((s.getDataInizio().before(spettacolo.getDataInizio())
@@ -99,8 +102,9 @@ public class ModuloSpettacolo {
 	 * Metodo che rimuove un film dalla lista dei film di un multisala
 	 * @param idFilm int con id del film da eliminare
 	 * @return true se il film è stato eliminato, false altrimenti
+	 * @throws FilmNonPresenteException 
 	 */
-	public boolean removeFilm(int idFilm)
+	public boolean removeFilm(int idFilm) throws FilmNonPresenteException
 	{
 		Film f;
 		if ((f = getFilm(idFilm)) != null)
@@ -281,7 +285,6 @@ public class ModuloSpettacolo {
 		ArrayList<Film> spettacoliSettimana = new ArrayList<Film>();
 		Calendar dataUtente = Calendar.getInstance();
 		Calendar inzioSettimana = (Calendar) dataUtente.clone();
-		// FACCIO DIVENTARE fineSettimana LA DATA DI FINE SETTIMANA DELLA SETTIMANA
 		while (inzioSettimana.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
 			inzioSettimana.set(Calendar.DAY_OF_MONTH, inzioSettimana.get(Calendar.DAY_OF_MONTH) - 1);
 		

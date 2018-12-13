@@ -7,6 +7,7 @@ import classi.Multisala;
 import classi.PoliticaSconto;
 import classi.Posto;
 import classi.Spettacolo;
+import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
 
 /**
@@ -33,17 +34,18 @@ public class ModuloGestore {
 	
 	/**
 	 * Aggiunge uno spettacolo al programma settimanale
-	 * @param id
-	 * @param film
+	 * @param idSpettacolo
+	 * @param idFilm
 	 * @param numeroSala
 	 * @param prezzo
 	 * @param data
 	 * @throws OraSpettacoloException 
+	 * @throws FilmNonPresenteException 
 	 */
-	public void addSpettacolo(int id, Film film, int numeroSala, double prezzo, Calendar data) throws OraSpettacoloException
+	public void addSpettacolo(int idSpettacolo, int idFilm, int numeroSala, double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException
 	{
-		ModuloSpettacolo m = new ModuloSpettacolo(multisala);
-		m.addSpettacolo(id, film, numeroSala, prezzo, data);
+		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
+		modSpe.addSpettacolo(idSpettacolo, idFilm, numeroSala, prezzo, data);
 	}
 
 	/**
@@ -51,10 +53,10 @@ public class ModuloGestore {
 	 * @param s Spettacolo in cui modificare il prezzo
 	 * @param prezzo Double con il prezzo nuovo
 	 */
-	public void setPrezzoSpettacolo(Spettacolo s, Double prezzo)
+	public void setPrezzoSpettacolo(int idSpettacolo, Double prezzo)
 	{
 		ModuloSpettacolo m = new ModuloSpettacolo(multisala);
-		m.getSpettacolo(s.getID()).setPrezzo(prezzo);
+		m.getSpettacolo(idSpettacolo).setPrezzo(prezzo);
 	}
 	
 	/**
