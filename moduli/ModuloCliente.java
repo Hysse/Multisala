@@ -47,7 +47,7 @@ public class ModuloCliente {
 		return modSpettacolo.getSpettacoliSettimana();
 	}
 	
-	public ArrayList<Spettacolo> getSpettacoliSale(Sala sala)
+	public ArrayList<Spettacolo> getSpettacoliSala(Sala sala)
 	{
 		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
 		return modSpettacolo.getSpettacoliPerSala(sala);
@@ -79,7 +79,7 @@ public class ModuloCliente {
 	
 	public boolean prenotaBiglietto(Spettacolo spettacolo,char lettera,int numero) throws OraPrenotazioneException,PostoIndisponibileException,PostoNonEsistenteException
 	{
-		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		if(modPre.addPrenotazione(spettacolo, lettera, numero) == null)
 			return false;
 		else
@@ -88,14 +88,14 @@ public class ModuloCliente {
 	
 	public boolean cancellaPrenotazione(int idSpettacolo)
 	{
-		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		Biglietto b = modPre.getBiglietto(idSpettacolo);
 		return modPre.removePrenotazione(b);
 	}
 	
 	public boolean acquistoDiretto(Spettacolo spettacolo,char lettera,int numero) throws PostoIndisponibileException, OraPrenotazioneException, PostoOccupatoException, PostoNonEsistenteException
 	{
-		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		if(modPre.acquistoDiretto(spettacolo, lettera, numero) == null)
 			return false;
 		else 
@@ -104,7 +104,7 @@ public class ModuloCliente {
 	
 	public boolean acquistoPrenotazione(int idSpettacolo) throws PostoIndisponibileException, OraPrenotazioneException
 	{
-		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		Biglietto b = modPre.getBiglietto(idSpettacolo);
 		if(modPre.acquistoConPrenotazione(b) == null)
 			return false;
