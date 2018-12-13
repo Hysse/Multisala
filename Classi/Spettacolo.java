@@ -177,7 +177,24 @@ public class Spettacolo implements Cloneable, Serializable {
 				+ getDataFine().get(Calendar.HOUR) + ":" + getDataFine().get(Calendar.MINUTE) + " " + am_pm2
 				+ "  Prezzo : " + prezzo;
 	}
-
+	
+	
+	public String infoDettagliate()
+	{
+		String am_pm, am_pm2;
+		if (data.get(Calendar.AM_PM) == Calendar.AM)
+			am_pm = "A.M.";
+		else
+			am_pm = "P.M.";
+		if (getDataFine().get(Calendar.AM_PM) == Calendar.AM)
+			am_pm2 = "A.M.";
+		else
+			am_pm2 = "P.M.";
+		return "Film : " + film.getTitolo() + "\n\nDescrizione : \n"
+		+ film.getDescrizione()+"\n\nInizio : " + data.get(Calendar.HOUR) + ":" + data.get(Calendar.MINUTE) + " " + am_pm + "\nFine : "
+		+ getDataFine().get(Calendar.HOUR) + ":" + getDataFine().get(Calendar.MINUTE) + " " + am_pm2
+		+ "\n\nPrezzo : " + prezzo;
+	}
 	/**
 	 * Metodo di accesso ai dati fondamentali dello Spettacolo.
 	 * 
