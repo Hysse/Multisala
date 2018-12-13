@@ -125,4 +125,14 @@ public class ModuloGestore {
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
 		return modSpe.getIncassoFilm(film);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Spettacolo> listaFruibili()
+	{
+		ModuloSpettacolo m = new ModuloSpettacolo(multisala);
+		return m.getSpettacoliFruibili();
+	}
 }
