@@ -73,9 +73,9 @@ public class FrameLogin extends JFrame{
 				else
 				{
 					if(utente.isGestore())
-						new FrameGestore(utente).setVisible(true);
+						new FrameGestore(autenticazione.getMultisala()).setVisible(true);
 					else
-						new FrameCliente((Cliente)utente).setVisible(true);
+						new FrameCliente((Cliente)utente,autenticazione.getMultisala()).setVisible(true);
 					dispose();
 				}
 			}
