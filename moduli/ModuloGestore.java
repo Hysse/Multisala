@@ -75,8 +75,8 @@ public class ModuloGestore {
 	 */
 	public boolean attivaPoliticaSconto(PoliticaSconto p)
 	{
-		ModuloSconto m = new ModuloSconto(multisala);
-		return m.addPoliticaSconto(p);
+		ModuloSconto modSconto = new ModuloSconto(multisala);
+		return modSconto.addPoliticaSconto(p);
 	}
 	
 	/**
@@ -88,8 +88,8 @@ public class ModuloGestore {
 	 */
 	public boolean setPostoDisponibile(int numSala, char lettera, int numero)
 	{
-		ModuloSala m = new ModuloSala(multisala);
-		return m.setIndisponibile(new Posto(lettera, numero), numSala);
+		ModuloSala modSala = new ModuloSala(multisala);
+		return modSala.setDisponibile(new Posto(lettera, numero), numSala);
 	}
 	
 	/**
@@ -101,8 +101,8 @@ public class ModuloGestore {
 	 */
 	public boolean setPostoIndisponibile(int numSala, char lettera, int numero)
 	{
-		ModuloSala m = new ModuloSala(multisala);
-		return m.setIndisponibile(new Posto(lettera, numero), numSala);
+		ModuloSala modSala = new ModuloSala(multisala);
+		return modSala.setIndisponibile(new Posto(lettera, numero), numSala);
 	}
 	
 	/**
@@ -115,12 +115,12 @@ public class ModuloGestore {
 	}
 	
 	/**
-	 * Metodo che ritorna una lista con gli incassi settimanali per film
-	 * @return Arraylist con film
+	 * Metodo che ritorna una lista con i film della settimana.
+	 * @return Arraylist con i film della settimana.
 	 */
 	public ArrayList<Film> getIncassoSettimanaleFilm()
 	{
-		ModuloSpettacolo m = new ModuloSpettacolo(multisala);
-		return m.getIncassoSettimanaleFilm();
+		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
+		return modSpe.getIncassoSettimanaleFilm();
 	}
 }

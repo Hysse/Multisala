@@ -107,16 +107,17 @@ public class Sala implements Serializable, Cloneable{
 	
 	/**
 	 * Metodo che restituisce il puntatore a un Posto contenuto nella sala cercato per uguaglianza con un Posto passato per parametro.
-	 * @param p Posto da cercare.
+	 * @param posto Posto da cercare.
 	 * @return Restituisce il puntatore al Posto cercato se presente nella collezione di posti della sala, altrimenti restituisce null.
 	 */
-	public Posto getPosto(Posto p)
+	public Posto getPosto(Posto posto)
 	{
-		int pos = posti.indexOf(p);
-		if(pos < 0)
-			return null;
-		else
-			return posti.get(pos);
+		for(Posto p : posti)
+		{
+			if(p.matches(posto))
+				return p;
+		}
+		return null;
 	}
 	
 	/**
