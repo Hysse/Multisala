@@ -220,8 +220,7 @@ public class Multisala implements Serializable, Cloneable {
 	 * @return Stringa con le informazioni
 	 */
 	public String toString() {
-		return getClass().getSimpleName() + "[Sale:\n" + listaSale + ", Spettacoli:\n" +
-				listaSpettacoli + ", Film:\n" + listaPoliticheSconto + "Utenti:\n" +
-				listaUtenti + "]";
+		return getClass().getSimpleName() + "[Sale:\n" + listaSale + ", Spettacoli:\n" + listaSpettacoli + ", Film:\n"
+				+ listaPoliticheSconto + "Utenti:\n" + listaUtenti + "]";
 	}
 }

@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 //PROVARE AD IMPLEMENTARE POLITICHE DI SCONTO SIA COME CLASSE ASTRATTA SIA COME INTERFACCIA. PENSACI!
 public class TesterPoliticheSconto {
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		Cliente cliente = new Cliente("David","Ciaociao1.",19);
 		
@@ -72,7 +71,7 @@ public class TesterPoliticheSconto {
 		Spettacolo spettacolo = new Spettacolo(sala1, film, data, 20.00);
 		
 		Posto postobiglietto = new Posto('a', 3);
-		Biglietto biglietto = new Biglietto(spettacolo,postobiglietto.getLet(),postobiglietto.getNum(),false,spettacolo.getPrezzo());
+		Biglietto biglietto = new Biglietto(spettacolo,postobiglietto.getLet(),postobiglietto.getNum(),false);
 		spettacolo.occupa(postobiglietto);
 		
 		PoliticaSconto sconto1 = new PoliticaEta();

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Cliente extends Utente {
 
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Biglietto> prenotazioni;
+	private ArrayList<Biglietto> biglietti;
 	private int eta;
 
 	/**
@@ -27,7 +27,7 @@ public class Cliente extends Utente {
 	 */
 	public Cliente(String username, String password, int eta) {
 		super(username, password, false);
-		prenotazioni = new ArrayList<Biglietto>();
+		biglietti = new ArrayList<Biglietto>();
 		this.eta = eta;
 	}
 
@@ -38,7 +38,7 @@ public class Cliente extends Utente {
 	 * @param b Biglietto da rimuovere
 	 */
 	public boolean removePrenotazione(Biglietto b) {
-		return prenotazioni.remove(b);
+		return biglietti.remove(b);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class Cliente extends Utente {
 	 * 
 	 * @return ArrayList con le prenotazioni
 	 */
-	public ArrayList<Biglietto> getListaPrenotazioni() {
-		return this.prenotazioni;
+	public ArrayList<Biglietto> getListaBiglietti() {
+		return this.biglietti;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class Cliente extends Utente {
 	 * @param biglietto La prenotazione che si vuole aggiungere.
 	 */
 	public void addPrenotazione(Biglietto biglietto) {
-		prenotazioni.add(biglietto);
+		biglietti.add(biglietto);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Cliente extends Utente {
 	 *         Cliente.
 	 */
 	public String toString() {
-		return super.toString() + "[Età = " + eta + ", Prenotazioni = " + prenotazioni + "]";
+		return super.toString() + "[Età = " + eta + ", Prenotazioni = " + biglietti + "]";
 	}
 
 	/**
@@ -96,9 +96,9 @@ public class Cliente extends Utente {
 	public Cliente clone() {
 		Cliente clone = (Cliente) super.clone();
 		ArrayList<Biglietto> biglietticlone = new ArrayList<Biglietto>();
-		for (Biglietto p : prenotazioni)
+		for (Biglietto p : biglietti)
 			biglietticlone.add(p.clone());
-		clone.prenotazioni = biglietticlone;
+		clone.biglietti = biglietticlone;
 		return clone;
 	}
 
@@ -113,6 +113,6 @@ public class Cliente extends Utente {
 		if (!super.equals(obj))
 			return false;
 		Cliente other = (Cliente) obj;
-		return prenotazioni.equals(other.prenotazioni);
+		return biglietti.equals(other.biglietti);
 	}
 }
