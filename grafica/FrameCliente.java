@@ -58,9 +58,10 @@ public class FrameCliente extends JFrame{
 		JPanel panelcliente = new JPanel();
 		panelcliente.setLayout(new BorderLayout());
 		JTextArea display = createTextAreaCliente();
+		JScrollPane scroll = new JScrollPane(display);
 		panelcliente.add(createMenuBarCliente(display),BorderLayout.NORTH);
 		panelcliente.add(paneldiDestraCliente(display,multisala),BorderLayout.EAST);
-		panelcliente.add(display,BorderLayout.CENTER);
+		panelcliente.add(scroll,BorderLayout.CENTER);
 		return panelcliente;
 	}
 	
@@ -122,8 +123,7 @@ public class FrameCliente extends JFrame{
 				{
 					JFrame framespettacolo = new FrameInfoSpettacolo(multisala, moduloCliente.getCliente(), s);
 					framespettacolo.setVisible(true);
-					framespettacolo.addWindowListener(new CloseListener(multisala));
-					setVisible(false);
+					dispose();
 				}
 			}
 		}
@@ -151,6 +151,7 @@ public class FrameCliente extends JFrame{
 	private JTextArea createTextAreaCliente()
 	{
 		JTextArea display = new JTextArea(7,20);
+		display.setEditable(false);
 		return display;
 	}
 	
