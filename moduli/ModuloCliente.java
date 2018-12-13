@@ -55,7 +55,7 @@ public class ModuloCliente {
 		ModuloSala modSala = new ModuloSala(multisala);
 		for(int i = 0;i < modSala.getNumeroSale();i++)
 		{
-			for(Spettacolo s : modSpettacolo.getSpettacoliPerSala(i))
+			for(Spettacolo s : modSpettacolo.getSpettacoliPerSala(i+1))
 				array.add(s);
 		}
 		return array;
