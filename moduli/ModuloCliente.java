@@ -47,11 +47,6 @@ public class ModuloCliente {
 		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
 		return modSpettacolo.getSpettacoliSettimana();
 	}
-	public ArrayList<Spettacolo> getSpettacoliFruibili()
-	{
-		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
-		return modSpettacolo.getSpettacoliFruibili();
-	}
 	
 	public ArrayList<Spettacolo> getSpettacoliSala()
 	{
@@ -64,6 +59,11 @@ public class ModuloCliente {
 				array.add(s);
 		}
 		return array;
+	}
+	
+	public Cliente getCliente()
+	{
+		return cliente;
 	}
 	
 	public ArrayList<Spettacolo> getFruibiliCronologico()
