@@ -128,7 +128,7 @@ public class ModuloBiglietto {
 		if (!isBeforeDodici(biglietto.getSpettacolo()))
 			throw new OraPrenotazioneException();
 		moduli.ModuloSala modSala = new ModuloSala(multisala);
-		Posto p = modSala.getSala(biglietto.getSpettacolo().getSala().getNumSala()).getPosto(biglietto.getLetteraPosto(), biglietto.getLetteraPosto());
+		Posto p = modSala.getSala(biglietto.getSpettacolo().getSala().getNumSala()).getPosto(biglietto.getLetteraPosto(), biglietto.getNumeroPosto());
 		if (p.isDisponibile())
 		{
 			ModuloSconto.applicaSconto(biglietto);
