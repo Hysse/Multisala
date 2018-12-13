@@ -9,8 +9,10 @@ import java.util.GregorianCalendar;
 import eccezioni.OraPrenotazioneException;
 import eccezioni.OraSpettacoloException;
 import eccezioni.PostoIndisponibileException;
+import eccezioni.PostoNonEsistenteException;
 import moduli.ModuloCliente;
-import moduli.ModuloPrenotazione;
+import moduli.ModuloGestore;
+import moduli.ModuloBiglietto;
 import moduli.ModuloSala;
 import moduli.ModuloSconto;
 import moduli.ModuloSpettacolo;
@@ -72,19 +74,21 @@ public class TesterMultisala {
 		Film film2 = new Film("La città incantata","Film d'animazione di Miazaki",80, 2);
 		Film film3 = new Film("Spiderman","Un ragazzo viene morso da un ragno e ne acquista i poteri",110, 3);
 		
-		GregorianCalendar data1 = new GregorianCalendar(2018,12,13,18,0);
-		GregorianCalendar data2 = new GregorianCalendar(2018,11,10,11,0);
-		GregorianCalendar data3 = new GregorianCalendar(2018,11,10,12,0);
+		GregorianCalendar data1 = new GregorianCalendar(2018,11,12,23,50);
+		GregorianCalendar data2 = new GregorianCalendar(2018,11,14,18,10);
+		GregorianCalendar data3 = new GregorianCalendar(2018,11,15,12,0);
+		GregorianCalendar data4 = new GregorianCalendar(2018,11,17,12,30);
 		
 		Spettacolo spettacolo1 = new Spettacolo(1,sala1, film1, data1, 25.00);
 		Spettacolo spettacolo2 = new Spettacolo(2,sala2, film2, data2, 25.00);
 		Spettacolo spettacolo3 = new Spettacolo(3,sala2, film3, data3, 30.00);
 		
-		ModuloCliente modCli = new ModuloCliente(multisala);
+		ModuloGestore modGes = new ModuloGestore(multisala);
+		ModuloCliente modCli = new ModuloCliente(multisala,cliente);
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
 		ModuloSala modSala = new ModuloSala(multisala);
 		ModuloSconto modSconto = new ModuloSconto(multisala);
-		ModuloPrenotazione modPre = new ModuloPrenotazione(multisala, cliente);
+		ModuloBiglietto modPre = new ModuloBiglietto(multisala, cliente);
 		
 		modSala.addSala(sala1);
 		modSala.addSala(sala2);
@@ -94,17 +98,27 @@ public class TesterMultisala {
 		modSpe.addFilm(film3);
 		try
 		{
-			modSpe.addSpettacolo(1,film1, 1, 20.00, data1);
-			modSpe.addSpettacolo(2,film2, 1, 20.00, data1);
-			System.out.println("Bella");
+			modSpe.addSpettacolo(1,film1, 2, 20.00, data1);
+			modSpe.addSpettacolo(2,film2, 2, 20.00, data2);
+			modSpe.addSpettacolo(3, film3, 2, 15.00, data3);
+			modSpe.addSpettacolo(4, film1, 1, 10.00, data4);
 		}
 		catch(OraSpettacoloException e)
 		{
 			System.out.println(e.getMessage());
 		}
-		/*try
+		System.out.println("Spettacoli fruibili TITOLO :");
+		ArrayList<Spettacolo> fruibilisorttitolo = modSpe.SortSpettacoliTitolo(modSpe.getSpettacoliFruibili());
+		for(Spettacolo s : fruibilisorttitolo)
+			System.out.println(""+s.displayContent());
+		
+		
+		try
 		{
-			modPre.addPrenotazione(spettacolo1, 'a', 3);
+			if(modPre.addPrenotazione(spettacolo3, 'a', 3) == null)
+				System.out.println("Prenotazione già effettuata");
+			if(modPre.addPrenotazione(spettacolo2, 'b', 3) == null)
+				System.out.println("Prenotazione già effettuata");
 		}
 		catch(PostoIndisponibileException e)
 		{
@@ -113,7 +127,10 @@ public class TesterMultisala {
 		catch(OraPrenotazioneException e)
 		{
 			System.out.println(e.getMessage());
+		} catch (PostoNonEsistenteException e) {
+			System.out.println(e.getMessage());
 		}
-		System.out.println("Bella");*/
+		System.out.println("Bella");
 	}
 }
+
