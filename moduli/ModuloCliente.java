@@ -48,10 +48,17 @@ public class ModuloCliente {
 		return modSpettacolo.getSpettacoliSettimana();
 	}
 	
-	public ArrayList<Spettacolo> getSpettacoliSala(Sala sala)
+	public ArrayList<Spettacolo> getSpettacoliSala()
 	{
+		ArrayList<Spettacolo> array = new ArrayList<Spettacolo>();
 		ModuloSpettacolo modSpettacolo = new ModuloSpettacolo(multisala);
-		return modSpettacolo.getSpettacoliPerSala(sala);
+		ModuloSala modSala = new ModuloSala(multisala);
+		for(int i = 0;i < modSala.getNumeroSale();i++)
+		{
+			for(Spettacolo s : modSpettacolo.getSpettacoliPerSala(modSala.getSala(i)))
+				array.add(s);
+		}
+		return array;
 	}
 	
 	public ArrayList<Spettacolo> getFruibiliCronologico()
