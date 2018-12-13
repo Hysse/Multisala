@@ -43,7 +43,14 @@ public class Sala implements Serializable, Cloneable {
 	public int getNumSala() {
 		return numSala;
 	}
-
+	/**
+	 * Metodo di accesso alla collezione di posti di una sala.
+	 * @return Restituisce la collezione di posti di una sala.
+	 */
+	public ArrayList<Posto> getPosti()
+	{
+		return posti;
+	}
 	/**
 	 * Metodo che restituisce la quantità di posti della sala.
 	 * 
