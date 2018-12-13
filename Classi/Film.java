@@ -88,7 +88,7 @@ public final class Film implements Serializable, Cloneable {
 	 */
 	public String toString() {
 		return getClass().getSimpleName() + "[Titolo = " + this.titolo + ", Descrizione = " + this.descrizione
-				+ ", Durata = " + this.minuti + "]";
+				+ ", Durata = " + this.minuti + "Incasso : "+incasso+"]";
 	}
 
 	/**
