@@ -75,7 +75,7 @@ public class FrameSalaPrenotazioni extends JFrame{
 				if(!modSala.getSala(idSala).getPosto(p.getLet(), p.getNum()).isDisponibile())
 				{
 					JFrame framerr = new JFrame();
-					framerr.setSize(100, 100);
+					framerr.setSize(500, 100);
 					framerr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					JLabel errore = new JLabel("Posto Indisponibile!!!");
 					framerr.add(errore);
@@ -117,7 +117,7 @@ public class FrameSalaPrenotazioni extends JFrame{
 					else
 					{
 						JFrame framerr = new JFrame();
-						framerr.setSize(100, 100);
+						framerr.setSize(500, 100);
 						framerr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						JLabel errore = new JLabel("Posto Occupato!!!");
 						framerr.add(errore);

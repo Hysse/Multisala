@@ -65,7 +65,7 @@ public class FrameInfoSpettacolo extends JFrame{
 				if(modBig.alreadyPresente(spettacolo))
 				{
 					JFrame framerr = new JFrame();
-					framerr.setSize(100, 100);
+					framerr.setSize(500, 100);
 					framerr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					JLabel errore = new JLabel("Biglietto già prenotato/acquistato");
 					framerr.add(errore);

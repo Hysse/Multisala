@@ -59,7 +59,7 @@ public class FrameCliente extends JFrame{
 		panelcliente.setLayout(new BorderLayout());
 		JTextArea display = createTextAreaCliente();
 		JScrollPane scroll = new JScrollPane(display);
-		panelcliente.add(createMenuBarCliente(display),BorderLayout.NORTH);
+		panelcliente.add(createMenuBarCliente(display,multisala),BorderLayout.NORTH);
 		panelcliente.add(paneldiDestraCliente(display,multisala),BorderLayout.EAST);
 		panelcliente.add(scroll,BorderLayout.CENTER);
 		return panelcliente;
@@ -155,7 +155,7 @@ public class FrameCliente extends JFrame{
 		return display;
 	}
 	
-	private JMenuBar createMenuBarCliente(JTextArea display)
+	private JMenuBar createMenuBarCliente(JTextArea display,Multisala multisala)
 	{
 		JMenuBar menubar = new JMenuBar();
 		JMenu operazioni = new JMenu("Operazioni");
@@ -183,6 +183,8 @@ public class FrameCliente extends JFrame{
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				new FrameCancellaPrenotazione(multisala, moduloCliente.getCliente()).setVisible(true);
+				dispose();
 			}
 		}
 		class CronologicoListener implements ActionListener
@@ -222,10 +224,12 @@ public class FrameCliente extends JFrame{
 		ActionListener listenersala = new SalaCrescListener();
 		ActionListener listenertitolo = new TitoloListener();
 		ActionListener listenerlogout = new LogoutListener();
+		ActionListener listenerprenotazioni = new PrenotazioniListener();
 		logout.addActionListener(listenerlogout);
 		crolonologico.addActionListener(listenercrono);
 		per_sala.addActionListener(listenersala);
 		per_titolo.addActionListener(listenertitolo);
+		prenotazioni.addActionListener(listenerprenotazioni);
 		menubar.add(operazioni);
 		return menubar;
 	}
