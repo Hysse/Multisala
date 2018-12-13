@@ -72,7 +72,6 @@ public class ModuloSpettacolo {
 		else
 			return false;
 	}
-	
 	/**
 	 * Metodo che ritorna uno spettacolo cercato con l'id rispettivo
 	 * @param id int con id dello spettacolo
@@ -173,7 +172,7 @@ public class ModuloSpettacolo {
 	 */
 	public ArrayList<Spettacolo> getSpettacoliPerSala(int numSala) {
 		ArrayList<Spettacolo> spettacoliSala = new ArrayList<Spettacolo>();
-		for(Spettacolo s : multisala.getListaSpettacoli()) {
+		for(Spettacolo s : getSpettacoliSettimana()) {
 			if(s.getSala().getNumSala() == numSala)
 				spettacoliSala.add(s);
 		}
