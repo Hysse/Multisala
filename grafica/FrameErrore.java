@@ -8,7 +8,7 @@ public class FrameErrore extends JFrame{
 	public FrameErrore(Exception e)
 	{
 		setSize(100, 100);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel errore = new JLabel(e.getMessage());
 		add(errore);
 	}
