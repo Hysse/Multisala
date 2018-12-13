@@ -40,7 +40,7 @@ public class FrameLogin extends JFrame{
 		try {
 			autenticazione = new ModuloAutenticazione();
 		} catch (ClassNotFoundException | IOException e) {
-			JFrame errore = new FrameErrore(e);
+			JFrame errore = new FrameErrore(autenticazione.getMultisala(),e);
 			errore.setVisible(true);
 			errore.addWindowListener(new CloseListener(autenticazione.getMultisala()));
 			
