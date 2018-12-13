@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Questa classe è immutabile(final) e viene utilizzata per salvare descizione,
  * titolo, durata(in minuti) di un film, identificativo e incasso.
  */
-public final class Film implements Serializable, Cloneable {
+public class Film implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 	private String descrizione;
@@ -37,7 +37,7 @@ public final class Film implements Serializable, Cloneable {
 	 * 
 	 * @param incasso
 	 */
-	public void addIncasso(Double incasso) {
+	public void addIncasso(double incasso) {
 		this.incasso += incasso;
 	}
 

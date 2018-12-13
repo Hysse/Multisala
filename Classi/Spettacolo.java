@@ -67,7 +67,7 @@ public class Spettacolo implements Cloneable, Serializable {
 	 * @return Restituisce il film dello spettacolo.
 	 */
 	public Film getFilm() {
-		return film.clone();
+		return film;
 	}
 
 	/**
