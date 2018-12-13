@@ -87,8 +87,8 @@ public final class Film implements Serializable, Cloneable {
 	 * @return stringa con: titolo, descrizione e durata
 	 */
 	public String toString() {
-		return getClass().getSimpleName() + "[Titolo = " + this.titolo + ", Descrizione = " + this.descrizione
-				+ ", Durata = " + this.minuti + "Incasso : "+incasso+"]";
+		return getClass().getSimpleName() + "[Id = "+idFilm+"Titolo = " + this.titolo + ", Descrizione = " + this.descrizione
+				+ ", Durata = " + this.minuti + "Incasso = "+incasso+"]";
 	}
 
 	/**
@@ -119,7 +119,7 @@ public final class Film implements Serializable, Cloneable {
 
 		Film f = (Film) o;
 
-		return titolo.equals(f.getTitolo()) && descrizione.equals(f.getDescrizione()) && minuti == f.getMinuti()
+		return idFilm == f.idFilm && titolo.equals(f.getTitolo()) && descrizione.equals(f.getDescrizione()) && minuti == f.getMinuti()
 				&& incasso == f.getIncasso();
 	}
 }
