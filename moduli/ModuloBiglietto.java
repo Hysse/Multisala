@@ -143,13 +143,25 @@ public class ModuloBiglietto {
 		else
 			throw new PostoIndisponibileException();
 	}
-
-	
 	/**
-	 * Meotodo che controlla se il cliente ha già effettuato una prenotazione 
+	 * Metodo che controlla se il cliente ha già effettuato una prenotazione per uno spettacolo s.
+	 * @param s Spettacolo di cui si vuole cercare la prenotazione.
+	 * @returnRestituisce true se il Cliente ha una prenotazione per lo Spettacolo s,false altrimenti.
+	 */
+	public boolean hasPrenotazione(Spettacolo s)
+	{
+		for (Biglietto b: cliente.getListaBiglietti())
+		{
+			if (b.getSpettacolo().getID() == s.getID() && b.isPrenotazione())
+				return true;
+		}
+		return false;
+	}
+	/**
+	 * Meotodo che controlla se il cliente ha già effettuato una prenotazione/acquisto
 	 * per un determinato spettacolo
 	 * @param s Spettacolo da cui prendere l'id
-	 * @return true se il cliente già ha prenotato un biglietto per uno spettacolo, false altrimenti
+	 * @return true se il cliente già ha prenotato/acquistato un biglietto per uno spettacolo, false altrimenti
 	 */
 	public boolean alreadyPresente(Spettacolo s)
 	{
@@ -180,7 +192,6 @@ public class ModuloBiglietto {
 		
 		return false;
 	}
-	
 	/**
 	 * Metodo interno del modulo prenotazione che permette di controllare se un cliente
 	 * che tenta di fare una prenotazione, acquisto diretto o acquisto Prenotazione
