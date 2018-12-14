@@ -9,6 +9,7 @@ import classi.Posto;
 import classi.Spettacolo;
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
+import eccezioni.SpettacoloIDException;
 
 /**
  * Classe utilizzata per gestire un multisala e permette di fare le seguenti operazioni su un
@@ -41,8 +42,9 @@ public class ModuloGestore {
 	 * @param data
 	 * @throws OraSpettacoloException 
 	 * @throws FilmNonPresenteException 
+	 * @throws SpettacoloIDException 
 	 */
-	public void addSpettacolo(int idSpettacolo, int idFilm, int numeroSala, double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException
+	public void addSpettacolo(int idSpettacolo, int idFilm, int numeroSala, double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException, SpettacoloIDException
 	{
 		ModuloSpettacolo modSpe = new ModuloSpettacolo(multisala);
 		modSpe.addSpettacolo(idSpettacolo, idFilm, numeroSala, prezzo, data);

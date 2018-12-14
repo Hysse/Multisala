@@ -10,6 +10,7 @@ import classi.Sala;
 import classi.Spettacolo;
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
+import eccezioni.SpettacoloIDException;
 import utilities.Sort;
 
 /**
@@ -43,8 +44,9 @@ public class ModuloSpettacolo {
 	 * lo spettacolo in un orario in cui è presente uno spettacolo ancora in corso nella sala
 	 * in considerazione
 	 * @throws FilmNonPresenteException Eccezione lanciata nel caso in cui l'id del film da associare allo spettacolo con corrisponda a nessun film.
+	 * @throws SpettacoloIDException 
 	 */
-	public void addSpettacolo(int idSpettacolo,int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException
+	public void addSpettacolo(int idSpettacolo,int idFilm, int numeroSala, Double prezzo, Calendar data) throws OraSpettacoloException, FilmNonPresenteException, SpettacoloIDException
 	{
 		ModuloSala modSala = new ModuloSala(multisala);
 		Film film = getFilm(idFilm);
@@ -55,6 +57,8 @@ public class ModuloSpettacolo {
 					&& s.getDataFine().after(spettacolo.getDataInizio()) &&
 					s.getSala().getNumSala() == spettacolo.getSala().getNumSala()) || s.getDataInizio().equals(spettacolo.getDataInizio()))
 				throw new OraSpettacoloException();
+			if(s.getID() == idSpettacolo)
+				throw new SpettacoloIDException();
 		}
 		multisala.getListaSpettacoli().add(spettacolo);
 	}

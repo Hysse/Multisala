@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
+import eccezioni.SpettacoloIDException;
 import grafica.FrameLogin;
 import moduli.ModuloGestore;
 import moduli.ModuloSala;
@@ -84,11 +85,12 @@ public class Visualizzatore {
 						modGes.addSpettacolo(2, 2, 2, 25.00, data2);
 						modGes.addSpettacolo(3, 3, 2, 30.00, data3);
 						modGes.addSpettacolo(4, 4, 1, 22.00, data4);
-						modGes.setPostoIndisponibile(1, 'a', 3);
 					}
 					catch(OraSpettacoloException e){
 						System.out.println(e.getMessage());
 					} catch (FilmNonPresenteException e) {
+						System.out.println(e.getMessage());
+					} catch (SpettacoloIDException e) {
 						System.out.println(e.getMessage());
 					}
 					flusso.save(multisala);

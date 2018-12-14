@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import classi.Multisala;
 import eccezioni.FilmNonPresenteException;
 import eccezioni.OraSpettacoloException;
+import eccezioni.SpettacoloIDException;
 import listeners.CloseListener;
 import moduli.ModuloSpettacolo;
 
@@ -78,7 +79,10 @@ public class FrameAggiungiSpettacolo extends JFrame{
 						Integer.parseInt(ora.getText()), Integer.parseInt(minuti.getText()));
 				try {
 					modSpe.addSpettacolo(Integer.parseInt(idSp.getText()), Integer.parseInt(idFilm.getText()),
-							Integer.parseInt(numSala.getText()), Double.parseDouble(prezzo.getText()), data);
+					Integer.parseInt(numSala.getText()), Double.parseDouble(prezzo.getText()), data);
+					FrameGestore f = new FrameGestore(multisala);
+					f.setVisible(true);
+					dispose();
 					
 				} catch (NumberFormatException e) {
 					JFrame framerr = new JFrame();
@@ -101,11 +105,15 @@ public class FrameAggiungiSpettacolo extends JFrame{
 					JLabel errore = new JLabel(e.getMessage());
 					framerr.add(errore);
 					framerr.setVisible(true);
+				} catch (SpettacoloIDException e) {
+					JFrame framerr = new JFrame();
+					framerr.setSize(500, 100);
+					framerr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					JLabel errore = new JLabel(e.getMessage());
+					framerr.add(errore);
+					framerr.setVisible(true);
 				}
 					
-					FrameGestore f = new FrameGestore(multisala);
-					f.setVisible(true);
-					dispose();
 				}
 
 			}
