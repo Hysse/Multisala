@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,11 +18,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
 import classi.Film;
 import classi.Multisala;
 import classi.Spettacolo;
 import listeners.CloseListener;
+import listeners.InputTextListener;
 import moduli.ModuloCliente;
 import moduli.ModuloGestore;
 import moduli.ModuloSpettacolo;
@@ -262,6 +266,7 @@ public class FrameGestore extends JFrame{
 		panelEst.setLayout(new GridLayout(5, 1));
 		panelEst.add(new JLabel("Inserisci id Spettacolo"));
 		JTextField pannello = new JTextField();
+		pannello.setEnabled(false);
 		panelEst.add(pannello);
 		ButtonGroup comandi = new ButtonGroup();
 		cercaId = new JRadioButton("Cerca id");
@@ -296,10 +301,14 @@ public class FrameGestore extends JFrame{
 				}
 			}	
 		}
-
+		
 		panelEst.add(cercaId);
 		panelEst.add(infoFilm);
 		ok.addActionListener(new okListener());
+		ArrayList<Document> documenti = new ArrayList<Document>();
+		documenti.add(pannello.getDocument());
+		DocumentListener inputListener = new InputTextListener(documenti,ok);
+		pannello.getDocument().addDocumentListener(inputListener);
 		panelEst.add(ok);
 	}
 	

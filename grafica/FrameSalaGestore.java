@@ -49,12 +49,11 @@ public class FrameSalaGestore extends JFrame{
 		JButton btn = new JButton(""+p.getLet()+" "+p.getNum());
 		if(sala.getPosto(p.getLet(), p.getNum()).isDisponibile())
 		{
-			btn.setBackground(Color.RED);
+			btn.setBackground(Color.GREEN);
 		}
 		else
 		{
-			if(p.isDisponibile())
-				btn.setBackground(Color.GREEN);
+			btn.setBackground(Color.RED);
 		}
 		
 		class ButtonListener implements ActionListener
