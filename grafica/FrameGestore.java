@@ -228,7 +228,7 @@ public class FrameGestore extends JFrame{
 				
 				for (Film f: m.getListaFilm())
 				{
-					textMultisala.append(f.getTitolo() + "Incasso: " + modGes.getIncassoFilm(f) + "\n");
+					textMultisala.append(f.getTitolo() + ", Incasso: " + modGes.getIncassoFilm(f) + "\n");
 				}
 			}
 		}

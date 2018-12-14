@@ -79,6 +79,7 @@ public class FrameAggiungiSpettacolo extends JFrame{
 				try {
 					modSpe.addSpettacolo(Integer.parseInt(idSp.getText()), Integer.parseInt(idFilm.getText()),
 							Integer.parseInt(numSala.getText()), Double.parseDouble(prezzo.getText()), data);
+					
 				} catch (NumberFormatException e) {
 					JFrame framerr = new JFrame();
 					framerr.setSize(500, 100);
@@ -100,19 +101,22 @@ public class FrameAggiungiSpettacolo extends JFrame{
 					JLabel errore = new JLabel(e.getMessage());
 					framerr.add(errore);
 					framerr.setVisible(true);
+				}
 					
 					FrameGestore f = new FrameGestore(multisala);
 					f.setVisible(true);
 					dispose();
 				}
+
 			}
-			
-		}
 		
 		aggiungi.addActionListener(new aggiungiListener());
 		pannello.add(aggiungi, BorderLayout.SOUTH);
 		add(pannello);
-		
+			
 	}
 
+		
 }
+
+
