@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,18 +13,24 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import classi.Film;
 import classi.Multisala;
 import classi.Spettacolo;
 import listeners.CloseListener;
+import moduli.ModuloCliente;
 import moduli.ModuloGestore;
+import moduli.ModuloSpettacolo;
 
 public class FrameGestore extends JFrame{
 	
 	private static final long serialVersionUID = 1455478804991929894L;
 	private ModuloGestore modGes;
+	private Multisala m;
 	
 	// Menu Operazione
 	private JMenu menuOperazione;
@@ -44,11 +52,9 @@ public class FrameGestore extends JFrame{
 	private JMenuItem logOut;
 	// Area di testo.
 	private JTextArea textMultisala;
-	// Input
-	private JLabel labelMostraInformazioni;
-	private JTextField fieldIdSpettacolo;
 	// Button
-	private JButton cercaId;
+	private JRadioButton cercaId;
+	private JRadioButton infoFilm;
 	//Jpanel
 	private JPanel panelCentro;
 	private JPanel panelEst;
@@ -58,13 +64,15 @@ public class FrameGestore extends JFrame{
 	public FrameGestore(Multisala m)
 	{
 		this.modGes = new ModuloGestore(m);
-		setSize(700,300);
+		this.m = m;
+		setSize(800,500);
 		setName("Gestore");
 		createMenu();
 		createTextArea();
 		createCercaSpettacolo();
 		createPanelResult();
 		add(panelResult);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new CloseListener(m));
 	}
 	
@@ -135,6 +143,10 @@ public class FrameGestore extends JFrame{
 		{
 			public void actionPerformed(ActionEvent e) {
 				
+				FrameSconto frame = new FrameSconto(m);
+				frame.setVisible(true);
+				dispose();
+				
 			}
 		}
 		
@@ -150,7 +162,9 @@ public class FrameGestore extends JFrame{
 		class SaleListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e) {
-				
+					
+				new FrameSelezioneSala(m).setVisible(true);
+				dispose();
 			}
 		}
 		
@@ -167,6 +181,8 @@ public class FrameGestore extends JFrame{
 		{
 			public void actionPerformed(ActionEvent e) {
 				
+				textMultisala.setText("");
+				textMultisala.setText("Incasso totale settimana:" + modGes.getIncassoTotaleSettimana());
 			}
 		}
 		
@@ -201,6 +217,12 @@ public class FrameGestore extends JFrame{
 		{
 			public void actionPerformed(ActionEvent e) {
 				
+				textMultisala.setText("");
+				
+				for (Film f: m.getListaFilm())
+				{
+					textMultisala.append(f.getTitolo() + "Incasso: " + modGes.getIncassoFilm(f) + "\n");
+				}
 			}
 		}
 		
@@ -227,7 +249,7 @@ public class FrameGestore extends JFrame{
 	
 	//DIVISORE
 	private void createTextArea() {
-		textMultisala = new JTextArea(5, 50);
+		textMultisala = new JTextArea(10, 50);
 		scroll = new JScrollPane(textMultisala);
 		textMultisala.setEditable(false);
 		panelCentro = new JPanel();
@@ -237,30 +259,48 @@ public class FrameGestore extends JFrame{
 	private void createCercaSpettacolo()
 	{
 		panelEst = new JPanel();
-		panelEst.setLayout(new GridLayout(3, 1));
+		panelEst.setLayout(new GridLayout(5, 1));
 		panelEst.add(new JLabel("Inserisci id Spettacolo"));
 		JTextField pannello = new JTextField();
-		pannello.setSize(5, 1);
 		panelEst.add(pannello);
-		cercaId = new JButton("Cerca id");
+		ButtonGroup comandi = new ButtonGroup();
+		cercaId = new JRadioButton("Cerca id");
+		infoFilm = new JRadioButton("Modifica prezzo id film");
+		comandi.add(cercaId);
+		comandi.add(infoFilm);
 		
-		class cercaIdListener implements ActionListener
+		cercaId.setSelected(true);
+		
+		JButton ok = new JButton("Ok");
+		
+		class okListener implements ActionListener
 		{
-			public void actionPerformed(ActionEvent arg0) {
-				
-				textMultisala.setText("");
-				for (Spettacolo s: modGes.listaFruibili())
+			public void actionPerformed(ActionEvent e) {
+				if (cercaId.isSelected())
 				{
-					if (Integer.parseInt(pannello.getText()) == s.getID())
-							textMultisala.append(s.displayContent());
+					textMultisala.setText("");
+					for (Spettacolo s: modGes.listaFruibili())
+					{
+						if (Integer.parseInt(pannello.getText()) == s.getID())
+								textMultisala.append(s.displayContent());
+					}
+					pannello.setText("");
 				}
-				pannello.setText("");
-			}
+				else
+				{
+					FrameInfo frame = new FrameInfo(m, Integer.parseInt(pannello.getText()));
+					pannello.setText("");
+					frame.setVisible(true);
+					dispose();
+				
+				}
+			}	
 		}
-		
-		cercaIdListener c = new cercaIdListener();
-		cercaId.addActionListener(c);
+
 		panelEst.add(cercaId);
+		panelEst.add(infoFilm);
+		ok.addActionListener(new okListener());
+		panelEst.add(ok);
 	}
 	
 	private void stampaIniziale()
@@ -280,7 +320,5 @@ public class FrameGestore extends JFrame{
 		panelResult.add(panelEst, BorderLayout.EAST);
 		add(panelResult);
 	}
-	
-	//DIVISORE
 	
 }
