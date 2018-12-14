@@ -266,7 +266,6 @@ public class FrameGestore extends JFrame{
 		panelEst.setLayout(new GridLayout(5, 1));
 		panelEst.add(new JLabel("Inserisci id Spettacolo"));
 		JTextField pannello = new JTextField();
-		pannello.setEnabled(false);
 		panelEst.add(pannello);
 		ButtonGroup comandi = new ButtonGroup();
 		cercaId = new JRadioButton("Cerca id");
@@ -277,6 +276,7 @@ public class FrameGestore extends JFrame{
 		cercaId.setSelected(true);
 		
 		JButton ok = new JButton("Ok");
+		ok.setEnabled(false);
 		
 		class okListener implements ActionListener
 		{
