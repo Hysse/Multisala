@@ -204,6 +204,9 @@ public class FrameGestore extends JFrame{
 
 			public void actionPerformed(ActionEvent e) {
 				
+				new FrameAggiungiSpettacolo(m).setVisible(true);
+				dispose();
+				
 			}
 			
 		}
